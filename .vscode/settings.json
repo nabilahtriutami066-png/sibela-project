@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        ".fantomasignore": "ignore",
+        "flake.lock": "json",
+        "update.h": "c",
+        "model.h": "c",
+        "draw.h": "c",
+        "utils.h": "c",
+        "header.h": "c"
+    }
+}
