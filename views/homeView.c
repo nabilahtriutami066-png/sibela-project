@@ -15,7 +15,9 @@ void drawHome(windowModel *windowM)
     int startX = 35;
     int startY = 375;
     DrawRectangle(0, 0, 300, 1080, SECONDARY);
-    DrawTextEx(*windowM->fontStyle.mediumItalic, "SIBELA", (Vector2){50, 64}, 80, 0, SIBELAWHITE);
+    //DrawTextEx(*windowM->fontStyle.mediumItalic, "SIBELA", (Vector2){50, 64}, 80, 0, SIBELAWHITE);
+    Texture2D logoSibela = LoadTexture("sibela.png");
+    DrawTexture(logoSibela, 50, 64, SIBELAWHITE);
 
     for (int i = 0; i < sizeof(opsi) / sizeof(opsi[0]); i++)
     {
