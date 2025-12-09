@@ -40,7 +40,7 @@ int main()
     defaultWindow.members[4].image = LoadTexture("assets/images/member/nabilah.png");
     defaultWindow.dataFetchers.admin[0] = findAllStaff;
 
-    defaultWindow.images.logo = LoadTexture("assets/images/logo_sibela.png");
+    defaultWindow.images.logo = LoadTexture("assets/images/sibela_Versi2.png");
     // findAllStaff(&defaultWindow.datas, defaultWindow.dbConn);
     SetTargetFPS(120);
 
