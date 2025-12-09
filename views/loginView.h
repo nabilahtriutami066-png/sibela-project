@@ -12,6 +12,7 @@
 #include "../data/staf.h"
 #include "../constants/color.h"
 
-void drawLogin(windowModel *windowM);
+void drawStaffLogin(windowModel *windowM);
+void drawMuridTeacherLogin(windowModel *windowM);
 
 #endif

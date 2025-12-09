@@ -11,15 +11,15 @@ void drawRootView(windowModel *windowM)
         break;
     case LOGINSTAFF:
         drawHeader(windowM);
-        drawLogin(windowM);
+        drawStaffLogin(windowM);
         break;
     case LOGINPENGAJAR:
         drawHeader(windowM);
-        drawLogin(windowM);
+        drawMuridTeacherLogin(windowM);
         break;
     case LOGINMURID:
         drawHeader(windowM);
-        drawLogin(windowM);
+        drawMuridTeacherLogin(windowM);
         break;
     case ADMINSTUDENT:
         break;

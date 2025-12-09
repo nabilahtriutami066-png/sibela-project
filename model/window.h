@@ -39,6 +39,7 @@ typedef struct
 typedef struct
 {
     InputParams email;
+    InputParams phoneNumber;
     InputParams password;
     int activeInput;
 } LoginScreen;
