@@ -14,6 +14,14 @@ typedef struct
     int totalPages;
 } data;
 
+typedef struct
+{
+    Murid murids[100];
+    SQLSMALLINT nMurid;
+    int page;
+    int totalPages;
+} dataMurid;
+
 typedef enum
 {
     SUCCESS,
