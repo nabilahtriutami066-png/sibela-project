@@ -10,5 +10,6 @@
 
 void readAscii(char name[], char dest[]);
 time_t parseDate(char strDate[]);
+char *parseDateToString(time_t cDate);
 
 #endif

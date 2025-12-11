@@ -7,22 +7,6 @@
 #include <string.h>
 #include <math.h>
 
-// void createStaf(int lastIndex)
-// {
-//     FILE *stafDb = fopen(STAFPATH, "ab");
-
-//     time_t now;
-//     char ID[30];
-//     localtime(&now);
-//     parseID("KAR", lastIndex, &ID);
-
-//     Staf newStaf = {.nama = "sukardi", .alamat = "jl. makan", .no_hp = "086920201202", .email = "atmin@gmail.com", .password = "admin123@", .role = FRONTDESK, .tanggal_lahir = parseDate("02-10-2007"), .tanggal_masuk = now};
-//     strcpy(newStaf.id, ID);
-
-//     fwrite(&newStaf, sizeof(Staf), 1, stafDb);
-//     fclose(stafDb);
-// }
-
 Staf findStafbyEmail(char email[], SQLHDBC *dbConn)
 {
     Staf foundRecord;
@@ -136,4 +120,105 @@ void findAllStaff(data *datas, int *nPage, SQLHDBC *dbConn)
     }
     datas->nStaf = rowsFetched;
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
+}
+
+QUERYSTATUS createStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf newStaff)
+{
+    SQLHSTMT stmt;
+    SQLRETURN ret;
+    int count;
+    SQLUSMALLINT rowStatus[100];
+    char *dateBuff;
+
+    SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
+    SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO staff (nama, tanggal_lahir, no_hp, password, email) VALUES (?,?,?,?,?)", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newStaff.nama), 0, newStaff.nama, 0, NULL);
+    dateBuff = parseDateToString(newStaff.tanggal_lahir);
+    printf("date: %s\n", dateBuff);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_DATE, strlen("2028-10-20"), 0, "2028-10-20", 0, NULL);
+    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newStaff.no_hp), 0, newStaff.no_hp, 0, NULL);
+    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newStaff.password), 0, newStaff.password, 0, NULL);
+    SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newStaff.email), 0, newStaff.email, 0, NULL);
+    ret = SQLExecute(stmt);
+
+    if (SQL_SUCCEEDED(ret))
+    {
+        ret = SQLFetch(stmt);
+    }
+
+    SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
+
+    switch (ret)
+    {
+    case SQL_SUCCESS:
+        return SUCCESS;
+
+    default:
+        return FAILED;
+    }
+}
+
+QUERYSTATUS updateStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf updatedStaff)
+{
+    SQLHSTMT stmt;
+    SQLRETURN ret;
+    int count;
+    SQLUSMALLINT rowStatus[100];
+    char *dateBuff;
+
+    SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
+    SQLPrepare(stmt, (SQLCHAR *)"UPDATE staff SET nama = ?, tanggal_lahir = ?, no_hp = ?, password = ?, email = ? WHERE id_staff = ?", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.nama), 0, updatedStaff.nama, 0, NULL);
+    dateBuff = parseDateToString(updatedStaff.tanggal_lahir);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_DATE, strlen(dateBuff), 0, dateBuff, 0, NULL);
+    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.no_hp), 0, updatedStaff.no_hp, 0, NULL);
+    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.password), 0, updatedStaff.password, 0, NULL);
+    SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.email), 0, updatedStaff.email, 0, NULL);
+    SQLBindParameter(stmt, 6, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.id_staff), 0, updatedStaff.id_staff, 0, NULL);
+    ret = SQLExecute(stmt);
+
+    if (SQL_SUCCEEDED(ret))
+    {
+        ret = SQLFetch(stmt);
+    }
+
+    SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
+
+    switch (ret)
+    {
+    case SQL_SUCCESS:
+        return SUCCESS;
+
+    default:
+        return FAILED;
+    }
+}
+
+QUERYSTATUS deleteStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf updatedStaff)
+{
+    SQLHSTMT stmt;
+    SQLRETURN ret;
+    int count;
+    SQLUSMALLINT rowStatus[100];
+
+    SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
+    SQLPrepare(stmt, (SQLCHAR *)"DELETE FROM staff WHERE id_staff = ?", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.id_staff), 0, updatedStaff.id_staff, 0, NULL);
+    ret = SQLExecute(stmt);
+
+    if (SQL_SUCCEEDED(ret))
+    {
+        ret = SQLFetch(stmt);
+    }
+
+    SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
+
+    switch (ret)
+    {
+    case SQL_SUCCESS:
+        return SUCCESS;
+
+    default:
+        return FAILED;
+    }
 }

@@ -14,6 +14,12 @@ typedef struct
     int totalPages;
 } data;
 
+typedef enum
+{
+    SUCCESS,
+    FAILED
+} QUERYSTATUS;
+
 void readDBDsn(char target[]);
 void initSQLConn(SQLHDBC *dbConn);
 void disconnectDb(SQLHDBC *dbConn);

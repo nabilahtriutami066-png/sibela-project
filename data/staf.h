@@ -15,6 +15,9 @@
 // void createStaf(int lastIndex);
 Staf findStafbyEmail(char email[], SQLHDBC *dbConn);
 
+QUERYSTATUS createStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf newStaff);
 void findAllStaff(data *datas, int *nPage, SQLHDBC *dbConn);
+QUERYSTATUS updateStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf updatedStaff);
+QUERYSTATUS deleteStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf updatedStaff);
 
 #endif
