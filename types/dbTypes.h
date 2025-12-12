@@ -64,6 +64,13 @@ typedef struct
     char deskripsi[100];
 } Ruangan;
 
+typedef struct 
+{
+    int id_num;
+    char id_mapel[7];
+    char nama_mapel[101];
+} Mapel;
+
 
 
 // typedef struct

@@ -16,6 +16,8 @@ typedef struct
     SQLSMALLINT nMurid;
     Ruangan ruangans[100];
     SQLSMALLINT nRuangan;
+    Mapel Mapels[100];
+    SQLSMALLINT nMapel;
     int page;
     int totalPages;
 } data;
