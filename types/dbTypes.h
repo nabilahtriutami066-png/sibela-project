@@ -67,8 +67,8 @@ typedef struct
 typedef struct 
 {
     int id_num;
-    char id_mapel[6];
-    char nama_mapel[100];
+    char id_mapel[7];
+    char nama_mapel[101];
 } Mapel;
 
 
