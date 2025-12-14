@@ -94,6 +94,15 @@ typedef struct
 
 typedef struct
 {
+    Staf staff;
+    Murid murid;
+    Pengajar pengajar;
+    Mapel mapel;
+    Ruangan ruangan;
+} FocusedData;
+
+typedef struct
+{
     WINDOWS currWindow;
     int shouldClose;
     int curPos;
@@ -102,6 +111,7 @@ typedef struct
     int selectedPage;
     int cursorEnabled;
     SQLHDBC *dbConn;
+    FocusedData focusedData;
     FontStyles fontStyle;
     ascii asciis;
     image images;

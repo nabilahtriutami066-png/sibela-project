@@ -1,4 +1,6 @@
 #include "read.h"
+#define RAYGUI_IMPLEMENTATION
+#include "../../../../../libs/headers/raygui.h"
 
 void drawStaffRead(windowModel *windowM)
 {
@@ -59,6 +61,7 @@ void drawStaffRead(windowModel *windowM)
                 cell_height};
             if (row == windowM->curPos)
             {
+                windowM->focusedData.staff = windowM->datas.staffs[row];
                 DrawRectangleRec(cellRect, PRIMARY);
             }
             DrawRectangleLinesEx(cellRect, 1, SIBELAWHITE);
@@ -94,4 +97,18 @@ void drawStaffRead(windowModel *windowM)
                          1000},
                40, 0,
                SIBELAWHITE);
+
+    if (windowM->isModalShown)
+    {
+        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Delete Staff?", TextFormat("Apakah anda ingin menghapus staff %s?", windowM->focusedData.staff.id_staff), "Batal;Hapus!");
+
+        if (res == 2)
+        {
+            deleteStaff(windowM->dbConn, windowM->focusedData.staff);
+            windowM->dataFetchers.admin[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
+            windowM->isModalShown = 0;
+        }
+        else if (res >= 0 && res < 2)
+            windowM->isModalShown = 0;
+    }
 }

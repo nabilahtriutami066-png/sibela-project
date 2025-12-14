@@ -117,9 +117,8 @@ void updateView(windowModel *windowM)
                         windowM->curPos = 0;
                         windowM->dataFetchers.admin[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
                     }
-
                     break;
-                case KEY_ENTER:
+                case KEY_D:
                     windowM->isModalShown = 1;
                     break;
                 case KEY_LEFT:

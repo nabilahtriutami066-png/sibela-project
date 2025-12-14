@@ -1,7 +1,5 @@
 #include "drawView.h"
 #include "Loading.h"
-#define RAYGUI_IMPLEMENTATION
-#include "../libs/headers/raygui.h"
 
 void drawRootView(windowModel *windowM)
 {

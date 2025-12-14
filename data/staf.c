@@ -194,7 +194,7 @@ QUERYSTATUS updateStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf updatedSt
     }
 }
 
-QUERYSTATUS deleteStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf updatedStaff)
+QUERYSTATUS deleteStaff(SQLHDBC *dbConn, Staf updatedStaff)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
