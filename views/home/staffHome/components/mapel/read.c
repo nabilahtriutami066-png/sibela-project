@@ -1,4 +1,5 @@
 #include "read.h"
+#include "../../../../../libs/headers/raygui.h"
 
 void drawMapelRead(windowModel *windowM)
 {
@@ -8,7 +9,7 @@ void drawMapelRead(windowModel *windowM)
     int start_y = 1080 / 2 - 300;
     int padding = 5;
     int font_size = 32;
-    DrawTextEx(*windowM->fontStyle.regular, "DATA Mapel",
+    DrawTextEx(*windowM->fontStyle.regular, "DATA MAPEL",
                (Vector2){start_x + 390,
                          start_y - 120},
                64, 0,
@@ -44,6 +45,7 @@ void drawMapelRead(windowModel *windowM)
                 cell_height};
             if (row == windowM->curPos)
             {
+                windowM->focusedData.mapel = windowM->datas.Mapels[row];
                 DrawRectangleRec(cellRect, PRIMARY);
             }
             DrawRectangleLinesEx(cellRect, 1, SIBELAWHITE);
@@ -64,4 +66,18 @@ void drawMapelRead(windowModel *windowM)
                          1000},
                40, 0,
                SIBELAWHITE);
+
+               if (windowM->isModalShown)
+    {
+        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Delete Mapel?", TextFormat("Apakah anda ingin menghapus mapel %s?", windowM->focusedData.mapel.id_mapel), "Batal;Hapus!");
+
+        if (res == 2)
+        {
+            deleteMapel(windowM->dbConn, windowM->focusedData.mapel);
+            windowM->dataFetchers.admin[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
+            windowM->isModalShown = 0;
+        }
+        else if (res >= 0 && res < 2)
+            windowM->isModalShown = 0;
+    }
 }

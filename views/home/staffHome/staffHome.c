@@ -73,6 +73,9 @@ void drawStaffHome(windowModel *windowM)
         case 3:
             drawRuanganCreate(windowM);
             break;
+        case 4:
+            drawMapelCreate(windowM);
+            break;
         }
     }
 }
