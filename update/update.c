@@ -42,10 +42,12 @@ void updateView(windowModel *windowM)
         case KEY_DOWN:
             windowM->curPos += 1;
             break;
-
         case KEY_TAB:
-            windowM->cursorEnabled = 1;
-            windowM->selectedPage = -1;
+            if (windowM->activeSubWindow == READ)
+            {
+                windowM->cursorEnabled = 1;
+                windowM->selectedPage = -1;
+            }
             windowM->activeSubWindow = READ;
             windowM->curPos = 0;
             break;
@@ -57,7 +59,6 @@ void updateView(windowModel *windowM)
                 switch (ch)
                 {
                 case KEY_RIGHT:
-
                     windowM->page++;
                     windowM->curPos = windowM->page * windowM->forms.staffPage[windowM->selectedPage].fieldPerPage - windowM->forms.staffPage[windowM->selectedPage].fieldPerPage + 1;
                     break;
@@ -68,7 +69,27 @@ void updateView(windowModel *windowM)
                 default:
                     int selectedPage = windowM->selectedPage;
                     int curPos = windowM->curPos;
-                    handleInput(&ch, &windowM->forms.staffPage[selectedPage].fields[curPos].value.charLen, windowM->forms.staffPage[selectedPage].fields[curPos].value.text, windowM->forms.staffPage[selectedPage].fields[curPos].type, 100, windowM->forms.staffPage[selectedPage].func, windowM->forms.staffPage[selectedPage].fields, windowM->dataFetchers.admin[selectedPage], windowM);
+                    handleInput(&ch, &windowM->forms.staffPage[selectedPage].fields[curPos].value.charLen, windowM->forms.staffPage[selectedPage].fields[curPos].value.text, windowM->forms.staffPage[selectedPage].fields[curPos].type, 100, windowM->forms.staffPage[selectedPage].createFunc, windowM->forms.staffPage[selectedPage].fields, windowM->dataFetchers.admin[selectedPage], windowM);
+
+                    break;
+                }
+            }
+            if (!windowM->cursorEnabled && windowM->activeSubWindow == UPDATE)
+            {
+                switch (ch)
+                {
+                case KEY_RIGHT:
+                    windowM->page++;
+                    windowM->curPos = windowM->page * windowM->forms.staffPage[windowM->selectedPage].fieldPerPage - windowM->forms.staffPage[windowM->selectedPage].fieldPerPage + 1;
+                    break;
+                case KEY_LEFT:
+                    windowM->page--;
+                    windowM->curPos = windowM->page * windowM->forms.staffPage[windowM->selectedPage].fieldPerPage - windowM->forms.staffPage[windowM->selectedPage].fieldPerPage + 1;
+                    break;
+                default:
+                    int selectedPage = windowM->selectedPage;
+                    int curPos = windowM->curPos;
+                    handleInput(&ch, &windowM->forms.staffPage[selectedPage].fields[curPos].value.charLen, windowM->forms.staffPage[selectedPage].fields[curPos].value.text, windowM->forms.staffPage[selectedPage].fields[curPos].type, 100, windowM->forms.staffPage[selectedPage].updateFunction, windowM->forms.staffPage[selectedPage].fields, windowM->dataFetchers.admin[selectedPage], windowM);
 
                     break;
                 }
@@ -79,6 +100,7 @@ void updateView(windowModel *windowM)
                 {
                 case KEY_N:
                     windowM->activeSubWindow = CREATE;
+                    windowM->page = 1;
                     windowM->curPos = 1;
                     break;
                 case KEY_RIGHT:
@@ -92,6 +114,48 @@ void updateView(windowModel *windowM)
                 case KEY_D:
                     windowM->isModalShown = 1;
                     break;
+                case KEY_U:
+                    switch (windowM->selectedPage)
+                    {
+                    case STAFF:
+                        copyStringData(windowM->focusedData.staff.id_staff, &windowM->forms.staffPage[STAFF].fields[0].value);
+                        copyStringData(windowM->focusedData.staff.nama, &windowM->forms.staffPage[STAFF].fields[1].value);
+                        copyStringData(windowM->focusedData.staff.tanggal_lahir, &windowM->forms.staffPage[STAFF].fields[2].value);
+                        copyStringData(windowM->focusedData.staff.no_hp, &windowM->forms.staffPage[STAFF].fields[3].value);
+                        copyStringData(windowM->focusedData.staff.password, &windowM->forms.staffPage[STAFF].fields[4].value);
+                        copyStringData(windowM->focusedData.staff.email, &windowM->forms.staffPage[STAFF].fields[5].value);
+                        break;
+                    case MURID:
+                        char tingkatBuff[4];
+                        sprintf(tingkatBuff, "%d", windowM->focusedData.murid.tingkat);
+                        copyStringData(windowM->focusedData.murid.id_murid, &windowM->forms.staffPage[MURID].fields[0].value);
+                        copyStringData(windowM->focusedData.murid.nama, &windowM->forms.staffPage[MURID].fields[1].value);
+                        copyStringData(windowM->focusedData.murid.tanggal_lahir, &windowM->forms.staffPage[MURID].fields[2].value);
+                        copyStringData(windowM->focusedData.murid.no_hp, &windowM->forms.staffPage[MURID].fields[3].value);
+                        copyStringData(windowM->focusedData.murid.password, &windowM->forms.staffPage[MURID].fields[4].value);
+                        copyStringData(tingkatBuff, &windowM->forms.staffPage[MURID].fields[5].value);
+                        break;
+                    case PENGAJAR:
+                        copyStringData(windowM->focusedData.pengajar.id_pengajar, &windowM->forms.staffPage[PENGAJAR].fields[0].value);
+                        copyStringData(windowM->focusedData.pengajar.nama, &windowM->forms.staffPage[PENGAJAR].fields[1].value);
+                        copyStringData(windowM->focusedData.pengajar.tanggal_lahir, &windowM->forms.staffPage[PENGAJAR].fields[2].value);
+                        copyStringData(windowM->focusedData.pengajar.no_hp, &windowM->forms.staffPage[PENGAJAR].fields[3].value);
+                        copyStringData(windowM->focusedData.pengajar.password, &windowM->forms.staffPage[PENGAJAR].fields[4].value);
+                        break;
+                    case RUANGAN:
+                        copyStringData(windowM->focusedData.ruangan.id_ruangan, &windowM->forms.staffPage[RUANGAN].fields[0].value);
+                        copyStringData(windowM->focusedData.ruangan.lokasi, &windowM->forms.staffPage[RUANGAN].fields[1].value);
+                        copyStringData(windowM->focusedData.ruangan.deskripsi, &windowM->forms.staffPage[RUANGAN].fields[2].value);
+                        break;
+                    case MAPEL:
+                        copyStringData(windowM->focusedData.mapel.id_mapel, &windowM->forms.staffPage[MAPEL].fields[0].value);
+                        copyStringData(windowM->focusedData.mapel.nama_mapel, &windowM->forms.staffPage[MAPEL].fields[1].value);
+                        break;
+                    }
+                    windowM->activeSubWindow = UPDATE;
+                    windowM->page = 1;
+                    windowM->curPos = 1;
+                    break;
                 case KEY_LEFT:
                     if (windowM->datas.page > 1)
                     {
@@ -102,6 +166,7 @@ void updateView(windowModel *windowM)
                     break;
                 }
             }
+
             if (windowM->cursorEnabled)
             {
                 switch (ch)

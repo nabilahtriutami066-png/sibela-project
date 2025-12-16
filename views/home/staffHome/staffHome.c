@@ -37,19 +37,19 @@ void drawStaffHome(windowModel *windowM)
     {
         switch (windowM->selectedPage)
         {
-        case 0:
+        case STAFF:
             drawStaffRead(windowM);
             break;
-        case 1:
+        case MURID:
             drawMuridRead(windowM);
             break;
-        case 2:
+        case PENGAJAR:
             drawPengajarRead(windowM);
             break;
-        case 3:
+        case RUANGAN:
             drawRuanganRead(windowM);
             break;
-        case 4:
+        case MAPEL:
             drawMapelRead(windowM);
             break;
         default:
@@ -61,20 +61,42 @@ void drawStaffHome(windowModel *windowM)
     {
         switch (windowM->selectedPage)
         {
-        case 0:
+        case STAFF:
             drawStaffCreate(windowM);
             break;
-        case 1:
+        case MURID:
             drawMuridCreate(windowM);
             break;
-        case 2:
+        case PENGAJAR:
             drawPengajarCreate(windowM);
             break;
-        case 3:
+        case RUANGAN:
             drawRuanganCreate(windowM);
             break;
-        case 4:
+        case MAPEL:
             drawMapelCreate(windowM);
+            break;
+        }
+    }
+
+    if (windowM->activeSubWindow == UPDATE)
+    {
+        switch (windowM->selectedPage)
+        {
+        case STAFF:
+            drawStaffUpdate(windowM);
+            break;
+        case MURID:
+            drawMuridUpdate(windowM);
+            break;
+        case PENGAJAR:
+            drawPengajarUpdate(windowM);
+            break;
+        case RUANGAN:
+            drawRuanganUpdate(windowM);
+            break;
+        case MAPEL:
+            drawMapelUpdate(windowM);
             break;
         }
     }

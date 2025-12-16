@@ -1,7 +1,7 @@
 #include "update.h"
 #include <math.h>
 
-void drawPengajarUpdate(windowModel *windowM)
+void drawRuanganUpdate(windowModel *windowM)
 {
     int cell_width = 250;
     int cell_height = 50;
@@ -9,7 +9,7 @@ void drawPengajarUpdate(windowModel *windowM)
     int start_y = 1080 / 2 - 300;
     int padding = 5;
     int font_size = 32;
-    DrawTextEx(windowM->fontStyle.regular, "UPDATE PENGAJAR",
+    DrawTextEx(windowM->fontStyle.regular, "UPDATE RUANGAN",
                (Vector2){start_x + 390,
                          start_y - 120},
                64, 0,

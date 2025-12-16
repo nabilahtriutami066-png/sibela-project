@@ -44,3 +44,17 @@ char *parseDateToString(time_t cDate)
 
     return dateBuff;
 }
+
+void copyStringData(char src[], InputParams *dest)
+{
+    strcpy(dest->text, src);
+    dest->charLen = strlen(src);
+}
+
+char *intToString(int i)
+{
+    char *buff;
+    sprintf(buff, "%d", i);
+
+    return buff;
+}

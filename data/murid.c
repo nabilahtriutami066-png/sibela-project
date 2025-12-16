@@ -133,7 +133,7 @@ QUERYSTATUS createMurid(InputField fields[], SQLHDBC *dbConn)
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_DATE, strlen(newMurid.tanggal_lahir), 0, newMurid.tanggal_lahir, 0, NULL);
     SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMurid.no_hp), 0, newMurid.no_hp, 0, NULL);
     SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMurid.password), 0, newMurid.password, 0, NULL);
-    SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0 , 0, &newMurid.tingkat, 0, NULL);
+    SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &newMurid.tingkat, 0, NULL);
     ret = SQLExecute(stmt);
 
     if (SQL_SUCCEEDED(ret))
@@ -153,7 +153,7 @@ QUERYSTATUS createMurid(InputField fields[], SQLHDBC *dbConn)
     }
 }
 
-QUERYSTATUS updateMurid(data *datas, int *nPage, SQLHDBC *dbConn, Murid updatedMurid)
+QUERYSTATUS updateMurid(InputField fields[], SQLHDBC *dbConn)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -161,13 +161,22 @@ QUERYSTATUS updateMurid(data *datas, int *nPage, SQLHDBC *dbConn, Murid updatedM
     SQLUSMALLINT rowStatus[100];
     char *dateBuff;
 
+    Murid updatedMurid;
+    strcpy(updatedMurid.id_murid, fields[0].value.text);
+    strcpy(updatedMurid.nama, fields[1].value.text);
+    strcpy(updatedMurid.tanggal_lahir, fields[2].value.text);
+    strcpy(updatedMurid.no_hp, fields[3].value.text);
+    strcpy(updatedMurid.password, fields[4].value.text);
+    updatedMurid.tingkat = atoi(fields[5].value.text);
+
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"UPDATE staff SET nama = ?, tanggal_lahir = ?, no_hp = ?, password = ? WHERE id_murid = ?", SQL_NTS);
+    SQLPrepare(stmt, (SQLCHAR *)"UPDATE staff SET nama = ?, tanggal_lahir = ?, no_hp = ?, password = ?, tingkat = ? WHERE id_murid = ?", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMurid.nama), 0, updatedMurid.nama, 0, NULL);
-    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_DATE, strlen(dateBuff), 0, dateBuff, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_DATE, strlen(updatedMurid.tanggal_lahir), 0, updatedMurid.tanggal_lahir, 0, NULL);
     SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMurid.no_hp), 0, updatedMurid.no_hp, 0, NULL);
     SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMurid.password), 0, updatedMurid.password, 0, NULL);
-    SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMurid.id_murid), 0, updatedMurid.id_murid, 0, NULL);
+    SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &updatedMurid.tingkat, 0, NULL);
+    SQLBindParameter(stmt, 6, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMurid.id_murid), 0, updatedMurid.id_murid, 0, NULL);
     ret = SQLExecute(stmt);
 
     if (SQL_SUCCEEDED(ret))

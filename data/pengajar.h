@@ -14,7 +14,7 @@ Pengajar findPengajarbyPhoneNum(char PhoneNum[], SQLHDBC *dbConn);
 
 QUERYSTATUS createPengajar(InputField fields[], SQLHDBC *dbConn);
 void findAllPengajar(data *datas, int *nPage, SQLHDBC *dbConn);
-QUERYSTATUS updatedPengajar(data *datas, int *nPage, SQLHDBC *dbConn, Pengajar updatedPengajar);
+QUERYSTATUS updatePengajar(InputField fields[], SQLHDBC *dbConn);
 QUERYSTATUS deletePengajar(SQLHDBC *dbConn, Pengajar updatedPengajar);
 
 #endif

@@ -13,9 +13,9 @@
 // #include "../components/header.h"
 #include "../types/form.h"
 
-QUERYSTATUS createMateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi newMateri);
+QUERYSTATUS createMateri(InputField fields[], SQLHDBC *dbConn);
 void findAllMateri(data *datas, int *nPage, SQLHDBC *dbConn);
-QUERYSTATUS updateMateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi updatedMateri);
+QUERYSTATUS updateMateri(InputField fields[], SQLHDBC *dbConn);
 QUERYSTATUS deleteMateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi updatedMateri);
 
 #endif

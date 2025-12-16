@@ -18,7 +18,7 @@
 
 QUERYSTATUS createRuangan(InputField fields[], SQLHDBC *dbConn);
 void findAllRuangan(data *datas, int *nPage, SQLHDBC *dbConn);
-QUERYSTATUS updateRuangan(data *datas, int *nPage, SQLHDBC *dbConn, Ruangan updatedRuangan);
+QUERYSTATUS updateRuangan(InputField fields[], SQLHDBC *dbConn);
 QUERYSTATUS deleteRuangan(SQLHDBC *dbConn, Ruangan updatedRuangan);
 
 #endif

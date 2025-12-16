@@ -24,8 +24,6 @@ typedef struct
     int totalPages;
 } data;
 
-
-
 typedef enum
 {
     SUCCESS,

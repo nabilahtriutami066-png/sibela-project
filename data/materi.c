@@ -65,7 +65,7 @@ void findAllMateri(data *datas, int *nPage, SQLHDBC *dbConn)
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
 
-QUERYSTATUS createMateri(InputField fields[], SQLHDBC *dbConn, Materi newMateri)
+QUERYSTATUS createMateri(InputField fields[], SQLHDBC *dbConn)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -73,17 +73,17 @@ QUERYSTATUS createMateri(InputField fields[], SQLHDBC *dbConn, Materi newMateri)
     SQLUSMALLINT rowStatus[100];
     char *dateBuff;
 
+    Materi newMateri;
+
     strcpy(newMateri.id_mapel, fields[1].value.text);
-    strcpy(newMateri.id_materi, fields[2].value.text);
-    strcpy(newMateri.judul_materi, fields[3].value.text);
-    strcpy(newMateri.isi_materi, fields[4].value.text);
+    strcpy(newMateri.judul_materi, fields[2].value.text);
+    strcpy(newMateri.isi_materi, fields[3].value.text);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO materi (id_materi, id_mapel, judul_materi, isi_materi) VALUES (?,?,?,?)", SQL_NTS);
-    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMateri.id_materi), 0, newMateri.id_materi, 0, NULL);
-    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMateri.id_mapel), 0, newMateri.id_mapel, 0, NULL);
-    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMateri.judul_materi), 0, newMateri.judul_materi, 0, NULL);
-    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMateri.isi_materi), 0, newMateri.isi_materi, 0, NULL);
+    SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO materi (id_mapel, judul_materi, isi_materi) VALUES (?,?,?)", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMateri.id_mapel), 0, newMateri.id_mapel, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMateri.judul_materi), 0, newMateri.judul_materi, 0, NULL);
+    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMateri.isi_materi), 0, newMateri.isi_materi, 0, NULL);
     ret = SQLExecute(stmt);
 
     if (SQL_SUCCEEDED(ret))
@@ -103,7 +103,7 @@ QUERYSTATUS createMateri(InputField fields[], SQLHDBC *dbConn, Materi newMateri)
     }
 }
 
-QUERYSTATUS updateMateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi updatedMateri)
+QUERYSTATUS updateMateri(InputField fields[], SQLHDBC *dbConn)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -111,12 +111,17 @@ QUERYSTATUS updateMateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi update
     SQLUSMALLINT rowStatus[100];
     char *dateBuff;
 
+    Materi updatedMateri;
+
+    strcpy(updatedMateri.id_mapel, fields[0].value.text);
+    strcpy(updatedMateri.judul_materi, fields[1].value.text);
+    strcpy(updatedMateri.isi_materi, fields[2].value.text);
+
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"UPDATE materi SET id_materi = ?, tanggal_lahir = ?, id_materi = ?, judul_materi = ?, isi_materi = ? WHERE id_materi = ?", SQL_NTS);
-    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMateri.id_materi), 0, updatedMateri.id_materi, 0, NULL);
-    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMateri.id_mapel), 0, updatedMateri.id_mapel, 0, NULL);
-    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMateri.judul_materi), 0, updatedMateri.judul_materi, 0, NULL);
-    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMateri.isi_materi), 0, updatedMateri.isi_materi, 0, NULL);
+    SQLPrepare(stmt, (SQLCHAR *)"UPDATE materi SET judul_materi = ?, isi_materi = ? WHERE id_materi = ?", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMateri.judul_materi), 0, updatedMateri.judul_materi, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMateri.isi_materi), 0, updatedMateri.isi_materi, 0, NULL);
+    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMateri.id_materi), 0, updatedMateri.id_materi, 0, NULL);
     ret = SQLExecute(stmt);
 
     if (SQL_SUCCEEDED(ret))

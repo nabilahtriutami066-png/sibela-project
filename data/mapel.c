@@ -86,13 +86,18 @@ QUERYSTATUS createMapel(InputField fields[], SQLHDBC *dbConn)
     }
 }
 
-QUERYSTATUS updateMapel(data *datas, int *nPage, SQLHDBC *dbConn, Mapel updatedMapel)
+QUERYSTATUS updateMapel(InputField fields[], SQLHDBC *dbConn)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
     int count;
     SQLUSMALLINT rowStatus[100];
     char *dateBuff;
+
+    Mapel updatedMapel;
+
+    strcpy(updatedMapel.id_mapel, fields[0].value.text);
+    strcpy(updatedMapel.nama_mapel, fields[1].value.text);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     SQLPrepare(stmt, (SQLCHAR *)"UPDATE Mapel nama_mapel = ? WHERE id_mapel = ?", SQL_NTS);
@@ -117,7 +122,7 @@ QUERYSTATUS updateMapel(data *datas, int *nPage, SQLHDBC *dbConn, Mapel updatedM
     }
 }
 
-QUERYSTATUS deleteMapel( SQLHDBC *dbConn, Mapel updatedMapel)
+QUERYSTATUS deleteMapel(SQLHDBC *dbConn, Mapel updatedMapel)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;

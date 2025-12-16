@@ -41,7 +41,7 @@ Pengajar findPengajarbyPhoneNum(char PhoneNum[], SQLHDBC *dbConn)
             SQLGetData(stmt, 4, SQL_C_CHAR,
                        foundRecord.tanggal_lahir, sizeof(foundRecord.tanggal_lahir), NULL);
             SQLGetData(stmt, 5, SQL_C_CHAR,
-                        foundRecord.tanggal_masuk, sizeof( foundRecord.tanggal_masuk), NULL);
+                       foundRecord.tanggal_masuk, sizeof(foundRecord.tanggal_masuk), NULL);
             SQLGetData(stmt, 6, SQL_C_CHAR,
                        &foundRecord.no_hp, sizeof(foundRecord.no_hp), NULL);
             SQLGetData(stmt, 7, SQL_C_CHAR,
@@ -116,10 +116,10 @@ QUERYSTATUS createPengajar(InputField fields[], SQLHDBC *dbConn)
     char *dateBuff;
 
     Pengajar newPengajar;
-    strcpy(newPengajar.nama,fields[1].value.text);
-    strcpy(newPengajar.tanggal_lahir,fields[2].value.text);
-    strcpy(newPengajar.no_hp,fields[3].value.text);
-    strcpy(newPengajar.password,fields[4].value.text);
+    strcpy(newPengajar.nama, fields[1].value.text);
+    strcpy(newPengajar.tanggal_lahir, fields[2].value.text);
+    strcpy(newPengajar.no_hp, fields[3].value.text);
+    strcpy(newPengajar.password, fields[4].value.text);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO pengajar (nama, tanggal_lahir, no_hp, password) VALUES (?,?,?,?)", SQL_NTS);
@@ -146,7 +146,7 @@ QUERYSTATUS createPengajar(InputField fields[], SQLHDBC *dbConn)
     }
 }
 
-QUERYSTATUS updatedPengajar(data *datas, int *nPage, SQLHDBC *dbConn, Pengajar updatedPengajar)
+QUERYSTATUS updatePengajar(InputField fields[], SQLHDBC *dbConn)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -154,10 +154,17 @@ QUERYSTATUS updatedPengajar(data *datas, int *nPage, SQLHDBC *dbConn, Pengajar u
     SQLUSMALLINT rowStatus[100];
     char *dateBuff;
 
+    Pengajar updatedPengajar;
+    strcpy(updatedPengajar.id_pengajar, fields[0].value.text);
+    strcpy(updatedPengajar.nama, fields[1].value.text);
+    strcpy(updatedPengajar.tanggal_lahir, fields[2].value.text);
+    strcpy(updatedPengajar.no_hp, fields[3].value.text);
+    strcpy(updatedPengajar.password, fields[4].value.text);
+
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     SQLPrepare(stmt, (SQLCHAR *)"UPDATE pengajar SET nama = ?, tanggal_lahir = ?, no_hp = ?, password = ? WHERE id_pengajar = ?", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedPengajar.nama), 0, updatedPengajar.nama, 0, NULL);
-    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_DATE, strlen(dateBuff), 0, dateBuff, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_DATE, strlen(updatedPengajar.tanggal_lahir), 0, updatedPengajar.tanggal_lahir, 0, NULL);
     SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedPengajar.no_hp), 0, updatedPengajar.no_hp, 0, NULL);
     SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedPengajar.password), 0, updatedPengajar.password, 0, NULL);
     SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedPengajar.id_pengajar), 0, updatedPengajar.id_pengajar, 0, NULL);

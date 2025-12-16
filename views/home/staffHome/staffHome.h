@@ -22,8 +22,10 @@
 #include "components/mapel/update.h"
 #include "components/ruangan/read.h"
 #include "components/ruangan/create.h"
+#include "components/ruangan/update.h"
 #include "components/murid/read.h"
 #include "components/murid/create.h"
+#include "components/murid/update.h"
 // #include "components/ruangan/update.h"
 
 void drawStaffHome(windowModel *windowM);

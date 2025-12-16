@@ -15,7 +15,7 @@ Murid findMuridbyPhoneNum(char PhoneNum[], SQLHDBC *dbConn);
 // CRUD
 QUERYSTATUS createMurid(InputField fields[], SQLHDBC *dbConn);
 void findAllMurid(data *datas, int *nPage, SQLHDBC *dbConn);
-QUERYSTATUS updateMurid(data *datas, int *nPage, SQLHDBC *dbConn, Murid updatedMurid);
+QUERYSTATUS updateMurid(InputField fields[], SQLHDBC *dbConn);
 QUERYSTATUS deleteMurid(SQLHDBC *dbConn, Murid updatedMurid);
 
 #endif

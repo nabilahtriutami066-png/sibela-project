@@ -159,13 +159,22 @@ QUERYSTATUS createStaff(InputField fields[], SQLHDBC *dbConn)
     }
 }
 
-QUERYSTATUS updateStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf updatedStaff)
+QUERYSTATUS updateStaff(InputField fields[], SQLHDBC *dbConn)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
     int count;
     SQLUSMALLINT rowStatus[100];
     char *dateBuff;
+
+    Staf updatedStaff;
+
+    strcpy(updatedStaff.id_staff, fields[0].value.text);
+    strcpy(updatedStaff.nama, fields[1].value.text);
+    strcpy(updatedStaff.tanggal_lahir, fields[2].value.text);
+    strcpy(updatedStaff.no_hp, fields[3].value.text);
+    strcpy(updatedStaff.password, fields[4].value.text);
+    strcpy(updatedStaff.email, fields[5].value.text);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     SQLPrepare(stmt, (SQLCHAR *)"UPDATE staff SET nama = ?, tanggal_lahir = ?, no_hp = ?, password = ?, email = ? WHERE id_staff = ?", SQL_NTS);

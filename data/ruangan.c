@@ -10,7 +10,6 @@
 void findAllRuangan(data *datas, int *nPage, SQLHDBC *dbConn)
 {
 
-
     SQLHSTMT stmt;
     SQLRETURN ret;
     int count;
@@ -62,7 +61,7 @@ void findAllRuangan(data *datas, int *nPage, SQLHDBC *dbConn)
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
 
-QUERYSTATUS createRuangan(InputField fields[],SQLHDBC *dbConn)
+QUERYSTATUS createRuangan(InputField fields[], SQLHDBC *dbConn)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -99,13 +98,19 @@ QUERYSTATUS createRuangan(InputField fields[],SQLHDBC *dbConn)
     }
 }
 
-QUERYSTATUS updateRuangan(data *datas, int *nPage, SQLHDBC *dbConn, Ruangan updatedRuangan)
+QUERYSTATUS updateRuangan(InputField fields[], SQLHDBC *dbConn)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
     int count;
     SQLUSMALLINT rowStatus[100];
     char *dateBuff;
+
+    Ruangan updatedRuangan;
+
+    strcpy(updatedRuangan.id_ruangan, fields[0].value.text);
+    strcpy(updatedRuangan.lokasi, fields[1].value.text);
+    strcpy(updatedRuangan.deskripsi, fields[2].value.text);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     SQLPrepare(stmt, (SQLCHAR *)"UPDATE ruangan SET lokasi = ?, deskripsi = ? WHERE id_ruangan = ?", SQL_NTS);
@@ -132,7 +137,7 @@ QUERYSTATUS updateRuangan(data *datas, int *nPage, SQLHDBC *dbConn, Ruangan upda
     }
 }
 
-QUERYSTATUS deleteRuangan (SQLHDBC *dbConn, Ruangan uptadeRuangan)
+QUERYSTATUS deleteRuangan(SQLHDBC *dbConn, Ruangan uptadeRuangan)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;

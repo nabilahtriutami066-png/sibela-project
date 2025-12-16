@@ -18,7 +18,7 @@ Staf findStafbyEmail(char email[], SQLHDBC *dbConn);
 
 QUERYSTATUS createStaff(InputField fields[], SQLHDBC *dbConn);
 void findAllStaff(data *datas, int *nPage, SQLHDBC *dbConn);
-QUERYSTATUS updateStaff(data *datas, int *nPage, SQLHDBC *dbConn, Staf updatedStaff);
+QUERYSTATUS updateStaff(InputField fields[], SQLHDBC *dbConn);
 QUERYSTATUS deleteStaff(SQLHDBC *dbConn, Staf updatedStaff);
 
 #endif

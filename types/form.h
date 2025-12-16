@@ -1,6 +1,8 @@
 #ifndef FORMTYPES
 #define FORMTYPES
 
+#include "../model/model.h"
+
 typedef struct
 {
     char text[100];
@@ -21,13 +23,15 @@ typedef struct
     InputParams value;
     InputType type;
 } InputField;
+
 typedef QUERYSTATUS (*mutationFunc)(InputField fields[], SQLHDBC *dbConn);
 
 typedef struct
 {
     InputField fields[10];
     int nField;
-    mutationFunc func;
+    mutationFunc createFunc;
+    mutationFunc updateFunction;
     int fieldPerPage;
     int totalPages;
     int offset;
