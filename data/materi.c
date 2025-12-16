@@ -30,9 +30,17 @@ void findAllMateri(data *datas, int *nPage, SQLHDBC *dbConn)
     }
     SQLFreeHandle(SQL_HANDLE_STMT, stmt);
     *nPage = (int)ceil((float)count / 10);
-    printf("awikwok %d\n", *nPage);
+    int limit = 10;
+    int offset = (datas->page - 1) * limit;
+    *nPage = (int)ceil((float)count / limit);
+
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    ret = SQLExecDirect(stmt, (SQLCHAR *)"SELECT * FROM materi WHERE id_materi", SQL_NTS);
+    SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM materi ORDER BY id_materi DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
+
+    ret = SQLExecute(stmt);
+
     while (SQL_SUCCEEDED(ret = SQLFetch(stmt)))
     {
         printf("Successfully fetched %lld rows\n", rowsFetched);
@@ -57,13 +65,18 @@ void findAllMateri(data *datas, int *nPage, SQLHDBC *dbConn)
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
 
-QUERYSTATUS createMateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi newMateri)
+QUERYSTATUS createMateri(InputField fields[], SQLHDBC *dbConn, Materi newMateri)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
     int count;
     SQLUSMALLINT rowStatus[100];
     char *dateBuff;
+
+    strcpy(newMateri.id_mapel, fields[1].value.text);
+    strcpy(newMateri.id_materi, fields[2].value.text);
+    strcpy(newMateri.judul_materi, fields[3].value.text);
+    strcpy(newMateri.isi_materi, fields[4].value.text);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO materi (id_materi, id_mapel, judul_materi, isi_materi) VALUES (?,?,?,?)", SQL_NTS);
@@ -123,7 +136,7 @@ QUERYSTATUS updateMateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi update
     }
 }
 
-QUERYSTATUS deletemateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi updatedMateri)
+QUERYSTATUS deleteMateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi updatedMateri)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;

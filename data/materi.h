@@ -11,6 +11,7 @@
 // #include "../libs/utils.h"
 #include "../types/dbTypes.h"
 // #include "../components/header.h"
+#include "../types/form.h"
 
 QUERYSTATUS createMateri(data *datas, int *nPage, SQLHDBC *dbConn, Materi newMateri);
 void findAllMateri(data *datas, int *nPage, SQLHDBC *dbConn);
