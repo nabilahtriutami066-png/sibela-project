@@ -77,8 +77,11 @@ void updateView(windowModel *windowM)
                     }
                     else if (windowM->forms.staffPage[windowM->selectedPage].selectedField == -1)
                     {
-                        windowM->page++;
-                        windowM->curPos = windowM->page * windowM->forms.staffPage[windowM->selectedPage].fieldPerPage - windowM->forms.staffPage[windowM->selectedPage].fieldPerPage + 1;
+                        if (windowM->page < windowM->forms.staffPage[windowM->selectedPage].totalPages)
+                        {
+                            windowM->page++;
+                            windowM->curPos = windowM->page * windowM->forms.staffPage[windowM->selectedPage].fieldPerPage - windowM->forms.staffPage[windowM->selectedPage].fieldPerPage + 1;
+                        }
                     }
                     break;
                 case KEY_LEFT:
@@ -90,8 +93,12 @@ void updateView(windowModel *windowM)
                     }
                     else if (windowM->forms.staffPage[windowM->selectedPage].selectedField == -1)
                     {
-                        windowM->page--;
-                        windowM->curPos = windowM->page * windowM->forms.staffPage[windowM->selectedPage].fieldPerPage - windowM->forms.staffPage[windowM->selectedPage].fieldPerPage + 1;
+                        if (windowM->page > 1)
+                        {
+
+                            windowM->page--;
+                            windowM->curPos = windowM->page * windowM->forms.staffPage[windowM->selectedPage].fieldPerPage - windowM->forms.staffPage[windowM->selectedPage].fieldPerPage + 1;
+                        }
                     }
                     break;
                 default:

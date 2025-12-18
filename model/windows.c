@@ -35,6 +35,11 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[MURID].fieldPerPage = 4;
     windowM->forms.staffPage[PENGAJAR].fieldPerPage = 5;
     windowM->forms.staffPage[RUANGAN].fieldPerPage = 3;
+    windowM->forms.staffPage[STAFF].selectedField = -1;
+    windowM->forms.staffPage[MAPEL].selectedField = -1;
+    windowM->forms.staffPage[MURID].selectedField = -1;
+    windowM->forms.staffPage[PENGAJAR].selectedField = -1;
+    windowM->forms.staffPage[RUANGAN].selectedField = -1;
     windowM->forms.staffPage[JADWAL].fieldPerPage = 4;
     windowM->forms.staffPage[STAFF].createFunc = createStaff;
     windowM->forms.staffPage[STAFF].updateFunction = updateStaff;
