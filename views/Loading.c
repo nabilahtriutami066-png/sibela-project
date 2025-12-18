@@ -55,9 +55,7 @@ void LoadingScreen(windowModel *windowM, float progress)
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
 
-    static Texture2D logo = {0};
-    if (logo.id == 0)
-        logo = LoadTexture("assets/images/sibela_Versi2.png");
+    Texture2D logo = windowM->images.logo;
 
     float glow = (sinf(GetTime() * 3.0f) + 1.0f) * 0.5f;
     int alphaGlow = (int)(glow * 120.0f);
