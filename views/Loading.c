@@ -63,7 +63,7 @@ void LoadingScreen(windowModel *windowM, float progress)
     int alphaGlow = (int)(glow * 120.0f);
 
     Vector2 logoPos = {
-        (screenWidth - logo.width) / 2.0f + 40,
+        (screenWidth / 2 - logo.width / 2),
         (screenHeight / 2.0f) - logo.height - 40};
 
     DrawTexture(logo, logoPos.x, logoPos.y, WHITE);
@@ -72,7 +72,7 @@ void LoadingScreen(windowModel *windowM, float progress)
     int barHeight = 22;
 
     Vector2 barPos = {
-        (screenWidth - barWidth) / 2.0f,
+        (screenWidth - barWidth) / 2.0f - 36,
         logoPos.y + logo.height + 70};
 
     DrawRectangle(barPos.x, barPos.y, barWidth, barHeight, Fade(BLUE, 0.25f));
