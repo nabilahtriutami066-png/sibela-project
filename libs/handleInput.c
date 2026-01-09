@@ -82,7 +82,7 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
             if (func != NULL && dataFetcher != NULL)
             {
                 func(fields, windowM->dbConn);
-                dataFetcher(&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
+                dataFetcher(&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
                 clearFields(fields);
             }
             windowM->activeSubWindow = READ;

@@ -7,7 +7,7 @@
 #include <string.h>
 #include <math.h>
 
-void findAllPembayaran(data *datas, int *nPage, SQLHDBC *dbConn)
+void findAllPembayaran(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -65,7 +65,7 @@ void findAllPembayaran(data *datas, int *nPage, SQLHDBC *dbConn)
     datas->nPembayaran = rowsFetched;
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
-void findAllPembayaranByUserId(data *datas, int *nPage, SQLHDBC *dbConn, user authUser)
+void findAllPembayaranByUserId(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -77,7 +77,7 @@ void findAllPembayaranByUserId(data *datas, int *nPage, SQLHDBC *dbConn, user au
 
     SQLPrepare(stmt, (SQLCHAR *)"SELECT COUNT(*) AS row_count FROM pembayaran WHERE id_murid =  ?", SQL_NTS);
 
-    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(authUser.id), 0, authUser.id, 0, NULL);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(authUser->id), 0, authUser->id, 0, NULL);
 
     ret = SQLExecute(stmt);
     if (SQL_SUCCEEDED(ret))
@@ -97,7 +97,7 @@ void findAllPembayaranByUserId(data *datas, int *nPage, SQLHDBC *dbConn, user au
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     SQLPrepare(stmt, (SQLCHAR *)"SELECT p.id_num, id_pembayaran, p.id_murid,m.nama AS 'nama_murid', tanggal_pembayaran, jumlah_pembayaran, dikonfirmasi, p.id_staff,s.nama AS 'nama_staff', mtd_pembayaran FROM pembayaran p WHERE id_murid = ? LEFT JOIN murid m ON m.id_murid = p.id_murid LEFT JOIN staff s ON s.id_staff = p.id_staff ORDER BY tanggal_pembayaran DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
-    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(authUser.id), 0, authUser.id, 0, NULL);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(authUser->id), 0, authUser->id, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
     SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
 

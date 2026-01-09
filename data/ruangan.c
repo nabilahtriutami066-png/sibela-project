@@ -7,7 +7,7 @@
 #include <string.h>
 #include <math.h>
 
-void findAllRuangan(data *datas, int *nPage, SQLHDBC *dbConn)
+void findAllRuangan(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
 {
 
     SQLHSTMT stmt;

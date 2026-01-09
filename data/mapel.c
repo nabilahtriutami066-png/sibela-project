@@ -7,7 +7,7 @@
 #include <string.h>
 #include <math.h>
 
-void findAllMapel(data *datas, int *nPage, SQLHDBC *dbConn)
+void findAllMapel(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;

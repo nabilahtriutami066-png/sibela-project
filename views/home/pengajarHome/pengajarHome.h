@@ -15,6 +15,7 @@
 #include "components/jadwal/read.h"
 #include "components/Materi/read.h"
 #include "components/Materi/update.h"
+#include "components/absensi/read.h"
 
 void drawPengajarHome(windowModel *windowM);
 

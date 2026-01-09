@@ -1,5 +1,5 @@
-#ifndef MURIDHOME_JADWAL_READ_H
-#define MURIDHOME_JADWAL_READ_H
+#ifndef PENGAJARHOME_JADWAL_READ_H
+#define PENGAJARHOME_JADWAL_READ_H
 
 #include <stdio.h>
 #include <stdlib.h>

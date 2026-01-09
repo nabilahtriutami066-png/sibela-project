@@ -78,14 +78,13 @@ typedef struct
     Texture2D logoRobot;
 } image;
 
-typedef void (*authFetcher)(data *datas, int *nPage, SQLHDBC *dbConn, user authUser);
-typedef void (*fetcherFunc)(data *datas, int *nPage, SQLHDBC *dbConn);
+typedef void (*fetcherFunc)(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 
 typedef struct
 {
     fetcherFunc staffPage[10];
     fetcherFunc pengajarPage[10];
-    authFetcher muridPage[10];
+    fetcherFunc muridPage[10];
 } fetcher;
 
 typedef struct
@@ -129,6 +128,16 @@ typedef struct
 
 typedef struct
 {
+    JadwalPertemuanWithDetails selectedJadwal;
+} AbsensiPageStates;
+
+typedef struct
+{
+    AbsensiPageStates absensiPage;
+} PengajarHomeStates;
+
+typedef struct
+{
     SelectByPage selectByPage;
     WINDOWS currWindow;
     int shouldClose;
@@ -154,6 +163,7 @@ typedef struct
     float loadingTime;
     float progress;
     LegendItem legends[MAX_LEGEND];
+    PengajarHomeStates pengajarHomeState;
 } windowModel;
 
 void initForm(windowModel *windowM);

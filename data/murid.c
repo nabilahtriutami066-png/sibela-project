@@ -55,7 +55,7 @@ Murid findMuridbyPhoneNum(char PhoneNum[], SQLHDBC *dbConn)
     return foundRecord;
 }
 
-void findAllMurid(data *datas, int *nPage, SQLHDBC *dbConn)
+void findAllMurid(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;

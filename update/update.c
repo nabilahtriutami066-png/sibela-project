@@ -170,7 +170,7 @@ void updateView(windowModel *windowM)
                     {
                         windowM->datas.page++;
                         windowM->curPos = 0;
-                        windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
+                        windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
                     }
                     break;
                 case KEY_D:
@@ -234,7 +234,7 @@ void updateView(windowModel *windowM)
                     {
                         windowM->datas.page--;
                         windowM->curPos = 0;
-                        windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
+                        windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
                     }
                     break;
                 }
@@ -251,7 +251,7 @@ void updateView(windowModel *windowM)
                         logoutFunction(windowM);
                         return;
                     }
-                    windowM->dataFetchers.staffPage[windowM->curPos](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
+                    windowM->dataFetchers.staffPage[windowM->curPos](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
                     windowM->selectedPage = windowM->curPos;
                     windowM->datas.page = 1;
                     windowM->curPos = 0;
@@ -338,7 +338,7 @@ void updateView(windowModel *windowM)
                 break;
             }
         }
-        if (!windowM->cursorEnabled && windowM->activeSubWindow == READ && windowM->forms.pengajarPage[windowM->selectedPage].selectedField == -1)
+        if (!windowM->cursorEnabled && windowM->activeSubWindow == READ)
         {
             switch (ch)
             {
@@ -367,7 +367,7 @@ void updateView(windowModel *windowM)
                 {
                     windowM->datas.page++;
                     windowM->curPos = 0;
-                    windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
+                    windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
                 }
                 break;
             case KEY_D:
@@ -394,20 +394,20 @@ void updateView(windowModel *windowM)
                 {
                     windowM->datas.page--;
                     windowM->curPos = 0;
-                    windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
+                    windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
                 }
                 break;
             }
         }
-        if (windowM->forms.pengajarPage[windowM->selectedPage].selectedField >= 0)
-        {
-            switch (ch)
-            {
-            KEY_TAB:
-                windowM->forms.pengajarPage[windowM->selectedPage].selectedField = -1;
-                break;
-            }
-        }
+        // if (windowM->forms.pengajarPage[windowM->selectedPage].selectedField >= 0)
+        // {
+        //     switch (ch)
+        //     {
+        //     KEY_TAB:
+        //         windowM->forms.pengajarPage[windowM->selectedPage].selectedField = -1;
+        //         break;
+        //     }
+        // }
         if (windowM->cursorEnabled)
         {
             switch (ch)
@@ -425,8 +425,9 @@ void updateView(windowModel *windowM)
                     logoutFunction(windowM);
                     return;
                 }
-                windowM->dataFetchers.pengajarPage[windowM->curPos](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
+                windowM->dataFetchers.pengajarPage[windowM->curPos](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, &windowM->authUser);
                 windowM->selectedPage = windowM->curPos;
+                windowM->activeSubWindow = READ;
                 windowM->datas.page = 1;
                 windowM->curPos = 0;
                 windowM->cursorEnabled = 0;
@@ -459,7 +460,7 @@ void updateView(windowModel *windowM)
                     {
                         windowM->datas.page++;
                         windowM->curPos = 0;
-                        windowM->dataFetchers.muridPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, windowM->authUser);
+                        windowM->dataFetchers.muridPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, &windowM->authUser);
                     }
                     break;
                 case KEY_LEFT:
@@ -467,7 +468,7 @@ void updateView(windowModel *windowM)
                     {
                         windowM->datas.page--;
                         windowM->curPos = 0;
-                        windowM->dataFetchers.muridPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, windowM->authUser);
+                        windowM->dataFetchers.muridPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, &windowM->authUser);
                     }
                     break;
                 }
@@ -484,7 +485,7 @@ void updateView(windowModel *windowM)
                         logoutFunction(windowM);
                         return;
                     }
-                    windowM->dataFetchers.muridPage[windowM->curPos](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, windowM->authUser);
+                    windowM->dataFetchers.muridPage[windowM->curPos](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, &windowM->authUser);
                     windowM->selectedPage = windowM->curPos;
                     windowM->datas.page = 1;
                     windowM->curPos = 0;

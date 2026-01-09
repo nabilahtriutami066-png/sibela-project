@@ -53,7 +53,7 @@ Pengajar findPengajarbyPhoneNum(char PhoneNum[], SQLHDBC *dbConn)
     return foundRecord;
 }
 
-void findAllPengajar(data *datas, int *nPage, SQLHDBC *dbConn)
+void findAllPengajar(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;

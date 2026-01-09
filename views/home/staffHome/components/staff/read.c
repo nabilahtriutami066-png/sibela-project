@@ -105,7 +105,7 @@ void drawStaffRead(windowModel *windowM)
         if (res == 2)
         {
             deleteStaff(windowM->dbConn, windowM->focusedData.staff);
-            windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
+            windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
             windowM->isModalShown = 0;
         }
         else if (res >= 0 && res < 2)

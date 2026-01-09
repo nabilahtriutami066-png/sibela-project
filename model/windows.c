@@ -88,6 +88,9 @@ void initForm(windowModel *windowM)
     windowM->forms.pengajarPage[MATERI].nField = 4;
     windowM->forms.pengajarPage[MATERI].optionFetcher[2] = findAllMapelSelect;
     windowM->forms.pengajarPage[MATERI].selectedField = -1;
+
+    windowM->dataFetchers.pengajarPage[ABSENSI] = findAllJadwalPertemuanByUserId;
+    windowM->dataFetchers.pengajarPage[PERTEMUAN] = findAllJadwalPertemuanByUserId;
 }
 
 void initAssets(windowModel *windowM)

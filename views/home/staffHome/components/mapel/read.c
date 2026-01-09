@@ -74,7 +74,7 @@ void drawMapelRead(windowModel *windowM)
         if (res == 2)
         {
             deleteMapel(windowM->dbConn, windowM->focusedData.mapel);
-            windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
+            windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
             windowM->isModalShown = 0;
         }
         else if (res >= 0 && res < 2)

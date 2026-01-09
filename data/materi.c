@@ -7,7 +7,7 @@
 #include <string.h>
 #include <math.h>
 
-void findAllMateri(data *datas, int *nPage, SQLHDBC *dbConn)
+void findAllMateri(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;

@@ -12,8 +12,8 @@
 #include "../types/dbTypes.h"
 #include "../types/form.h"
 
-void findAllPembayaran(data *datas, int *nPage, SQLHDBC *dbConn);
-void findAllPembayaranByUserId(data *datas, int *nPage, SQLHDBC *dbConn, user authUser);
+void findAllPembayaran(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
+void findAllPembayaranByUserId(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 QUERYSTATUS createPembayaran(InputField fields[], SQLHDBC *dbConn);
 
 #endif

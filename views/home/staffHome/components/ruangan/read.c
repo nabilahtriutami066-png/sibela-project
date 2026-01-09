@@ -84,7 +84,7 @@ void drawRuanganRead(windowModel *windowM)
         if (res == 2)
         {
             deleteRuangan(windowM->dbConn, windowM->focusedData.ruangan);
-            windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn);
+            windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
             windowM->isModalShown = 0;
         }
         else if (res >= 0 && res < 2)

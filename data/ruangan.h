@@ -17,7 +17,7 @@
 // Staf findStafbyEmail(char email[], SQLHDBC *dbConn);
 
 QUERYSTATUS createRuangan(InputField fields[], SQLHDBC *dbConn);
-void findAllRuangan(data *datas, int *nPage, SQLHDBC *dbConn);
+void findAllRuangan(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 void findAllRuanganSelect(Select *selectObject, SQLHDBC *dbConn);
 QUERYSTATUS updateRuangan(InputField fields[], SQLHDBC *dbConn);
 QUERYSTATUS deleteRuangan(SQLHDBC *dbConn, Ruangan updatedRuangan);
