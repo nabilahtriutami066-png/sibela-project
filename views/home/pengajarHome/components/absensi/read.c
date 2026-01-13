@@ -34,24 +34,26 @@ void drawAbsensiPengajarRead(windowModel *windowM)
         break;
 
     case PRESENSI:
-        for (int i = 0; i < windowM->datas.nMuridAbsensi; i++)
+        for (int i = 0; i < windowM->pengajarHomeState.absensiPage.nMurid; i++)
         {
+            char *formattedText = TextFormat("%s %s", windowM->pengajarHomeState.absensiPage.paginatedAbsensi[i].nama_murid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi[i].isHadir ? "HADIR" : "Belom");
+            Vector2 textLen = MeasureTextEx(windowM->fontStyle.regular, formattedText, 64, 0);
             if (windowM->curPos == i)
             {
                 DrawRectangleRounded((Rectangle){start_x - 325 - 15,
-                                                 start_y - 150 - 10 + i * 50, .width = 100, .height = 80},
+                                                 start_y - 150 - 10 + i * 50, .width = textLen.x + 20, .height = textLen.y + 20},
                                      0.4, 0, PRIMARY);
-                if (!windowM->datas.muridAbsensis[i].isHadir)
+                if (!windowM->pengajarHomeState.absensiPage.paginatedAbsensi[i].isHadir)
                 {
-                    Rectangle input = {.x = start_x - 225 + 150,
+                    Rectangle input = {.x = start_x - 325 + textLen.x + 12,
                                        .y = start_y - 150 - 10 + i * 50,
-                                       .width = 300,
-                                       .height = 32};
-                    GuiTextBox(input, windowM->datas.muridAbsensis[i].alasan, 42, CheckCollisionPointRec(windowM->mousePosition, input));
+                                       .width = textLen.x + 20,
+                                       .height = textLen.y + 20};
+                    GuiTextBox(input, windowM->datas.muridAbsensis[i + (windowM->pengajarHomeState.absensiPage.page - 1) * 10].alasan, 200, CheckCollisionPointRec(windowM->mousePosition, input));
                 }
             }
-            DrawTextEx(windowM->fontStyle.regular, TextFormat("%s %s", windowM->datas.muridAbsensis[i].nama_murid, windowM->datas.muridAbsensis[i].isHadir ? "HADIR" : "Belom"),
-                       (Vector2){start_x - 225,
+            DrawTextEx(windowM->fontStyle.regular, formattedText,
+                       (Vector2){start_x - 325,
                                  start_y - 150 + i * 50},
                        64, 0,
                        SIBELAWHITE);
@@ -62,8 +64,13 @@ void drawAbsensiPengajarRead(windowModel *windowM)
                                       .height = 80};
             if (GuiButton(submitButton, "Submit"))
             {
-                windowM->pengajarHomeState.absensiPage.submitFunc(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->focusedData.jadwal.id_pertemuan, windowM->dbConn, windowM->authUser);
+                windowM->pengajarHomeState.absensiPage.submitFunc(windowM->pengajarHomeState.absensiPage.paginatedAbsensi, windowM->datas.nMuridAbsensi, windowM->focusedData.jadwal.id_pertemuan, windowM->dbConn, windowM->authUser);
             }
+            DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->pengajarHomeState.absensiPage.page, windowM->pengajarHomeState.absensiPage.nPage),
+                       (Vector2){300 + (1620 / 2 - 50),
+                                 1000},
+                       40, 0,
+                       SIBELAWHITE);
         }
         break;
     }

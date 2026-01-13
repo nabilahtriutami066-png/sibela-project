@@ -4,6 +4,6 @@
 #include "../model/window.h"
 #include "../model/model.h"
 
-void validateInput(windowModel *windowM);
+int validateInput(InputField *input);
 
 #endif

@@ -13,6 +13,12 @@ typedef struct
     char role[20];
 } user;
 
+typedef enum
+{
+    ASC = 30,
+    DESC
+} SORTBY;
+
 typedef struct
 {
     Staf staffs[100];
@@ -34,6 +40,7 @@ typedef struct
     MuridAbsensi muridAbsensis[100];
     SQLSMALLINT nMuridAbsensi;
 
+    SORTBY sortBy;
     int page;
     int totalPages;
 } data;

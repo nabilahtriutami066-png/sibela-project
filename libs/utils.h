@@ -19,5 +19,6 @@ void clearFields(InputField fields[]);
 void clearSelects(Select (*fields)[]);
 void copySelectData(char label[], char value[], SelectProp *dest);
 void popMultiSelectArray(SelectProp target, SelectProp domain[], int *nDomain);
+void paginateAbsensi(MuridAbsensi absensis[], int nAbsensi, int nPage, int page, int *outCount, MuridAbsensi sliced[]);
 
 #endif

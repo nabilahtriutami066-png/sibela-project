@@ -122,3 +122,20 @@ void popMultiSelectArray(SelectProp target, SelectProp domain[], int *nDomain)
     }
     domain[*nDomain] = (SelectProp){};
 }
+
+void paginateAbsensi(MuridAbsensi absensis[], int nAbsensi, int nPage, int page, int *outCount, MuridAbsensi sliced[])
+{
+    *outCount = 0;
+    int start = (page - 1) * 10;
+    start = start < nAbsensi ? start : -1;
+    int end = nAbsensi - start < 10 && start + 10 >= nAbsensi ? nAbsensi : start + 10;
+
+    if (start >= 0)
+    {
+        for (int i = start; i < end; i++)
+        {
+            sliced[*outCount] = absensis[i];
+            (*outCount)++;
+        }
+    }
+}

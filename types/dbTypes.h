@@ -123,6 +123,7 @@ typedef struct
     char id_ruangan[7];
     char lokasi[101];
     char deskripsi[101];
+    char deskripsi_short[31];
 } Ruangan;
 
 typedef struct
@@ -176,6 +177,7 @@ typedef struct
     int charLenAlasan;
     int isHadir;
     char waktu_absensi[30];
+    int existed;
 } MuridAbsensi;
 
 typedef struct

@@ -2,15 +2,17 @@
 
 void loginFunction(windowModel *windowM)
 {
+    bool invalid = false;
+    char email[100];
+    char pass[100];
+    char phoneNum[100];
 
     switch (windowM->currWindow)
     {
     case LOGINSTAFF:
-        char email[100];
-        char pass[100];
+
         strcpy(email, windowM->loginData.email.text);
-        strcpy(email, windowM->loginData.password.text);
-        bool invalid = false;
+        strcpy(pass, windowM->loginData.password.text);
 
         if (strcspn(email, "@") == strlen(email) || strcspn(email, ".") == strlen(email))
         {
@@ -54,6 +56,26 @@ void loginFunction(windowModel *windowM)
         }
         break;
     case LOGINMURID:
+        strcpy(phoneNum, windowM->loginData.phoneNumber.text);
+        strcpy(pass, windowM->loginData.password.text);
+
+        if (strcspn(phoneNum, "0") != 0 || strlen(phoneNum) <= 10)
+        {
+            windowM->loginData.phoneNumber.validation.isInputInvalid = true;
+            strcpy(windowM->loginData.phoneNumber.validation.errMessage, "Invalid No. Telp!");
+
+            invalid = true;
+        }
+        if (strlen(pass) <= 5)
+        {
+            windowM->loginData.password.validation.isInputInvalid = true;
+            strcpy(windowM->loginData.password.validation.errMessage, "Password too short!");
+
+            invalid = true;
+        }
+        if (invalid)
+            return;
+
         Murid loginMurid = findMuridbyPhoneNum(windowM->loginData.phoneNumber.text, windowM->dbConn);
 
         if (loginMurid.id_num == -1)
@@ -78,6 +100,26 @@ void loginFunction(windowModel *windowM)
         }
         break;
     case LOGINPENGAJAR:
+        strcpy(phoneNum, windowM->loginData.phoneNumber.text);
+        strcpy(pass, windowM->loginData.password.text);
+
+        if (strcspn(phoneNum, "0") != 0 || strlen(phoneNum) <= 10)
+        {
+            windowM->loginData.phoneNumber.validation.isInputInvalid = true;
+            strcpy(windowM->loginData.phoneNumber.validation.errMessage, "Invalid No. Telp!");
+
+            invalid = true;
+        }
+        if (strlen(pass) <= 5)
+        {
+            windowM->loginData.password.validation.isInputInvalid = true;
+            strcpy(windowM->loginData.password.validation.errMessage, "Password too short!");
+
+            invalid = true;
+        }
+        if (invalid)
+            return;
+
         Pengajar loginpengajar = findPengajarbyPhoneNum(windowM->loginData.phoneNumber.text, windowM->dbConn);
 
         if (loginpengajar.id_num == -1)

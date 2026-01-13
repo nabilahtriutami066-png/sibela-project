@@ -120,6 +120,17 @@ void initAssets(windowModel *windowM)
     windowM->fontStyle.regular = LoadFontEx("assets/fonts/Poppins-Regular.ttf", 224, 0, 250);
     windowM->fontStyle.mediumItalic = LoadFontEx("assets/fonts/Poppins-MediumItalic.ttf", 224, 0, 250);
     GuiSetFont(windowM->fontStyle.regular);
+    GuiSetStyle(DEFAULT, TEXT_SIZE, (int)32);
+    GuiSetStyle(DEFAULT, BASE_COLOR_NORMAL, 0x3A475000);
+    GuiSetStyle(DEFAULT, BASE_COLOR_FOCUSED, 0x0080FF00);
+    GuiSetStyle(DEFAULT, BASE_COLOR_PRESSED, 0x0080FF00);
+    GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, 0xF3F3F3FF);
+    GuiSetStyle(DEFAULT, TEXT_COLOR_FOCUSED, 0xF3F3F3FF);
+    GuiSetStyle(DEFAULT, TEXT_COLOR_PRESSED, 0xF3F3F3FF);
+    GuiSetStyle(DEFAULT, TEXT_COLOR_PRESSED, 0xF3F3F3FF);
+    GuiSetStyle(DEFAULT, BORDER, 0xF3F3F3FF);
+    GuiSetStyle(DEFAULT, BORDER_COLOR_FOCUSED, 0x3A4750FF);
+    GuiSetStyle(DEFAULT, BORDER_WIDTH, 3);
 }
 
 void initWindow(windowModel *windowM)
@@ -135,6 +146,7 @@ void initWindow(windowModel *windowM)
         .activeSubWindow = READ,
         .loginData = {.email = {.charLen = 0, .text = "\0"}, .activeInput = 0}};
     windowM->datas.page = 1;
+    windowM->datas.sortBy = ASC;
 
     initForm(windowM);
     initAssets(windowM);

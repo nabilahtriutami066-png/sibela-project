@@ -11,6 +11,7 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
 
     switch (fieldType)
     {
+    case DATEINPUT:
     case LONGTEXTINPUT:
     case TEXTINPUT:
         *ch = GetCharPressed();

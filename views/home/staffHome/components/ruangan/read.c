@@ -66,7 +66,7 @@ void drawRuanganRead(windowModel *windowM)
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
-        DrawTextEx(windowM->fontStyle.regular, windowM->datas.ruangans[row].deskripsi,
+        DrawTextEx(windowM->fontStyle.regular, windowM->datas.ruangans[row].deskripsi_short,
                    (Vector2){start_x + 2 * cell_width + padding,
                              start_y + row * cell_height + padding},
                    font_size, 0,

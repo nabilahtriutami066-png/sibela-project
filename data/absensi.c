@@ -38,10 +38,10 @@ void getMuridsbyJadwalPertemuan(data *datas, int *nPage, SQLHDBC *dbConn, Jadwal
     *nPage = (int)ceilf((float)count / limit);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"SELECT m.id_murid, m.nama, abs.isHadir,abs.alasan, abs.waktu_absensi FROM jadwal_murid jm INNER JOIN murid m ON jm.id_murid = m.id_murid LEFT JOIN absensi abs ON abs.id_pertemuan = jm.id_pertemuan AND abs.id_murid = m.id_murid  WHERE jm.id_pertemuan = ? ORDER BY m.nama DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    SQLPrepare(stmt, (SQLCHAR *)"SELECT m.id_murid, m.nama, abs.isHadir,abs.alasan, abs.waktu_absensi FROM jadwal_murid jm INNER JOIN murid m ON jm.id_murid = m.id_murid LEFT JOIN absensi abs ON abs.id_pertemuan = jm.id_pertemuan AND abs.id_murid = m.id_murid  WHERE jm.id_pertemuan = ? ORDER BY m.nama ASC", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(jadwal->id_pertemuan), 0, jadwal->id_pertemuan, 0, NULL);
-    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
-    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
+    // SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
+    // SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
 
     ret = SQLExecute(stmt);
     while (SQL_SUCCEEDED(ret = SQLFetch(stmt)))
@@ -60,6 +60,7 @@ void getMuridsbyJadwalPertemuan(data *datas, int *nPage, SQLHDBC *dbConn, Jadwal
             datas->muridAbsensis[i].isHadir = 0;
             strcpy(datas->muridAbsensis[i].alasan, "");
             datas->muridAbsensis[i].charLenAlasan = 0;
+            datas->muridAbsensis[i].existed = 0;
             strcpy(datas->muridAbsensis[i].waktu_absensi, "");
         }
         else
@@ -69,6 +70,7 @@ void getMuridsbyJadwalPertemuan(data *datas, int *nPage, SQLHDBC *dbConn, Jadwal
             datas->muridAbsensis[i].charLenAlasan = strlen(datas->muridAbsensis[i].alasan);
             SQLGetData(stmt, 5, SQL_C_CHAR,
                        &datas->muridAbsensis[i].waktu_absensi, sizeof(datas->muridAbsensis[i].waktu_absensi), NULL);
+            datas->muridAbsensis[i].existed = 1;
         }
         rowsFetched++;
     }
@@ -93,12 +95,23 @@ QUERYSTATUS createAbsensi(MuridAbsensi murids[], int nMurid, char id_pert[], SQL
         strcpy(newAbsensi.id_murid, murids[i].id_murid);
         strcpy(newAbsensi.alasan, murids[i].alasan);
         newAbsensi.isHadir = murids[i].isHadir;
-        SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO absensi (id_pertemuan, id_murid,id_pengajar, isHadir, alasan) VALUES (?,?,?,?,?)", SQL_NTS);
-        SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.id_pertemuan), 0, newAbsensi.id_pertemuan, 0, NULL);
-        SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.id_murid), 0, newAbsensi.id_murid, 0, NULL);
-        SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.id_pengajar), 0, newAbsensi.id_pengajar, 0, NULL);
-        SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_BIT, SQL_BIT, sizeof(newAbsensi.isHadir), 0, &newAbsensi.isHadir, 0, NULL);
-        SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, strlen(newAbsensi.alasan) > 0 ? SQL_VARCHAR : SQL_NULL_DATA, strlen(newAbsensi.alasan), 0, newAbsensi.alasan, 0, NULL);
+        if (murids[i].existed)
+        {
+            SQLPrepare(stmt, (SQLCHAR *)"UPDATE absensi SET isHadir = ?, alasan = ? WHERE id_pertemuan = ? AND id_murid = ?", SQL_NTS);
+            SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_BIT, SQL_BIT, sizeof(newAbsensi.isHadir), 0, &newAbsensi.isHadir, 0, NULL);
+            SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, strlen(newAbsensi.alasan) > 0 ? SQL_VARCHAR : SQL_NULL_DATA, strlen(newAbsensi.alasan), 0, newAbsensi.alasan, 0, NULL);
+            SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.id_pertemuan), 0, newAbsensi.id_pertemuan, 0, NULL);
+            SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.id_murid), 0, newAbsensi.id_murid, 0, NULL);
+        }
+        else
+        {
+            SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO absensi (id_pertemuan, id_murid,id_pengajar, isHadir, alasan) VALUES (?,?,?,?,?)", SQL_NTS);
+            SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.id_pertemuan), 0, newAbsensi.id_pertemuan, 0, NULL);
+            SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.id_murid), 0, newAbsensi.id_murid, 0, NULL);
+            SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.id_pengajar), 0, newAbsensi.id_pengajar, 0, NULL);
+            SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_BIT, SQL_BIT, sizeof(newAbsensi.isHadir), 0, &newAbsensi.isHadir, 0, NULL);
+            SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, strlen(newAbsensi.alasan) > 0 ? SQL_VARCHAR : SQL_NULL_DATA, strlen(newAbsensi.alasan), 0, newAbsensi.alasan, 0, NULL);
+        }
         ret = SQLExecute(stmt);
 
         if (SQL_SUCCEEDED(ret))
@@ -106,6 +119,37 @@ QUERYSTATUS createAbsensi(MuridAbsensi murids[], int nMurid, char id_pert[], SQL
             ret = SQLFetch(stmt);
         }
     }
+    SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
+
+    switch (ret)
+    {
+    case SQL_SUCCESS:
+        return SUCCESS;
+
+    default:
+        return FAILED;
+    }
+}
+
+QUERYSTATUS deleteteAbsensiByPertemuanIDMuridId(MuridAbsensi murid, char id_pert[], SQLHDBC *dbConn)
+{
+    SQLHSTMT stmt;
+    SQLRETURN ret;
+    int count;
+    SQLUSMALLINT rowStatus[100];
+    char *dateBuff;
+
+    SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
+
+    SQLPrepare(stmt, (SQLCHAR *)"DELETE FROM absensi WHERE id_pertemuan = ? AND id_murid = ?", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(id_pert), 0, id_pert, 0, NULL);
+    ret = SQLExecute(stmt);
+
+    if (SQL_SUCCEEDED(ret))
+    {
+        ret = SQLFetch(stmt);
+    }
+
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)

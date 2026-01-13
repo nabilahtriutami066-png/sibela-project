@@ -137,6 +137,10 @@ typedef struct
 {
     JadwalPertemuanWithDetails selectedJadwal;
     ABSENSISUBWINDOW activeSubWindow;
+    int page;
+    int nPage;
+    int nMurid;
+    MuridAbsensi paginatedAbsensi[10];
     void (*getMurids)(data *datas, int *nPage, SQLHDBC *dbConn, JadwalPertemuanWithDetails *jadwal);
     QUERYSTATUS (*submitFunc)(MuridAbsensi murids[], int nMurid, char id_pert[], SQLHDBC *dbConn, user authUser);
 } AbsensiPageStates;

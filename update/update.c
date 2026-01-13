@@ -349,22 +349,7 @@ void updateView(windowModel *windowM)
             case KEY_DOWN:
                 windowM->curPos += 1;
                 break;
-            case KEY_RIGHT:
-                if (windowM->datas.page < windowM->datas.totalPages)
-                {
-                    windowM->datas.page++;
-                    windowM->curPos = 0;
-                    windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
-                }
-                break;
-            case KEY_LEFT:
-                if (windowM->datas.page > 1)
-                {
-                    windowM->datas.page--;
-                    windowM->curPos = 0;
-                    windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
-                }
-                break;
+
             default:
                 if (windowM->activeSubWindow == ABSENSI)
                 {
@@ -374,14 +359,32 @@ void updateView(windowModel *windowM)
                         switch (ch)
                         {
                         case KEY_ENTER:
+                            windowM->pengajarHomeState.absensiPage.page = 1;
                             windowM->curPos = 0;
-                            windowM->pengajarHomeState.absensiPage.getMurids(&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, &windowM->focusedData.jadwal);
+                            windowM->pengajarHomeState.absensiPage.getMurids(&windowM->datas, &windowM->pengajarHomeState.absensiPage.nPage, windowM->dbConn, &windowM->focusedData.jadwal);
+                            paginateAbsensi(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->pengajarHomeState.absensiPage.nPage, windowM->pengajarHomeState.absensiPage.page, &windowM->pengajarHomeState.absensiPage.nMurid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi);
                             windowM->pengajarHomeState.absensiPage.activeSubWindow = PRESENSI;
                             break;
                         case KEY_TAB:
                             windowM->curPos = 0;
                             windowM->cursorEnabled = 1;
                             windowM->activeSubWindow = -1;
+                            break;
+                        case KEY_RIGHT:
+                            if (windowM->datas.page < windowM->datas.totalPages)
+                            {
+                                windowM->datas.page++;
+                                windowM->curPos = 0;
+                                windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                            }
+                            break;
+                        case KEY_LEFT:
+                            if (windowM->datas.page > 1)
+                            {
+                                windowM->datas.page--;
+                                windowM->curPos = 0;
+                                windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                            }
                             break;
                         }
                         break;
@@ -392,7 +395,24 @@ void updateView(windowModel *windowM)
                             windowM->pengajarHomeState.absensiPage.activeSubWindow = MAIN;
                             break;
                         case KEY_ENTER:
-                            windowM->datas.muridAbsensis[windowM->curPos].isHadir = !windowM->datas.muridAbsensis[windowM->curPos].isHadir;
+                            windowM->datas.muridAbsensis[windowM->curPos + (windowM->pengajarHomeState.absensiPage.page - 1) * 10].isHadir = !windowM->datas.muridAbsensis[windowM->curPos + (windowM->pengajarHomeState.absensiPage.page - 1) * 10].isHadir;
+                            paginateAbsensi(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->pengajarHomeState.absensiPage.nPage, windowM->pengajarHomeState.absensiPage.page, &windowM->pengajarHomeState.absensiPage.nMurid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi);
+                            break;
+                        case KEY_RIGHT:
+                            if (windowM->pengajarHomeState.absensiPage.page < windowM->pengajarHomeState.absensiPage.nPage)
+                            {
+                                windowM->pengajarHomeState.absensiPage.page++;
+                                paginateAbsensi(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->pengajarHomeState.absensiPage.nPage, windowM->pengajarHomeState.absensiPage.page, &windowM->pengajarHomeState.absensiPage.nMurid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi);
+                                windowM->curPos = 0;
+                            }
+                            break;
+                        case KEY_LEFT:
+                            if (windowM->pengajarHomeState.absensiPage.page > 1)
+                            {
+                                windowM->pengajarHomeState.absensiPage.page--;
+                                paginateAbsensi(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->pengajarHomeState.absensiPage.nPage, windowM->pengajarHomeState.absensiPage.page, &windowM->pengajarHomeState.absensiPage.nMurid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi);
+                                windowM->curPos = 0;
+                            }
                             break;
                         }
                         break;

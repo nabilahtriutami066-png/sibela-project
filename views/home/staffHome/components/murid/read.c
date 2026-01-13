@@ -99,4 +99,6 @@ void drawMuridRead(windowModel *windowM)
         else if (res >= 0 && res < 2)
             windowM->isModalShown = 0;
     }
+
+    DrawSortControl(windowM, (Vector2){.x = start_x + 100, .y = 80});
 }

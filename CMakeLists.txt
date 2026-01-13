@@ -6,6 +6,8 @@ find_package(ODBC REQUIRED)
 set(PACKAGES
     libs/utils.c
     components/header.c
+    components/ui/sortControl.c
+    components/ui/inputBox.c
     libs/login.c
     libs/handleInput.c
     libs/validator.c
