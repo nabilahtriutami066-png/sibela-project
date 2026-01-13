@@ -16,6 +16,7 @@ typedef struct
     char multiValue[50][8];
     int charLen;
     int selected;
+    bool showSecret;  
     InputValidation validation;
 } InputParams;
 

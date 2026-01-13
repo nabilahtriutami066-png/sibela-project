@@ -65,6 +65,7 @@ typedef struct
     InputParams email;
     InputParams phoneNumber;
     InputParams password;
+    bool showPassword;
     int activeInput;
 } LoginScreen;
 

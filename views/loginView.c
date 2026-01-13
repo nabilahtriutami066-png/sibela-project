@@ -26,7 +26,7 @@ void drawStaffLogin(windowModel *windowM)
     };
     drawInputBox(windowM, &windowM->loginData.email, textBox, "Email", 0, 0);
 
-    drawInputBox(windowM, &windowM->loginData.password, textBoxPass, "Password", 1, 1);
+    drawInputBox(windowM, &windowM->loginData.password, textBoxPass, "Kata Sandi", 1, 1);
 
     if (windowM->loginData.activeInput == 2)
     {
@@ -34,7 +34,7 @@ void drawStaffLogin(windowModel *windowM)
     }
     else
         DrawRectangleRoundedLines(buttonBox, 0.3, 0, SIBELAWHITE);
-    DrawTextEx(windowM->fontStyle.medium, "Login", (Vector2){(int)buttonBox.x + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).x / 2, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).y / 2 - 8}, 40, 0, SIBELAWHITE);
+    DrawTextEx(windowM->fontStyle.medium, "Masuk", (Vector2){(int)buttonBox.x + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).x / 2, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).y / 2 - 8}, 40, 0, SIBELAWHITE);
 }
 
 void drawMuridTeacherLogin(windowModel *windowM)
@@ -62,7 +62,7 @@ void drawMuridTeacherLogin(windowModel *windowM)
         67,
     };
     drawInputBox(windowM, &windowM->loginData.phoneNumber, textBox, "No. Telp", 0, 0);
-    drawInputBox(windowM, &windowM->loginData.password, textBoxPass, "Password", 1, 1);
+    drawInputBox(windowM, &windowM->loginData.password, textBoxPass, "Kata Sandi", 1, 1);
 
     if (windowM->loginData.activeInput == 2)
     {
@@ -70,5 +70,5 @@ void drawMuridTeacherLogin(windowModel *windowM)
     }
     else
         DrawRectangleRoundedLines(buttonBox, 0.3, 0, SIBELAWHITE);
-    DrawTextEx(windowM->fontStyle.medium, "Login", (Vector2){(int)buttonBox.x + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).x / 2, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).y / 2 - 8}, 40, 0, SIBELAWHITE);
+    DrawTextEx(windowM->fontStyle.medium, "Masuk", (Vector2){(int)buttonBox.x + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).x / 2, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).y / 2 - 8}, 40, 0, SIBELAWHITE);
 }

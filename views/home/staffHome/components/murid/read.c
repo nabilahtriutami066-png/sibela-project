@@ -14,7 +14,7 @@ void drawMuridRead(windowModel *windowM)
                          start_y - 120},
                64, 0,
                SIBELAWHITE);
-    for (int col = 0; col < 4; col++)
+    for (int col = 0; col < 3; col++)
     {
         Rectangle cellRect = {
             start_x + col * cell_width,
@@ -39,14 +39,9 @@ void drawMuridRead(windowModel *windowM)
                          start_y - cell_height + padding},
                font_size, 0,
                SIBELAWHITE);
-    DrawTextEx(windowM->fontStyle.regular, "Password",
-               (Vector2){start_x + 3 * cell_width + padding,
-                         start_y - cell_height + padding},
-               font_size, 0,
-               SIBELAWHITE);
     for (int row = 0; row < windowM->datas.nMurid; row++)
     {
-        for (int col = 0; col < 4; col++)
+        for (int col = 0; col < 3; col++)
         {
             Rectangle cellRect = {
                 start_x + col * cell_width,
@@ -75,11 +70,7 @@ void drawMuridRead(windowModel *windowM)
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
-        DrawTextEx(windowM->fontStyle.regular, windowM->datas.murids[row].password,
-                   (Vector2){start_x + 3 * cell_width + padding,
-                             start_y + row * cell_height + padding},
-                   font_size, 0,
-                   SIBELAWHITE);
+
     }
     DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
                (Vector2){300 + (1620 / 2 - 30),
