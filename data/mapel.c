@@ -30,7 +30,10 @@ void findAllMapel(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
     *nPage = (int)ceil((float)count / limit);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM mapel ORDER BY nama_mapel ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    if (datas->sortBy == DESC)
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM mapel ORDER BY nama_mapel DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    else
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM mapel ORDER BY nama_mapel ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
 

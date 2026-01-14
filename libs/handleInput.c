@@ -80,11 +80,27 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
                 }
                 windowM->forms.staffPage[windowM->selectedPage].fields[6].value.charLen = windowM->selectByPage.staffPage[windowM->selectedPage][6].nMultiSelected;
             }
+            if (windowM->currWindow == STAFHOME && windowM->selectedPage == PEMBAYARAN)
+            {
+                strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[0].value.text, windowM->authUser.id);
+                strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[1].value.text, windowM->selectByPage.staffPage[windowM->selectedPage][1].selected.value);
+                windowM->selectByPage.staffPage[windowM->selectedPage][1].selected = (SelectProp){};
+            }
             if (func != NULL && dataFetcher != NULL)
             {
                 func(fields, windowM->dbConn);
                 dataFetcher(&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
-                clearFields(fields);
+            }
+            // clearFields(fields);
+            for (int i = 0; i < 10; i++)
+            {
+                fields[i].value.charLen = 0;
+                strcpy(fields[i].value.text, "");
+                fields[i].value.selected = -1;
+                for (int j = 0; i < 8; i++)
+                {
+                    strcpy(fields[i].value.multiValue[j], "\0");
+                }
             }
             windowM->activeSubWindow = READ;
             break;

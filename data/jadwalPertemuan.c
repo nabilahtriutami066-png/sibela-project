@@ -31,7 +31,10 @@ void findAllJadwalPertemuan(data *datas, int *nPage, SQLHDBC *dbConn, user *auth
     *nPage = (int)ceil((float)count / limit);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi, (SELECT COUNT(*) FROM jadwal_murid WHERE jadwal_murid.id_pertemuan = j.id_pertemuan) AS jumlah_murid,j.waktu, s.id_staff, p.id_pengajar, r.id_ruangan, m.id_materi FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m WHERE s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi ORDER BY j.waktu DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    if (datas->sortBy == DESC)
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi, (SELECT COUNT(*) FROM jadwal_murid WHERE jadwal_murid.id_pertemuan = j.id_pertemuan) AS jumlah_murid,j.waktu, s.id_staff, p.id_pengajar, r.id_ruangan, m.id_materi FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m WHERE s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi ORDER BY j.waktu DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    else
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi, (SELECT COUNT(*) FROM jadwal_murid WHERE jadwal_murid.id_pertemuan = j.id_pertemuan) AS jumlah_murid,j.waktu, s.id_staff, p.id_pengajar, r.id_ruangan, m.id_materi FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m WHERE s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi ORDER BY j.waktu ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
 
@@ -108,11 +111,17 @@ void findAllJadwalPertemuanByUserId(data *datas, int *nPage, SQLHDBC *dbConn, us
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     if (strcmp(authUser->role, "PENGAJAR") == 0)
     {
-        SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi, (SELECT COUNT(*) FROM jadwal_murid WHERE jadwal_murid.id_pertemuan = j.id_pertemuan) AS jumlah_murid,j.waktu FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m WHERE j.id_pengajar =  ? AND s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi AND j.waktu >= GETDATE() ORDER BY j.waktu DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+        if (datas->sortBy == DESC)
+            SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi, (SELECT COUNT(*) FROM jadwal_murid WHERE jadwal_murid.id_pertemuan = j.id_pertemuan) AS jumlah_murid,j.waktu FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m WHERE j.id_pengajar =  ? AND s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi AND j.waktu >= GETDATE() ORDER BY j.waktu DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+        else
+            SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi, (SELECT COUNT(*) FROM jadwal_murid WHERE jadwal_murid.id_pertemuan = j.id_pertemuan) AS jumlah_murid,j.waktu FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m WHERE j.id_pengajar =  ? AND s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi AND j.waktu >= GETDATE() ORDER BY j.waktu ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     }
     else if (strcmp(authUser->role, "MURID") == 0)
     {
-        SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi,j.waktu FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m, jadwal_murid jm WHERE jm.id_pertemuan = j.id_pertemuan AND jm.id_murid =  ? AND s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi AND j.waktu >= GETDATE() ORDER BY j.waktu DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+        if (datas->sortBy == DESC)
+            SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi,j.waktu FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m, jadwal_murid jm WHERE jm.id_pertemuan = j.id_pertemuan AND jm.id_murid =  ? AND s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi AND j.waktu >= GETDATE() ORDER BY j.waktu DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+        else
+            SQLPrepare(stmt, (SQLCHAR *)"SELECT j.id_num, j.id_pertemuan, s.nama AS nama_staff, p.nama AS nama_pengajar,r.lokasi,m.judul_materi,j.waktu FROM jadwal_pertemuan j, staff s, pengajar p, ruangan r, materi m, jadwal_murid jm WHERE jm.id_pertemuan = j.id_pertemuan AND jm.id_murid =  ? AND s.id_staff = j.id_staff AND p.id_pengajar = j.id_pengajar AND r.id_ruangan = j.id_ruangan AND m.id_materi = j.id_materi AND j.waktu >= GETDATE() ORDER BY j.waktu ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     }
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(authUser->id), 0, authUser->id, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);

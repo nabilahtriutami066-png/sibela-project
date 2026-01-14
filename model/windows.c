@@ -32,6 +32,7 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[JADWAL].nField = 7;
     windowM->forms.staffPage[PENGAJAR].nField = 5;
     windowM->forms.staffPage[RUANGAN].nField = 3;
+    windowM->forms.staffPage[PEMBAYARAN].nField = 4;
     windowM->forms.staffPage[STAFF].fieldPerPage = 4;
     windowM->forms.staffPage[MAPEL].fieldPerPage = 2;
     windowM->forms.staffPage[MURID].fieldPerPage = 4;
@@ -43,6 +44,7 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[PENGAJAR].selectedField = -1;
     windowM->forms.staffPage[RUANGAN].selectedField = -1;
     windowM->forms.staffPage[JADWAL].fieldPerPage = 4;
+    windowM->forms.staffPage[PEMBAYARAN].fieldPerPage = 4;
     windowM->forms.staffPage[STAFF].createFunc = createStaff;
     windowM->forms.staffPage[STAFF].updateFunction = updateStaff;
     windowM->forms.staffPage[MAPEL].createFunc = createMapel;
@@ -54,6 +56,7 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[RUANGAN].createFunc = createRuangan;
     windowM->forms.staffPage[RUANGAN].updateFunction = updateRuangan;
     windowM->forms.staffPage[JADWAL].createFunc = createJadwalPertemuan;
+    windowM->forms.staffPage[PEMBAYARAN].createFunc = createPembayaran;
     windowM->forms.staffPage[JADWAL].updateFunction = updateJadwalPertemuan;
     windowM->dataFetchers.staffPage[STAFF] = findAllStaff;
     windowM->dataFetchers.staffPage[MURID] = findAllMurid;
@@ -62,13 +65,15 @@ void initForm(windowModel *windowM)
     windowM->dataFetchers.staffPage[MAPEL] = findAllMapel;
     windowM->dataFetchers.staffPage[JADWAL] = findAllJadwalPertemuan;
     windowM->dataFetchers.muridPage[JADWALMURID] = findAllJadwalPertemuanByUserId;
+    windowM->dataFetchers.muridPage[PEMBAYARANMURID] = findAllPembayaranByUserId;
     windowM->dataFetchers.staffPage[PEMBAYARAN] = findAllPembayaran;
+    windowM->dataFetchers.staffPage[PEMBAYARANREPORT] = getPembayaranReport;
 
     windowM->forms.staffPage[JADWAL].fields[1] = (InputField){.label = "ID STAFF", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[JADWAL].fields[2] = (InputField){.label = "ID PENGAJAR", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[JADWAL].fields[3] = (InputField){.label = "ID RUANGAN", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[JADWAL].fields[4] = (InputField){.label = "ID MATERI", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[JADWAL].fields[5] = (InputField){.label = "WAKTU", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[JADWAL].fields[5] = (InputField){.label = "WAKTU", .type = DATEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[JADWAL].fields[6] = (InputField){.label = "MURID", .type = CUSTOMMODALMULTI, .value = (InputParams){.charLen = 0, .multiValue = {}}};
     windowM->forms.staffPage[JADWAL].fields[7] = (InputField){.label = "SUBMIT", .type = BUTTONINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[JADWAL].optionFetcher[2] = findAllPengajarSelect;
@@ -76,6 +81,13 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[JADWAL].optionFetcher[4] = findAllMateriSelect;
     windowM->forms.staffPage[JADWAL].optionFetcher[6] = findAllMuridSelect;
     windowM->forms.staffPage[JADWAL].selectedField = -1;
+
+    windowM->forms.staffPage[PEMBAYARAN].fields[1] = (InputField){.label = "SISWA", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[PEMBAYARAN].fields[2] = (InputField){.label = "Jumlah Bayar", .type = NUMERICINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[PEMBAYARAN].fields[3] = (InputField){.label = "METODE PEMBAYARAN", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[PEMBAYARAN].fields[4] = (InputField){.label = "SUBMIT", .type = BUTTONINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[PEMBAYARAN].optionFetcher[1] = findAllMuridSelect;
+    windowM->forms.staffPage[PEMBAYARAN].selectedField = -1;
 
     windowM->selectByPage.staffPage = (Select(*)[6])malloc(sizeof(Select) * 6 * 10);
 

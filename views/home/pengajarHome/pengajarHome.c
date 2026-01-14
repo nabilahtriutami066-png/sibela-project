@@ -15,7 +15,7 @@ void drawPengajarHome(windowModel *windowM)
 
     // Logo Sibela kiri Atas
     DrawRectangle(0, 0, 300, 200, SIBELAWHITE);
-    DrawTextureEx(windowM->images.logo, (Vector2){40, 44}, 0, 0.30, SIBELAWHITE);
+    DrawTextureEx(windowM->images.logo, (Vector2){-10, -10}, 0, 0.30, SIBELAWHITE);
 
     // Logo Robot kiri bawah
     DrawTextureEx(windowM->images.logoRobot, (Vector2){50, 820}, 0, 0.25, SIBELAWHITE);
@@ -41,12 +41,15 @@ void drawPengajarHome(windowModel *windowM)
         {
         case PERTEMUAN:
             drawJadwalPengajarRead(windowM);
+            DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
             break;
         case ABSENSI:
             drawAbsensiPengajarRead(windowM);
+            DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
             break;
         case MATERI:
             drawMateriRead(windowM);
+            DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
             break;
         default:
             DrawTextEx(windowM->fontStyle.medium, TextFormat("Halo, %s!", windowM->authUser.nama), (Vector2){300 + 1620 / 2 - MeasureTextEx(windowM->fontStyle.medium, TextFormat("Halo, %s!", windowM->authUser.nama), 80, 0).x / 2, 90}, 80, 0, SIBELAWHITE);

@@ -76,7 +76,10 @@ void findAllPengajar(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
     *nPage = (int)ceil((float)count / limit);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM pengajar ORDER BY tanggal_masuk DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    if (datas->sortBy == DESC)
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM pengajar ORDER BY tanggal_masuk DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    else
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM pengajar ORDER BY tanggal_masuk ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
 

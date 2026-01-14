@@ -37,6 +37,7 @@ void drawJadwalCreate(windowModel *windowM)
         {
         case LONGTEXTINPUT:
         case NUMERICINPUT:
+        case DATEINPUT:
         case TEXTINPUT:
             DrawTextEx(windowM->fontStyle.medium, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, (Vector2){(int)textBox.x, (int)textBox.y - 44}, 40, 0, SIBELAWHITE);
             DrawRectangleRoundedLines(textBox, 0.3, 0, windowM->curPos == i ? PRIMARY : SIBELAWHITE);

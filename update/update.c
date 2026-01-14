@@ -41,7 +41,7 @@ void updateView(windowModel *windowM)
         switch (ch)
         {
         case KEY_UP:
-            if ((windowM->curPos > 1 && (windowM->activeSubWindow == CREATE || windowM->activeSubWindow == UPDATE)) || (windowM->curPos > 0 && windowM->activeSubWindow == READ))
+            if ((windowM->curPos > 1 && (windowM->activeSubWindow == CREATE || windowM->activeSubWindow == UPDATE) && windowM->forms.staffPage[windowM->selectedPage].selectedField == -1) || (windowM->curPos > 0 && windowM->activeSubWindow == READ) || (windowM->curPos > 0 && (windowM->activeSubWindow == CREATE || windowM->activeSubWindow == UPDATE) && windowM->forms.staffPage[windowM->selectedPage].selectedField > 0))
                 windowM->curPos -= 1;
             break;
         case KEY_DOWN:
@@ -76,6 +76,7 @@ void updateView(windowModel *windowM)
                     {
                         windowM->selectByPage.staffPage[windowM->selectedPage][windowM->forms.staffPage[windowM->selectedPage].selectedField].page++;
                         windowM->forms.staffPage[windowM->selectedPage].optionFetcher[windowM->forms.staffPage[windowM->selectedPage].selectedField](&windowM->selectByPage.staffPage[windowM->selectedPage][windowM->forms.staffPage[windowM->selectedPage].selectedField], windowM->dbConn);
+                        windowM->curPos = 0;
                     }
                     else if (windowM->forms.staffPage[windowM->selectedPage].selectedField == -1)
                     {
@@ -90,8 +91,12 @@ void updateView(windowModel *windowM)
                     if (windowM->forms.staffPage[windowM->selectedPage].selectedField >= 0 && (windowM->forms.staffPage[windowM->selectedPage].fields[windowM->forms.staffPage[windowM->selectedPage].selectedField].type == CUSTOMMODAL || windowM->forms.staffPage[windowM->selectedPage].fields[windowM->forms.staffPage[windowM->selectedPage].selectedField].type == CUSTOMMODALMULTI))
                     {
                         if (windowM->selectByPage.staffPage[windowM->selectedPage][windowM->forms.staffPage[windowM->selectedPage].selectedField].page > 1)
+                        {
+
                             windowM->selectByPage.staffPage[windowM->selectedPage][windowM->forms.staffPage[windowM->selectedPage].selectedField].page--;
-                        windowM->forms.staffPage[windowM->selectedPage].optionFetcher[windowM->forms.staffPage[windowM->selectedPage].selectedField](&windowM->selectByPage.staffPage[windowM->selectedPage][windowM->forms.staffPage[windowM->selectedPage].selectedField], windowM->dbConn);
+                            windowM->forms.staffPage[windowM->selectedPage].optionFetcher[windowM->forms.staffPage[windowM->selectedPage].selectedField](&windowM->selectByPage.staffPage[windowM->selectedPage][windowM->forms.staffPage[windowM->selectedPage].selectedField], windowM->dbConn);
+                            windowM->curPos = 0;
+                        }
                     }
                     else if (windowM->forms.staffPage[windowM->selectedPage].selectedField == -1)
                     {
@@ -247,13 +252,13 @@ void updateView(windowModel *windowM)
                 {
                 case KEY_ENTER:
 
-                    if (windowM->curPos == 7)
+                    windowM->selectedPage = strcmp(windowM->authUser.role, "MANAJER") == 0 ? windowM->curPos + 8 : windowM->curPos;
+                    if (windowM->selectedPage == 7 || windowM->selectedPage == 10)
                     {
                         logoutFunction(windowM);
                         return;
                     }
-                    windowM->dataFetchers.staffPage[windowM->curPos](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
-                    windowM->selectedPage = windowM->curPos;
+                    windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
                     windowM->datas.page = 1;
                     windowM->curPos = 0;
                     windowM->cursorEnabled = 0;
@@ -348,6 +353,15 @@ void updateView(windowModel *windowM)
                 break;
             case KEY_DOWN:
                 windowM->curPos += 1;
+                break;
+
+            case KEY_N:
+                windowM->curPos = 1;
+                windowM->activeSubWindow = CREATE;
+                break;
+            case KEY_U:
+                windowM->curPos = 1;
+                windowM->activeSubWindow = UPDATE;
                 break;
 
             default:

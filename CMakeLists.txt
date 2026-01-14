@@ -35,6 +35,7 @@ set(PACKAGES
     views/home/staffHome/components/jadwal/read.c
     views/home/staffHome/components/jadwal/update.c
     views/home/staffHome/components/pembayaran/read.c
+    views/home/staffHome/components/pembayaran/create.c
     views/home/pengajarHome/pengajarHome.c
     views/home/pengajarHome/components/Materi/create.c
     views/home/pengajarHome/components/Materi/read.c
@@ -43,6 +44,7 @@ set(PACKAGES
     views/home/pengajarHome/components/Materi/update.c
     views/home/muridHome/muridHome.c
     views/home/muridHome/components/jadwal/read.c
+    views/home/muridHome/components/pembayaran/read.c
     views/loginView.c
     views/landingView.c
     views/memberView.c

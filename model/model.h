@@ -40,6 +40,8 @@ typedef struct
     MuridAbsensi muridAbsensis[100];
     SQLSMALLINT nMuridAbsensi;
 
+    PembayaranReport pembayaranReport;
+
     SORTBY sortBy;
     int page;
     int totalPages;

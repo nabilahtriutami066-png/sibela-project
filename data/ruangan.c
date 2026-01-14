@@ -34,7 +34,10 @@ void findAllRuangan(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
     *nPage = (int)ceil((float)count / limit);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"SELECT id_num, id_ruangan, lokasi, SUBSTRING(deskripsi, 1, 20) + IIF(LEN(deskripsi) >= 20,'...','') AS deskripsi_short, deskripsi FROM ruangan ORDER BY id_ruangan DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    if (datas->sortBy == DESC)
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT id_num, id_ruangan, lokasi, SUBSTRING(deskripsi, 1, 20) + IIF(LEN(deskripsi) >= 20,'...','') AS deskripsi_short, deskripsi FROM ruangan ORDER BY id_ruangan DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    else
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT id_num, id_ruangan, lokasi, SUBSTRING(deskripsi, 1, 20) + IIF(LEN(deskripsi) >= 20,'...','') AS deskripsi_short, deskripsi FROM ruangan ORDER BY id_ruangan ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
     ret = SQLExecute(stmt);

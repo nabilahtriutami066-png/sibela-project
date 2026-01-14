@@ -62,7 +62,7 @@ void LoadingScreen(windowModel *windowM, float progress)
 
     Vector2 logoPos = {
         (screenWidth / 2 - logo.width / 2),
-        (screenHeight / 2.0f) - logo.height - 40};
+        (screenHeight / 2.0f) - logo.height / 2.0f - 40};
 
     DrawTexture(logo, logoPos.x, logoPos.y, WHITE);
 

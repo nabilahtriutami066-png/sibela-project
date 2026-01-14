@@ -17,12 +17,7 @@ void DrawSortControl(windowModel *windowM, Vector2 pos)
             windowM->datas.sortBy = ASC;
             break;
         }
-        switch (windowM->currWindow)
-        {
-        case STAFHOME:
-            windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
-            break;
-        }
+        windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, &windowM->authUser);
     }
     DrawTextEx(windowM->fontStyle.regular, "Urutkan:", (Vector2){.x = pos.x - leng.x - 5, .y = pos.y}, 20, 0, SIBELAWHITE);
 }

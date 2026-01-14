@@ -30,6 +30,7 @@
 #include "components/jadwal/create.h"
 #include "components/jadwal/update.h"
 #include "components/pembayaran/read.h"
+#include "components/pembayaran/create.h"
 // #include "components/ruangan/update.h"
 
 void drawStaffHome(windowModel *windowM);

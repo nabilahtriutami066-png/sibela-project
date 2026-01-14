@@ -15,5 +15,6 @@
 void findAllPembayaran(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 void findAllPembayaranByUserId(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 QUERYSTATUS createPembayaran(InputField fields[], SQLHDBC *dbConn);
+void getPembayaranReport(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 
 #endif

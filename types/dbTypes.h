@@ -28,7 +28,9 @@ typedef enum
     RUANGAN,
     MAPEL,
     PEMBAYARAN,
-    JADWAL
+    JADWAL,
+    PEMBAYARANREPORT = 8,
+    MANAJERSTAFF
 } STAFFSUBWINDOW;
 
 typedef enum
@@ -162,7 +164,7 @@ typedef struct
     char id_murid[16];
     char nama_murid[100];
     char tanggal_pembayaran[20];
-    double jumlah_pembayaran;
+    int jumlah_pembayaran;
     int dikonfirmasi;
     char id_staff[16];
     char nama_staff[100];
@@ -191,6 +193,12 @@ typedef struct
     char alasan[201];
     char waktu_absensi[20];
 } Absensi;
+
+typedef struct
+{
+    int totalThisMonth;
+    int sumThisMonth;
+} PembayaranReport;
 
 // typedef struct
 //     {
