@@ -46,4 +46,5 @@ void drawRootView(windowModel *windowM)
         break;
     }
     DrawLegend(windowM);
+    drawToast(&windowM->toast);
 }

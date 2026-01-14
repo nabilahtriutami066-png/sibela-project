@@ -82,8 +82,16 @@ void drawMuridRead(windowModel *windowM)
 
         if (res == 2)
         {
-            deleteMurid(windowM->dbConn, windowM->focusedData.murid);
-            windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+            QUERYSTATUS sqlRes = deleteMurid(windowM->dbConn, windowM->focusedData.murid);
+            if (sqlRes == SUCCESS)
+            {
+                windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                showToast(&windowM->toast, "Terhapus", "Siswa berhasil dihapus!");
+            }
+            else
+            {
+                showToast(&windowM->toast, "Gagal Hapus!", "Siswa sudah memiliki relasi!");
+            }
             windowM->isModalShown = 0;
         }
         else if (res >= 0 && res < 2)

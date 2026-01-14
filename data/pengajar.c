@@ -86,9 +86,7 @@ void findAllPengajar(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
     ret = SQLExecute(stmt);
     while (SQL_SUCCEEDED(ret = SQLFetch(stmt)))
     {
-        printf("Successfully fetched %lld rows\n", rowsFetched);
         int i = (int)rowsFetched;
-        printf("awikwok %d\n", i);
 
         SQLGetData(stmt, 1, SQL_C_LONG,
                    &datas->pengajars[i].id_num, sizeof(datas->pengajars[i].id_num), NULL);

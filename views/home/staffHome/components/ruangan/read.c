@@ -3,9 +3,9 @@
 
 void drawRuanganRead(windowModel *windowM)
 {
-    int cell_width = 250;
+    int cell_width = 350;
     int cell_height = 50;
-    int start_x = 1920 / 2 - 600 + 100;
+    int start_x = 1920 / 2 - 600 + 100 + 150;
     int start_y = 1080 / 2 - 300;
     int padding = 5;
     int font_size = 32;
@@ -83,8 +83,16 @@ void drawRuanganRead(windowModel *windowM)
 
         if (res == 2)
         {
-            deleteRuangan(windowM->dbConn, windowM->focusedData.ruangan);
-            windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+            QUERYSTATUS sqlRes = deleteRuangan(windowM->dbConn, windowM->focusedData.ruangan);
+            if (sqlRes == SUCCESS)
+            {
+                windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                showToast(&windowM->toast, "Terhapus", "Ruangan berhasil dihapus!");
+            }
+            else
+            {
+                showToast(&windowM->toast, "Gagal Hapus!", "Ruangan sudah memiliki relasi!");
+            }
             windowM->isModalShown = 0;
         }
         else if (res >= 0 && res < 2)

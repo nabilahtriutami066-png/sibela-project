@@ -72,7 +72,7 @@ void clearFields(InputField fields[])
         fields[i].value.charLen = 0;
         strcpy(fields[i].value.text, "");
         fields[i].value.selected = -1;
-        for (int j = 0; i < 8; i++)
+        for (int j = 0; j < 8; j++)
         {
             strcpy(fields[i].value.multiValue[j], "\0");
         }
@@ -118,7 +118,6 @@ void popMultiSelectArray(SelectProp target, SelectProp domain[], int *nDomain)
     for (int i = idx; i < *nDomain; i++)
     {
         domain[i] = domain[i + 1];
-        printf("i:%d\n", i);
     }
     domain[*nDomain] = (SelectProp){};
 }

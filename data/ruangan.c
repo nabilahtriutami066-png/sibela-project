@@ -27,7 +27,6 @@ void findAllRuangan(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
     }
     SQLFreeHandle(SQL_HANDLE_STMT, stmt);
     *nPage = (int)ceil((float)count / 10);
-    printf("awikwok %d\n", *nPage);
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     int limit = 10;
     int offset = (datas->page - 1) * limit;
@@ -44,10 +43,8 @@ void findAllRuangan(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
 
     while (SQL_SUCCEEDED(ret = SQLFetch(stmt)))
     {
-        printf("Successfully fetched %lld rows\n", rowsFetched);
         char dateBuff[50];
         int i = (int)rowsFetched;
-        printf("awikwok %d\n", i);
 
         SQLGetData(stmt, 1, SQL_C_LONG,
                    &datas->ruangans[i].id_num, sizeof(datas->ruangans[i].id_num), NULL);
@@ -59,7 +56,6 @@ void findAllRuangan(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
                    &datas->ruangans[i].deskripsi_short, sizeof(datas->ruangans[i].deskripsi_short), NULL);
         SQLGetData(stmt, 5, SQL_C_CHAR,
                    &datas->ruangans[i].deskripsi, sizeof(datas->ruangans[i].deskripsi), NULL);
-        printf("ruangan %d: %s\n", i, datas->ruangans[i].deskripsi);
         rowsFetched++;
     }
     datas->nRuangan = rowsFetched;

@@ -11,6 +11,7 @@
 #include "../../../../../components/header.h"
 #include "../../../../../data/murid.h"
 #include "../../../../../constants/color.h"
+#include "../../../../../components/ui/inputBox.h"
 
 void drawJadwalUpdate(windowModel *windowM);
 

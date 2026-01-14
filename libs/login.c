@@ -36,7 +36,6 @@ void loginFunction(windowModel *windowM)
 
         if (loginStaf.id_num == -1)
             return;
-        // printf("loginaw: %d\n", strcmp(loginStaf.password, windowM->loginData.password.text));
 
         if (strcmp(loginStaf.password, windowM->loginData.password.text) == 0)
         {
@@ -80,7 +79,6 @@ void loginFunction(windowModel *windowM)
 
         if (loginMurid.id_num == -1)
             return;
-        // printf("loginaw: %d\n", strcmp(loginMurid.password, windowM->loginData.password.text));
 
         if (strcmp(loginMurid.password, windowM->loginData.password.text) == 0)
         {

@@ -37,10 +37,9 @@ void drawJadwalUpdate(windowModel *windowM)
         {
         case LONGTEXTINPUT:
         case NUMERICINPUT:
+        case DATETIMEINPUT:
         case TEXTINPUT:
-            DrawTextEx(windowM->fontStyle.medium, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, (Vector2){(int)textBox.x, (int)textBox.y - 44}, 40, 0, SIBELAWHITE);
-            DrawRectangleRoundedLines(textBox, 0.3, 0, windowM->curPos == i ? PRIMARY : SIBELAWHITE);
-            DrawTextEx(windowM->fontStyle.regular, windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, (Vector2){(int)textBox.x + 5, (int)textBox.y + 8}, 40, 0, SIBELAWHITE);
+            drawInputBox(windowM, &windowM->forms.staffPage[windowM->selectedPage].fields[i].value, textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, i, 0);
             break;
 
         case BUTTONINPUT:

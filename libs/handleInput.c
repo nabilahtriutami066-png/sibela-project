@@ -3,22 +3,48 @@
 void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, mutationFunc func, InputField fields[], fetcherFunc dataFetcher, windowModel *windowM)
 {
 
-    if (params->validation.isInputInvalid)
-    {
-        params->validation.isInputInvalid = false;
-        strcpy(params->validation.errMessage, "");
-    }
-
     switch (fieldType)
     {
     case DATEINPUT:
+        *ch = GetCharPressed();
+        while (*ch > 0)
+        {
+            if ((((*ch >= '0') && (*ch <= '9')) || *ch == '-' || *ch == ':') && (params->charLen < maxLen))
+            {
+                if (params->validation.isInputInvalid)
+                {
+                    params->validation.isInputInvalid = false;
+                    strcpy(params->validation.errMessage, "");
+                }
+                params->text[params->charLen] = (char)*ch;
+                params->text[(params->charLen) + 1] = '\0';
+                (params->charLen)++;
+            }
+
+            *ch = GetCharPressed();
+        }
+
+        if (IsKeyPressed(KEY_BACKSPACE))
+        {
+            (params->charLen)--;
+            if ((params->charLen) < 0)
+                (params->charLen) = 0;
+            params->text[params->charLen] = '\0';
+        }
+        break;
     case LONGTEXTINPUT:
+    case EMAILINPUT:
     case TEXTINPUT:
         *ch = GetCharPressed();
         while (*ch > 0)
         {
             if ((*ch >= 32) && (*ch <= 125) && (params->charLen < maxLen))
             {
+                if (params->validation.isInputInvalid)
+                {
+                    params->validation.isInputInvalid = false;
+                    strcpy(params->validation.errMessage, "");
+                }
                 params->text[params->charLen] = (char)*ch;
                 params->text[(params->charLen) + 1] = '\0';
                 (params->charLen)++;
@@ -41,6 +67,11 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
         {
             if ((*ch >= '0') && (*ch <= '9') && (params->charLen < maxLen))
             {
+                if (params->validation.isInputInvalid)
+                {
+                    params->validation.isInputInvalid = false;
+                    strcpy(params->validation.errMessage, "");
+                }
                 params->text[params->charLen] = (char)*ch;
                 params->text[(params->charLen) + 1] = '\0';
                 (params->charLen)++;
@@ -88,20 +119,21 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
             }
             if (func != NULL && dataFetcher != NULL)
             {
+                int valid = 1;
+                for (int i = 1; i < windowM->forms.staffPage[windowM->selectedPage].nField; i++)
+                {
+                    valid = valid && validateInput(&fields[i]);
+                }
+                if (!valid)
+                {
+                    showToast(&windowM->toast, "Input tidak valid!", "Silahkan cek lagi data yang anda masukkan!");
+                    return;
+                }
                 func(fields, windowM->dbConn);
                 dataFetcher(&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
             }
-            // clearFields(fields);
-            for (int i = 0; i < 10; i++)
-            {
-                fields[i].value.charLen = 0;
-                strcpy(fields[i].value.text, "");
-                fields[i].value.selected = -1;
-                for (int j = 0; i < 8; i++)
-                {
-                    strcpy(fields[i].value.multiValue[j], "\0");
-                }
-            }
+            clearFields(fields);
+
             windowM->activeSubWindow = READ;
             break;
         }

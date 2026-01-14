@@ -61,6 +61,7 @@ set(PACKAGES
     data/jadwalMurid.c
     components/header.c
     components/ui/legend.c
+    components/ui/toast.c
 )
 
 add_executable(sibela main.c ${PACKAGES})

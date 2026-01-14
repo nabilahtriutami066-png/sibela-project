@@ -16,6 +16,7 @@
 #include "landingView.h"
 #include "memberView.h"
 #include "../components/ui/legend.h"
+#include "../components/ui/toast.h"
 
 void drawRootView(windowModel *windowM);
 

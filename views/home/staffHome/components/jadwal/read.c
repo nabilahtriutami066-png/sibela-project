@@ -3,12 +3,13 @@
 
 void drawJadwalRead(windowModel *windowM)
 {
-    int cell_width = 250;
+    int cell_width = 280;
     int cell_height = 50;
-    int start_x = 1920 / 2 - 600 + 100;
+    int start_x = 1920 / 2 - 600;
     int start_y = 1080 / 2 - 300;
     int padding = 5;
     int font_size = 32;
+    int materiPadding = 100;
     DrawTextEx(windowM->fontStyle.regular, "DATA JADWAL",
                (Vector2){start_x + 390,
                          start_y - 120},
@@ -17,11 +18,10 @@ void drawJadwalRead(windowModel *windowM)
     for (int col = 0; col < 5; col++)
     {
         Rectangle cellRect = {
-            start_x + col * cell_width,
+            col >= 3 ? start_x + col * cell_width + materiPadding : start_x + col * cell_width,
             start_y - cell_height,
-            cell_width,
+            col == 2 ? cell_width + materiPadding : cell_width,
             cell_height};
-        DrawRectangleLinesEx(cellRect, 1, SIBELAWHITE);
         DrawRectangleLinesEx(cellRect, 1, SIBELAWHITE);
     }
     DrawTextEx(windowM->fontStyle.regular, "id",
@@ -40,12 +40,12 @@ void drawJadwalRead(windowModel *windowM)
                font_size, 0,
                SIBELAWHITE);
     DrawTextEx(windowM->fontStyle.regular, "Jumlah Siswa",
-               (Vector2){start_x + 3 * cell_width + padding,
+               (Vector2){start_x + 3 * cell_width + padding + materiPadding,
                          start_y - cell_height + padding},
                font_size, 0,
                SIBELAWHITE);
     DrawTextEx(windowM->fontStyle.regular, "Waktu",
-               (Vector2){start_x + 4 * cell_width + padding,
+               (Vector2){start_x + 4 * cell_width + padding + materiPadding,
                          start_y - cell_height + padding},
                font_size, 0,
                SIBELAWHITE);
@@ -54,9 +54,9 @@ void drawJadwalRead(windowModel *windowM)
         for (int col = 0; col < 5; col++)
         {
             Rectangle cellRect = {
-                start_x + col * cell_width,
+                col >= 3 ? start_x + col * cell_width + materiPadding : start_x + col * cell_width,
                 start_y + row * cell_height,
-                cell_width,
+                col == 2 ? cell_width + materiPadding : cell_width,
                 cell_height};
             if (row == windowM->curPos)
             {
@@ -81,12 +81,12 @@ void drawJadwalRead(windowModel *windowM)
                    font_size, 0,
                    SIBELAWHITE);
         DrawTextEx(windowM->fontStyle.regular, TextFormat("%ld", windowM->datas.jadwalPertemuans[row].jumlah_murid),
-                   (Vector2){start_x + 3 * cell_width + padding,
+                   (Vector2){start_x + 3 * cell_width + padding + materiPadding,
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
         DrawTextEx(windowM->fontStyle.regular, windowM->datas.jadwalPertemuans[row].waktu,
-                   (Vector2){start_x + 4 * cell_width + padding,
+                   (Vector2){start_x + 4 * cell_width + padding + materiPadding,
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);

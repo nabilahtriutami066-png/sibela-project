@@ -158,6 +158,7 @@ void updateView(windowModel *windowM)
                 case KEY_N:
                     clearFields(windowM->forms.staffPage[windowM->currWindow].fields);
                     clearSelects(windowM->selectByPage.staffPage);
+
                     if (windowM->selectedPage == JADWAL)
                     {
                         strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[1].value.text, windowM->authUser.id);

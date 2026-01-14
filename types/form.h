@@ -16,7 +16,7 @@ typedef struct
     char multiValue[50][8];
     int charLen;
     int selected;
-    bool showSecret;  
+    bool showSecret;
     InputValidation validation;
 } InputParams;
 
@@ -27,6 +27,9 @@ typedef enum
     SHORTINPUT,
     NUMERICINPUT,
     DATEINPUT,
+    EMAILINPUT,
+    PHONENOINPUT,
+    DATETIMEINPUT,
     LONGTEXTINPUT,
     CUSTOMMODAL,
     CUSTOMMODALMULTI,

@@ -16,7 +16,6 @@ Staf findStafbyEmail(char email[], SQLHDBC *dbConn)
     SQLUSMALLINT rowStatus[100];
     foundRecord.id_num = -1;
 
-    printf("Finding staf\n");
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
 
     SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM staff WHERE email = ?", SQL_NTS);

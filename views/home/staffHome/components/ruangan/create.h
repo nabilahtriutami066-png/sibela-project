@@ -11,6 +11,7 @@
 #include "../../../../../components/header.h"
 #include "../../../../../data/ruangan.h"
 #include "../../../../../constants/color.h"
+#include "../../../../../components/ui/inputBox.h"
 
 void drawRuanganCreate(windowModel *windowM);
 

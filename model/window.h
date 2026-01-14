@@ -102,6 +102,13 @@ typedef struct
 
 typedef struct
 {
+    int isToastOpened;
+    char toastMessage[100];
+    char toastTitle[100];
+} TOAST;
+
+typedef struct
+{
     char nama[50];
     Texture2D image;
     char nim[20];
@@ -181,11 +188,14 @@ typedef struct
     float progress;
     LegendItem legends[MAX_LEGEND];
     PengajarHomeStates pengajarHomeState;
+    TOAST toast;
 } windowModel;
 
 void initForm(windowModel *windowM);
 void initAssets(windowModel *windowM);
 void initWindow(windowModel *windowM);
 void unloadAssets(windowModel *windowM);
+void closeToast(TOAST *toast);
+void showToast(TOAST *toast, char title[], char message[]);
 
 #endif

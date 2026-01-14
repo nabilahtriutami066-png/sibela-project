@@ -3,9 +3,9 @@
 
 void drawMapelRead(windowModel *windowM)
 {
-    int cell_width = 250;
+    int cell_width = 450;
     int cell_height = 50;
-    int start_x = 1920 / 2 - 600 + 100;
+    int start_x = 1920 / 2 - 600 + 250;
     int start_y = 1080 / 2 - 300;
     int padding = 5;
     int font_size = 32;

@@ -2,11 +2,21 @@
 
 int validateInput(InputField *input)
 {
-    int valid = 0;
+    int valid = 1;
     switch (input->type)
     {
+    case BUTTONINPUT:
+        return 1;
     case DATEINPUT:
-        valid = strlen(input->value.text) > 0 && strcspn(input->value.text, "-") != strlen(input->value.text) && strcspn(input->value.text, ":") != strlen(input->value.text);
+        valid = input->value.charLen > 0 && strcspn(input->value.text, "-") != input->value.charLen;
+        if (!valid)
+        {
+            input->value.validation.isInputInvalid = 1;
+            strcpy(input->value.validation.errMessage, "Tanggal Invalid");
+        }
+        break;
+    case DATETIMEINPUT:
+        valid = input->value.charLen > 0 && strcspn(input->value.text, "-") != input->value.charLen && strcspn(input->value.text, ":") != input->value.charLen;
         if (!valid)
         {
             input->value.validation.isInputInvalid = 1;
@@ -17,9 +27,29 @@ int validateInput(InputField *input)
     case CUSTOMMODALMULTI:
 
         break;
-    default:
-        valid = strlen(input->value.text) > 0;
+
+    case EMAILINPUT:
+        valid = strcspn(input->value.text, "@") != input->value.charLen && strcspn(input->value.text, ".") != input->value.charLen;
+        if (!valid)
+        {
+            input->value.validation.isInputInvalid = 1;
+            strcpy(input->value.validation.errMessage, "EMAIL invalid!");
+        }
         break;
+    default:
+        valid = input->value.charLen > 0;
+        if (!valid)
+        {
+            input->value.validation.isInputInvalid = 1;
+            strcpy(input->value.validation.errMessage, "Input tidak boleh kosong!");
+        }
+        break;
+    }
+    valid = input->value.charLen > 0;
+    if (!valid)
+    {
+        input->value.validation.isInputInvalid = 1;
+        strcpy(input->value.validation.errMessage, "Input tidak boleh kosong!");
     }
 
     return valid;

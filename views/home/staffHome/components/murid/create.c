@@ -35,6 +35,8 @@ void drawMuridCreate(windowModel *windowM)
         };
         switch (windowM->forms.staffPage[windowM->selectedPage].fields[i].type)
         {
+        case DATEINPUT:
+        case EMAILINPUT:
         case NUMERICINPUT:
         case TEXTINPUT:
             drawInputBox(windowM, &windowM->forms.staffPage[windowM->selectedPage].fields[i].value, textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, i, 0);

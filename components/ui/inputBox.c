@@ -14,7 +14,7 @@ void drawInputBox(windowModel *windowM,
 
     if (isSecret && !eyeLoaded)
     {
-        eyeOpen  = LoadTexture("assets/images/BUKA.png");
+        eyeOpen = LoadTexture("assets/images/BUKA.png");
         eyeClose = LoadTexture("assets/images/TUTUP.png");
         eyeLoaded = true;
     }
@@ -27,15 +27,15 @@ void drawInputBox(windowModel *windowM,
     DrawRectangleRoundedLines(
         textBox,
         0.3, 0,
-        input->validation.isInputInvalid ? RED :
+
         (((windowM->currWindow == LOGINMURID ||
            windowM->currWindow == LOGINPENGAJAR ||
            windowM->currWindow == LOGINSTAFF)
-           ? windowM->loginData.activeInput
-           : windowM->curPos) == posIndex
-           ? PRIMARY
-           : SIBELAWHITE)
-    );
+              ? windowM->loginData.activeInput
+              : windowM->curPos) == posIndex
+             ? PRIMARY
+         : input->validation.isInputInvalid ? RED
+                                            : SIBELAWHITE));
 
     if (input->validation.isInputInvalid)
     {
@@ -49,8 +49,7 @@ void drawInputBox(windowModel *windowM,
         textBox.x + textBox.width - 45,
         textBox.y + 10,
         35,
-        35
-    };
+        35};
 
     if (isSecret &&
         CheckCollisionPointRec(GetMousePosition(), eyeBtn) &&
@@ -67,8 +66,7 @@ void drawInputBox(windowModel *windowM,
                 (int)textBox.x + 16 + i * 28,
                 (int)textBox.y + textBox.height / 2,
                 12,
-                SIBELAWHITE
-            );
+                SIBELAWHITE);
         }
     }
     else
@@ -88,7 +86,6 @@ void drawInputBox(windowModel *windowM,
             eyeBtn,
             (Vector2){0, 0},
             0,
-            WHITE
-        );
+            WHITE);
     }
 }
