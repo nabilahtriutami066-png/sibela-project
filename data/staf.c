@@ -144,20 +144,54 @@ QUERYSTATUS createStaff(InputField fields[], SQLHDBC *dbConn)
     SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newStaff.email), 0, newStaff.email, 0, NULL);
     ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
+    SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
+
+    switch (ret)
     {
-        ret = SQLFetch(stmt);
+    case SQL_ERROR:
+        return FAILED;
+
+    default:
+        return SUCCESS;
     }
+}
+
+QUERYSTATUS createStaffManajer(InputField fields[], SQLHDBC *dbConn)
+{
+    SQLHSTMT stmt;
+    SQLRETURN ret;
+    int count;
+    SQLUSMALLINT rowStatus[100];
+    char *dateBuff;
+
+    Staf newStaff;
+
+    strcpy(newStaff.nama, fields[1].value.text);
+    strcpy(newStaff.tanggal_lahir, fields[2].value.text);
+    strcpy(newStaff.no_hp, fields[3].value.text);
+    strcpy(newStaff.password, fields[4].value.text);
+    strcpy(newStaff.email, fields[5].value.text);
+    strcpy(newStaff.role, fields[6].value.text);
+
+    SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
+    SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO staff (nama, tanggal_lahir, no_hp, password, email, role) VALUES (?,?,?,?,?,?)", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newStaff.nama), 0, newStaff.nama, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_DATE, strlen(newStaff.tanggal_lahir), 0, newStaff.tanggal_lahir, 0, NULL);
+    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newStaff.no_hp), 0, newStaff.no_hp, 0, NULL);
+    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newStaff.password), 0, newStaff.password, 0, NULL);
+    SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newStaff.email), 0, newStaff.email, 0, NULL);
+    SQLBindParameter(stmt, 6, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newStaff.role), 0, newStaff.role, 0, NULL);
+    ret = SQLExecute(stmt);
 
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }
 
@@ -188,20 +222,15 @@ QUERYSTATUS updateStaff(InputField fields[], SQLHDBC *dbConn)
     SQLBindParameter(stmt, 6, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.id_staff), 0, updatedStaff.id_staff, 0, NULL);
     ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
-
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }
 
@@ -217,19 +246,14 @@ QUERYSTATUS deleteStaff(SQLHDBC *dbConn, Staf updatedStaff)
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.id_staff), 0, updatedStaff.id_staff, 0, NULL);
     ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
-
-    SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
+        SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }

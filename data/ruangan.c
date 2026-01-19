@@ -128,20 +128,15 @@ QUERYSTATUS createRuangan(InputField fields[], SQLHDBC *dbConn)
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newRuangan.deskripsi), 0, newRuangan.deskripsi, 0, NULL);
     ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
-
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }
 
@@ -167,20 +162,15 @@ QUERYSTATUS updateRuangan(InputField fields[], SQLHDBC *dbConn)
 
     ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
-
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }
 
@@ -196,19 +186,14 @@ QUERYSTATUS deleteRuangan(SQLHDBC *dbConn, Ruangan uptadeRuangan)
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(uptadeRuangan.id_ruangan), 0, uptadeRuangan.id_ruangan, 0, NULL);
     ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
-
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }

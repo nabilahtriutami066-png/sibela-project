@@ -54,6 +54,8 @@ void drawStaffHome(windowModel *windowM)
                 DrawMetricCard("Jumlah", TextFormat("%d", windowM->datas.pembayaranReport.totalThisMonth), (Vector2){.x = 1920 / 2 - 600 + 100 + 100 + 210, .y = 200}, 200, &windowM->fontStyle);
                 break;
             case MANAJERSTAFF:
+                drawStaffRead(windowM);
+                DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
                 break;
             }
         }
@@ -64,6 +66,18 @@ void drawStaffHome(windowModel *windowM)
             case PEMBAYARANREPORT:
                 break;
             case MANAJERSTAFF:
+                drawStaffCreate(windowM);
+                break;
+            }
+        }
+        if (windowM->activeSubWindow == UPDATE)
+        {
+            switch (windowM->selectedPage)
+            {
+            case PEMBAYARANREPORT:
+                break;
+            case MANAJERSTAFF:
+                drawStaffUpdate(windowM);
                 break;
             }
         }

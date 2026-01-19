@@ -35,8 +35,7 @@ void drawRuanganUpdate(windowModel *windowM)
         };
         switch (windowM->forms.staffPage[windowM->selectedPage].fields[i].type)
         {
-        case NUMERICINPUT:
-        case TEXTINPUT:
+        default:
             drawInputBox(windowM, &windowM->forms.staffPage[windowM->selectedPage].fields[i].value, textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, i, 0);
             break;
 

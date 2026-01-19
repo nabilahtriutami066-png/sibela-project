@@ -18,19 +18,26 @@ void initForm(windowModel *windowM)
 {
     windowM->forms.staffPage[STAFF].fields[1] = (InputField){.label = "Nama", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[STAFF].fields[2] = (InputField){.label = "Tanggal Lahir", .type = DATEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[STAFF].fields[3] = (InputField){.label = "No. HP", .type = NUMERICINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[STAFF].fields[3] = (InputField){.label = "No. HP", .type = PHONENOINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[STAFF].fields[4] = (InputField){.label = "Password", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[STAFF].fields[5] = (InputField){.label = "Email", .type = EMAILINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[STAFF].fields[6] = (InputField){.label = "Submit", .type = BUTTONINPUT};
+    windowM->forms.staffPage[MANAJERSTAFF].fields[1] = (InputField){.label = "Nama", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[MANAJERSTAFF].fields[2] = (InputField){.label = "Tanggal Lahir", .type = DATEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[MANAJERSTAFF].fields[3] = (InputField){.label = "No. HP", .type = PHONENOINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[MANAJERSTAFF].fields[4] = (InputField){.label = "Password", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[MANAJERSTAFF].fields[5] = (InputField){.label = "Email", .type = EMAILINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[MANAJERSTAFF].fields[6] = (InputField){.label = "Role", .type = ROLEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[MANAJERSTAFF].fields[7] = (InputField){.label = "Submit", .type = BUTTONINPUT};
     windowM->forms.staffPage[MURID].fields[1] = (InputField){.label = "Nama", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[MURID].fields[2] = (InputField){.label = "Tanggal Lahir", .type = DATEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[MURID].fields[3] = (InputField){.label = "No HP", .type = NUMERICINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[MURID].fields[3] = (InputField){.label = "No HP", .type = PHONENOINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[MURID].fields[4] = (InputField){.label = "Password", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[MURID].fields[5] = (InputField){.label = "Tingkat", .type = NUMERICINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[MURID].fields[5] = (InputField){.label = "Tingkat", .type = TINGKATINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[MURID].fields[6] = (InputField){.label = "Submit", .type = BUTTONINPUT};
     windowM->forms.staffPage[PENGAJAR].fields[1] = (InputField){.label = "Nama", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[PENGAJAR].fields[2] = (InputField){.label = "Tanggal Lahir", .type = DATEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[PENGAJAR].fields[3] = (InputField){.label = "No HP", .type = NUMERICINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[PENGAJAR].fields[3] = (InputField){.label = "No HP", .type = PHONENOINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[PENGAJAR].fields[4] = (InputField){.label = "Password", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[PENGAJAR].fields[5] = (InputField){.label = "Submit", .type = BUTTONINPUT};
     windowM->forms.staffPage[RUANGAN].fields[1] = (InputField){.label = "Lokasi", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
@@ -39,6 +46,7 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[MAPEL].fields[1] = (InputField){.label = "Nama Mapel", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[MAPEL].fields[2] = (InputField){.label = "Submit", .type = BUTTONINPUT};
     windowM->forms.staffPage[STAFF].nField = 6;
+    windowM->forms.staffPage[MANAJERSTAFF].nField = 7;
     windowM->forms.staffPage[MURID].nField = 6;
     windowM->forms.staffPage[MAPEL].nField = 2;
     windowM->forms.staffPage[JADWAL].nField = 7;
@@ -46,11 +54,13 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[RUANGAN].nField = 3;
     windowM->forms.staffPage[PEMBAYARAN].nField = 4;
     windowM->forms.staffPage[STAFF].fieldPerPage = 4;
+    windowM->forms.staffPage[MANAJERSTAFF].fieldPerPage = 4;
     windowM->forms.staffPage[MAPEL].fieldPerPage = 2;
     windowM->forms.staffPage[MURID].fieldPerPage = 4;
     windowM->forms.staffPage[PENGAJAR].fieldPerPage = 5;
     windowM->forms.staffPage[RUANGAN].fieldPerPage = 3;
     windowM->forms.staffPage[STAFF].selectedField = -1;
+    windowM->forms.staffPage[MANAJERSTAFF].selectedField = -1;
     windowM->forms.staffPage[MAPEL].selectedField = -1;
     windowM->forms.staffPage[MURID].selectedField = -1;
     windowM->forms.staffPage[PENGAJAR].selectedField = -1;
@@ -58,6 +68,8 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[JADWAL].fieldPerPage = 4;
     windowM->forms.staffPage[PEMBAYARAN].fieldPerPage = 4;
     windowM->forms.staffPage[STAFF].createFunc = createStaff;
+    windowM->forms.staffPage[MANAJERSTAFF].createFunc = createStaffManajer;
+    windowM->forms.staffPage[STAFF].updateFunction = updateStaff;
     windowM->forms.staffPage[STAFF].updateFunction = updateStaff;
     windowM->forms.staffPage[MAPEL].createFunc = createMapel;
     windowM->forms.staffPage[MAPEL].updateFunction = updateMapel;
@@ -71,6 +83,7 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[PEMBAYARAN].createFunc = createPembayaran;
     windowM->forms.staffPage[JADWAL].updateFunction = updateJadwalPertemuan;
     windowM->dataFetchers.staffPage[STAFF] = findAllStaff;
+    windowM->dataFetchers.staffPage[MANAJERSTAFF] = findAllStaff;
     windowM->dataFetchers.staffPage[MURID] = findAllMurid;
     windowM->dataFetchers.staffPage[PENGAJAR] = findAllPengajar;
     windowM->dataFetchers.staffPage[RUANGAN] = findAllRuangan;
@@ -96,7 +109,7 @@ void initForm(windowModel *windowM)
 
     windowM->forms.staffPage[PEMBAYARAN].fields[1] = (InputField){.label = "SISWA", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[PEMBAYARAN].fields[2] = (InputField){.label = "Jumlah Bayar", .type = NUMERICINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[PEMBAYARAN].fields[3] = (InputField){.label = "METODE PEMBAYARAN", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[PEMBAYARAN].fields[3] = (InputField){.label = "METODE PEMBAYARAN", .type = PAYMENTMETHODINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[PEMBAYARAN].fields[4] = (InputField){.label = "SUBMIT", .type = BUTTONINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[PEMBAYARAN].optionFetcher[1] = findAllMuridSelect;
     windowM->forms.staffPage[PEMBAYARAN].selectedField = -1;

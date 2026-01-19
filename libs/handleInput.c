@@ -32,9 +32,7 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
             params->text[params->charLen] = '\0';
         }
         break;
-    case LONGTEXTINPUT:
-    case EMAILINPUT:
-    case TEXTINPUT:
+    default:
         *ch = GetCharPressed();
         while (*ch > 0)
         {
@@ -61,6 +59,8 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
             params->text[params->charLen] = '\0';
         }
         break;
+    case PHONENOINPUT:
+    case TINGKATINPUT:
     case NUMERICINPUT:
         *ch = GetCharPressed();
         while (*ch > 0)
@@ -129,12 +129,19 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
                     showToast(&windowM->toast, "Input tidak valid!", "Silahkan cek lagi data yang anda masukkan!");
                     return;
                 }
-                func(fields, windowM->dbConn);
-                dataFetcher(&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                QUERYSTATUS resQuery = func(fields, windowM->dbConn);
+                if (resQuery == FAILED)
+                {
+                    showToast(&windowM->toast, "Kesalahan", "Terjadi kesalahan saat submit form!");
+                    return;
+                }
+                else
+                {
+                    dataFetcher(&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                    clearFields(fields);
+                    windowM->activeSubWindow = READ;
+                }
             }
-            clearFields(fields);
-
-            windowM->activeSubWindow = READ;
             break;
         }
         break;

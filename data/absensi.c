@@ -113,21 +113,16 @@ QUERYSTATUS createAbsensi(MuridAbsensi murids[], int nMurid, char id_pert[], SQL
             SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, strlen(newAbsensi.alasan) > 0 ? SQL_VARCHAR : SQL_NULL_DATA, strlen(newAbsensi.alasan), 0, newAbsensi.alasan, 0, NULL);
         }
         ret = SQLExecute(stmt);
-
-        if (SQL_SUCCEEDED(ret))
-        {
-            ret = SQLFetch(stmt);
-        }
     }
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }
 
@@ -145,19 +140,14 @@ QUERYSTATUS deleteteAbsensiByPertemuanIDMuridId(MuridAbsensi murid, char id_pert
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(id_pert), 0, id_pert, 0, NULL);
     ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
-
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }

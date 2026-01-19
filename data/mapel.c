@@ -118,20 +118,15 @@ QUERYSTATUS createMapel(InputField fields[], SQLHDBC *dbConn)
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMapel.nama_mapel), 0, newMapel.nama_mapel, 0, NULL);
     ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
-
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }
 
@@ -154,20 +149,15 @@ QUERYSTATUS updateMapel(InputField fields[], SQLHDBC *dbConn)
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMapel.id_mapel), 0, updatedMapel.id_mapel, 0, NULL);
     ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
-
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }
 
@@ -183,18 +173,13 @@ QUERYSTATUS deleteMapel(SQLHDBC *dbConn, Mapel updatedMapel)
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMapel.id_mapel), 0, updatedMapel.id_mapel, 0, NULL);
     ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
-
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }

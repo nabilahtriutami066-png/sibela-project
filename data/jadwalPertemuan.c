@@ -192,10 +192,6 @@ QUERYSTATUS createJadwalPertemuan(InputField fields[], SQLHDBC *dbConn)
     ret = SQLExecute(stmt);
 
     SQLBindCol(stmt, 1, SQL_C_CHAR, newJadwalPertemuan.id_pertemuan, sizeof(newJadwalPertemuan.id_pertemuan), &idind);
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
 
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
@@ -203,11 +199,11 @@ QUERYSTATUS createJadwalPertemuan(InputField fields[], SQLHDBC *dbConn)
 
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }
 
@@ -240,22 +236,17 @@ QUERYSTATUS updateJadwalPertemuan(InputField fields[], SQLHDBC *dbConn)
     SQLBindParameter(stmt, 6, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedJadwalPertemuan.id_pertemuan), 0, updatedJadwalPertemuan.id_pertemuan, 0, NULL);
     ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
-
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     createJadwalMurid(fields[6].value, updatedJadwalPertemuan.id_pertemuan, dbConn);
 
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }
 
@@ -273,18 +264,13 @@ QUERYSTATUS deleteJadwalPertemuan(SQLHDBC *dbConn, JadwalPertemuanWithDetails up
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedPertemuan.id_pertemuan), 0, updatedPertemuan.id_pertemuan, 0, NULL);
     ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
-
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
     switch (ret)
     {
-    case SQL_SUCCESS:
-        return SUCCESS;
+    case SQL_ERROR:
+        return FAILED;
 
     default:
-        return FAILED;
+        return SUCCESS;
     }
 }

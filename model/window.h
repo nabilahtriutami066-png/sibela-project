@@ -137,7 +137,7 @@ typedef struct
 
 typedef struct
 {
-    FORM staffPage[10];
+    FORM staffPage[14];
     FORM pengajarPage[10];
 } FORMBYPAGE;
 

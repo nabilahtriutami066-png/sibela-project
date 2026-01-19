@@ -194,6 +194,15 @@ void updateView(windowModel *windowM)
                         copyStringData(windowM->focusedData.staff.password, &windowM->forms.staffPage[STAFF].fields[4].value);
                         copyStringData(windowM->focusedData.staff.email, &windowM->forms.staffPage[STAFF].fields[5].value);
                         break;
+                    case MANAJERSTAFF:
+                        copyStringData(windowM->focusedData.staff.id_staff, &windowM->forms.staffPage[STAFF].fields[0].value);
+                        copyStringData(windowM->focusedData.staff.nama, &windowM->forms.staffPage[STAFF].fields[1].value);
+                        copyStringData(windowM->focusedData.staff.tanggal_lahir, &windowM->forms.staffPage[STAFF].fields[2].value);
+                        copyStringData(windowM->focusedData.staff.no_hp, &windowM->forms.staffPage[STAFF].fields[3].value);
+                        copyStringData(windowM->focusedData.staff.password, &windowM->forms.staffPage[STAFF].fields[4].value);
+                        copyStringData(windowM->focusedData.staff.email, &windowM->forms.staffPage[STAFF].fields[5].value);
+                        copyStringData(windowM->focusedData.staff.role, &windowM->forms.staffPage[STAFF].fields[6].value);
+                        break;
                     case MURID:
                         char tingkatBuff[4];
                         sprintf(tingkatBuff, "%d", windowM->focusedData.murid.tingkat);

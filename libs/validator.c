@@ -3,12 +3,23 @@
 int validateInput(InputField *input)
 {
     int valid = 1;
+
+    if (input->type != CUSTOMMODAL && input->type != CUSTOMMODALMULTI)
+    {
+        valid = input->value.charLen > 0;
+        if (!valid)
+        {
+            input->value.validation.isInputInvalid = 1;
+            strcpy(input->value.validation.errMessage, "Input tidak boleh kosong!");
+        }
+    }
+
     switch (input->type)
     {
     case BUTTONINPUT:
         return 1;
     case DATEINPUT:
-        valid = input->value.charLen > 0 && strcspn(input->value.text, "-") != input->value.charLen;
+        valid = valid && input->value.charLen > 0 && strcspn(input->value.text, "-") != input->value.charLen;
         if (!valid)
         {
             input->value.validation.isInputInvalid = 1;
@@ -16,7 +27,7 @@ int validateInput(InputField *input)
         }
         break;
     case DATETIMEINPUT:
-        valid = input->value.charLen > 0 && strcspn(input->value.text, "-") != input->value.charLen && strcspn(input->value.text, ":") != input->value.charLen;
+        valid = valid && input->value.charLen > 0 && strcspn(input->value.text, "-") != input->value.charLen && strcspn(input->value.text, ":") != input->value.charLen;
         if (!valid)
         {
             input->value.validation.isInputInvalid = 1;
@@ -28,28 +39,55 @@ int validateInput(InputField *input)
 
         break;
 
+    case TINGKATINPUT:
+        valid = valid && strcmp(input->value.text, "10") == 0 || strcmp(input->value.text, "11") == 0 || strcmp(input->value.text, "12") == 0;
+        if (!valid)
+        {
+            input->value.validation.isInputInvalid = 1;
+            strcpy(input->value.validation.errMessage, "Tingkat hanya bisa bernilai 10, 11, atau 12!");
+        }
+        break;
+    case PAYMENTMETHODINPUT:
+        valid = valid && strcmp(input->value.text, "TUNAI") == 0 || strcmp(input->value.text, "TRANSFER") == 0;
+        if (!valid)
+        {
+            input->value.validation.isInputInvalid = 1;
+            strcpy(input->value.validation.errMessage, "Metode hanya bisa bernilai 'TRANSFER' atau 'TUNAI'");
+        }
+        break;
     case EMAILINPUT:
-        valid = strcspn(input->value.text, "@") != input->value.charLen && strcspn(input->value.text, ".") != input->value.charLen;
+        valid = valid && strcspn(input->value.text, "@") != input->value.charLen && strcspn(input->value.text, ".") != input->value.charLen;
         if (!valid)
         {
             input->value.validation.isInputInvalid = 1;
             strcpy(input->value.validation.errMessage, "EMAIL invalid!");
         }
         break;
+    case PHONENOINPUT:
+        valid = valid && strcspn(input->value.text, "0") == 0 && input->value.charLen <= 13 && input->value.charLen >= 10;
+        if (!valid)
+        {
+            input->value.validation.isInputInvalid = 1;
+            strcpy(input->value.validation.errMessage, "No. HP invalid!");
+        }
+        break;
+
+    case ROLEINPUT:
+        valid = valid && strcmp(input->value.text, "FRONTDESK") == 0 || strcmp(input->value.text, "MANAJER") == 0;
+        if (!valid)
+        {
+            input->value.validation.isInputInvalid = 1;
+            strcpy(input->value.validation.errMessage, "Role hanya bisa bernilai 'FRONTDESK' atau 'MANAJER'");
+        }
+        break;
     default:
-        valid = input->value.charLen > 0;
+        valid = valid && input->value.charLen > 0;
         if (!valid)
         {
             input->value.validation.isInputInvalid = 1;
             strcpy(input->value.validation.errMessage, "Input tidak boleh kosong!");
         }
         break;
-    }
-    valid = input->value.charLen > 0;
-    if (!valid)
-    {
-        input->value.validation.isInputInvalid = 1;
-        strcpy(input->value.validation.errMessage, "Input tidak boleh kosong!");
     }
 
     return valid;

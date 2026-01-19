@@ -23,20 +23,19 @@ void drawPembayaranCreate(windowModel *windowM)
     {
         Rectangle textBox = {
             1920 / 2.0f - 300,
-            start_y + 100 + (i - 1 - windowM->forms.staffPage[windowM->selectedPage].offset) * 150,
+            start_y + 200 + (i - 1 - windowM->forms.staffPage[windowM->selectedPage].offset) * 150,
             600,
             63,
         };
         Rectangle buttonBox = {
             1920 / 2.0f - 80,
-            start_y + 100 + (i - 1 - windowM->forms.staffPage[windowM->selectedPage].offset) * 150,
+            start_y + 200 + (i - 1 - windowM->forms.staffPage[windowM->selectedPage].offset) * 150,
             160,
             67,
         };
         switch (windowM->forms.staffPage[windowM->selectedPage].fields[i].type)
         {
-        case NUMERICINPUT:
-        case TEXTINPUT:
+        default:
             drawInputBox(windowM, &windowM->forms.staffPage[windowM->selectedPage].fields[i].value, textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, i, 0);
             break;
 

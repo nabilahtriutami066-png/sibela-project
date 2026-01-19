@@ -152,31 +152,39 @@ QUERYSTATUS createPembayaran(InputField fields[], SQLHDBC *dbConn)
     strcpy(newPayment.id_staff, fields[0].value.text);
     strcpy(newPayment.id_murid, fields[1].value.text);
     // strcpy(newPayment.jumlah_pembayaran, fields[2].value.text);
-    newPayment.jumlah_pembayaran = (double)atoi(fields[2].value.text);
+    newPayment.jumlah_pembayaran = (double)(atoi(fields[2].value.text));
+    int jumPem = atoi(fields[2].value.text);
     strcpy(newPayment.mtd_pembayaran, fields[3].value.text);
-
+    printf("%s, %s, %lf, %d, %d, %s\n", newPayment.id_staff, newPayment.id_murid, newPayment.jumlah_pembayaran, jumPem, newPayment.dikonfirmasi, newPayment.mtd_pembayaran);
     // if (newPayment.jumlah_pembayaran <= 0)
     // return FAILED;
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO pembayaran (id_staff, dikonfirmasi, id_murid, jumlah_pembayaran, mtd_pembayaran) VALUES (?,?,?,?,?)", SQL_NTS);
-    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newPayment.id_staff), 0, newPayment.id_staff, 0, NULL);
-    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_BIT, SQL_BIT, sizeof(int), 0, &newPayment.dikonfirmasi, 0, NULL);
-    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newPayment.id_murid), 0, newPayment.id_murid, 0, NULL);
-    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_DOUBLE, SQL_NUMERIC, sizeof(double), 0, &newPayment.jumlah_pembayaran, 0, NULL);
-    SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newPayment.mtd_pembayaran), 0, newPayment.mtd_pembayaran, 0, NULL);
-    ret = SQLExecute(stmt);
 
-    if (SQL_SUCCEEDED(ret))
-    {
-        ret = SQLFetch(stmt);
-    }
+    char query[180];
+    sprintf(query, "INSERT INTO pembayaran (id_staff, dikonfirmasi, id_murid, jumlah_pembayaran, mtd_pembayaran) VALUES ('%s',%d,'%s',%d,'%s')", newPayment.id_staff, 1, newPayment.id_murid, jumPem, newPayment.mtd_pembayaran);
 
-    SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
+    // SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO pembayaran (id_staff, dikonfirmasi, id_murid, jumlah_pembayaran, mtd_pembayaran) VALUES (?,?,?,?,?)", SQL_NTS);
+    // SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newPayment.id_staff), 0, newPayment.id_staff, 0, NULL);
+    // SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_BIT, SQL_BIT, sizeof(int), 0, &newPayment.dikonfirmasi, 0, NULL);
+    // SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newPayment.id_murid), 0, newPayment.id_murid, 0, NULL);
+    // SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, sizeof(int), 0, &jumPem, 0, NULL);
+    // SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newPayment.mtd_pembayaran), 0, newPayment.mtd_pembayaran, 0, NULL);
+    printf("query: %s\n", query);
+    // SQLPrepare(stmt, (SQLCHAR *)query, SQL_NTS);
+    // ret = SQLExecute(stmt);
+    ret = SQLExecDirect(stmt, (SQLCHAR *)query, SQL_NTS);
+
+        SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)
     {
+    case SQL_SUCCESS_WITH_INFO:
     case SQL_SUCCESS:
         return SUCCESS;
+
+    case SQL_INVALID_HANDLE:
+        printf("awikwok err\n");
+        return FAILED;
 
     default:
         return FAILED;
