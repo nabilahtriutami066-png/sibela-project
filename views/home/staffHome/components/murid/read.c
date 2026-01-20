@@ -3,6 +3,8 @@
 
 void drawMuridRead(windowModel *windowM)
 {
+    int row;
+    int i = 1;
     int cell_width = 250;
     int cell_height = 50;
     int start_x = 1920 / 2 - 600 + 100;
@@ -39,7 +41,7 @@ void drawMuridRead(windowModel *windowM)
                          start_y - cell_height + padding},
                font_size, 0,
                SIBELAWHITE);
-    for (int row = 0; row < windowM->datas.nMurid; row++)
+    for (row = 0; row < windowM->datas.nMurid; row++)
     {
         for (int col = 0; col < 3; col++)
         {
@@ -72,8 +74,7 @@ void drawMuridRead(windowModel *windowM)
                    SIBELAWHITE);
     }
     DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
-               (Vector2){300 + (1620 / 2 - 30),
-                         1000},
+               (Vector2){start_x , start_y + (row * cell_height) + 30},
                40, 0,
                SIBELAWHITE);
     if (windowM->isModalShown)

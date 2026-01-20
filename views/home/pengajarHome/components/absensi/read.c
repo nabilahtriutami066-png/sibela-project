@@ -3,6 +3,7 @@
 
 void drawAbsensiPengajarRead(windowModel *windowM)
 {
+    int row;
     int cell_width = 250;
     int cell_height = 50;
     int start_x = 300 + 1620 / 2;
@@ -18,7 +19,7 @@ void drawAbsensiPengajarRead(windowModel *windowM)
                    64, 0,
                    SIBELAWHITE);
 
-        for (int row = 0; row < windowM->datas.nJadwalPertemuan; row++)
+        for (row = 0; row < windowM->datas.nJadwalPertemuan; row++)
         {
             if (windowM->curPos == row && row < windowM->datas.nJadwalPertemuan)
             {
@@ -27,8 +28,7 @@ void drawAbsensiPengajarRead(windowModel *windowM)
             DrawMeetingPengajarCard(windowM->datas.jadwalPertemuans[row], (Vector2){start_x - 400, start_y + row * 200}, 800, windowM->fontStyle, windowM->curPos == row);
         }
         DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
-                   (Vector2){300 + (1620 / 2 - 50),
-                             1000},
+                   (Vector2){start_x , start_y + (row * cell_height) + 30},
                    40, 0,
                    SIBELAWHITE);
         break;
