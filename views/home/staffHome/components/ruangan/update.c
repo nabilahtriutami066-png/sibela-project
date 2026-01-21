@@ -40,14 +40,39 @@ void drawRuanganUpdate(windowModel *windowM)
             break;
 
         case BUTTONINPUT:
-            if (windowM->curPos == i)
-            {
-                DrawRectangleRounded(buttonBox, 0.3, 0, PRIMARY);
-            }
-            else
-                DrawRectangleRoundedLines(buttonBox, 0.3, 0, SIBELAWHITE);
-            DrawTextEx(windowM->fontStyle.medium, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, (Vector2){(int)buttonBox.x + MeasureTextEx(windowM->fontStyle.medium, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, 40, 0).x / 2, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).y / 2 - 8}, 40, 0, SIBELAWHITE);
-            break;
+        {
+        const char *label =
+        windowM->forms.staffPage[windowM->selectedPage].fields[i].label;
+
+        Vector2 textSize = MeasureTextEx(
+        windowM->fontStyle.medium,
+        label,
+        40,
+        0
+        );
+
+        if (windowM->curPos == i)
+        {
+            DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
+        }
+        else
+        {
+            DrawRectangleRoundedLines(buttonBox, 0.3f, 0, SIBELAWHITE);
+        }
+
+        DrawTextEx(
+        windowM->fontStyle.medium,
+        label,
+        (Vector2){
+            buttonBox.x + buttonBox.width  / 2 - textSize.x / 2,
+            buttonBox.y + buttonBox.height / 2 - textSize.y / 2
+        },
+        40,
+        0,
+        SIBELAWHITE
+        );
+        }
+        break;
         }
     }
 }
