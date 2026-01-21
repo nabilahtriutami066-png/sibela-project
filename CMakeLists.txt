@@ -62,6 +62,7 @@ set(PACKAGES
     components/header.c
     components/ui/legend.c
     components/ui/toast.c
+    components/ui/welcomePage.c
 )
 
 add_executable(sibela main.c ${PACKAGES})

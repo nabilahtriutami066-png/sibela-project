@@ -12,6 +12,7 @@
 #include "../../../components/ui/sortControl.h"
 #include "../../../data/staf.h"
 #include "../../../constants/color.h"
+#include "../../../components/ui/welcomePage.h"
 #include "components/Materi/create.h"
 #include "components/jadwal/read.h"
 #include "components/Materi/read.h"

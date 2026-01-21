@@ -3,6 +3,7 @@
 void updateView(windowModel *windowM)
 {
     windowM->mousePosition = GetMousePosition();
+    time(&windowM->time);
     if (windowM->isLoading)
     {
         windowM->loadingTime += GetFrameTime();

@@ -154,8 +154,13 @@ void initAssets(windowModel *windowM)
 
     // FONTS
     windowM->fontStyle.medium = LoadFontEx("assets/fonts/Poppins-Medium.ttf", 224, 0, 250);
+    windowM->fontStyle.thin = LoadFontEx("assets/fonts/Poppins-Thin.ttf", 224, 0, 250);
     windowM->fontStyle.regular = LoadFontEx("assets/fonts/Poppins-Regular.ttf", 224, 0, 250);
     windowM->fontStyle.mediumItalic = LoadFontEx("assets/fonts/Poppins-MediumItalic.ttf", 224, 0, 250);
+    windowM->fontStyle.semiBold = LoadFontEx("assets/fonts/Poppins-SemiBold.ttf", 224, 0, 250);
+    windowM->fontStyle.bold = LoadFontEx("assets/fonts/Poppins-Bold.ttf", 224, 0, 250);
+    windowM->fontStyle.extraBold = LoadFontEx("assets/fonts/Poppins-ExtraBold.ttf", 224, 0, 250);
+    windowM->fontStyle.black = LoadFontEx("assets/fonts/Poppins-Black.ttf", 224, 0, 250);
     GuiSetFont(windowM->fontStyle.regular);
     GuiSetStyle(DEFAULT, TEXT_SIZE, (int)32);
     GuiSetStyle(DEFAULT, BASE_COLOR_NORMAL, 0x3A475000);
@@ -195,8 +200,13 @@ void unloadAssets(windowModel *windowM)
 {
     free(windowM->selectByPage.staffPage);
     UnloadFont(windowM->fontStyle.medium);
+    UnloadFont(windowM->fontStyle.thin);
     UnloadFont(windowM->fontStyle.regular);
     UnloadFont(windowM->fontStyle.mediumItalic);
+    UnloadFont(windowM->fontStyle.semiBold);
+    UnloadFont(windowM->fontStyle.bold);
+    UnloadFont(windowM->fontStyle.extraBold);
+    UnloadFont(windowM->fontStyle.black);
     UnloadTexture(windowM->images.logo);
     UnloadTexture(windowM->images.logoRobot);
     UnloadTexture(windowM->members[0].image);

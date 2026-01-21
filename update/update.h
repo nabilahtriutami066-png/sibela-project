@@ -10,6 +10,7 @@
 #include "../libs/utils.h"
 #include "../libs/login.h"
 #include "../libs/handleInput.h"
+#include "time.h"
 
 void updateView(windowModel *windowM);
 

@@ -57,6 +57,9 @@ void drawStaffHome(windowModel *windowM)
                 drawStaffRead(windowM);
                 DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
                 break;
+            default:
+                drawWelcomePage(windowM);
+                break;
             }
         }
         if (windowM->activeSubWindow == CREATE)
@@ -148,7 +151,7 @@ void drawStaffHome(windowModel *windowM)
                 DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
                 break;
             default:
-                DrawTextEx(windowM->fontStyle.medium, TextFormat("Halo, %s!", windowM->authUser.nama), (Vector2){300 + 1620 / 2 - MeasureTextEx(windowM->fontStyle.medium, TextFormat("Halo, %s!", windowM->authUser.nama), 80, 0).x / 2, 90}, 80, 0, SIBELAWHITE);
+                drawWelcomePage(windowM);
                 break;
             }
         }

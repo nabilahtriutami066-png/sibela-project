@@ -9,6 +9,7 @@
 #include "../../../model/window.h"
 #include "../../../libs/utils.h"
 #include "../../../components/header.h"
+#include "../../../components/ui/welcomePage.h"
 #include "../../../data/staf.h"
 #include "../../../constants/color.h"
 #include "components/staff/read.h"

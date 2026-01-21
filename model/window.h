@@ -71,9 +71,14 @@ typedef struct
 
 typedef struct
 {
+    Font thin;
     Font regular;
     Font medium;
     Font mediumItalic;
+    Font semiBold;
+    Font bold;
+    Font extraBold;
+    Font black;
 } FontStyles;
 
 typedef struct
@@ -189,6 +194,7 @@ typedef struct
     LegendItem legends[MAX_LEGEND];
     PengajarHomeStates pengajarHomeState;
     TOAST toast;
+    time_t time;
 } windowModel;
 
 void initForm(windowModel *windowM);
