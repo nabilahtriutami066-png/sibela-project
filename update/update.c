@@ -284,7 +284,10 @@ void updateView(windowModel *windowM)
                 break;
             case KEY_TAB:
                 if (windowM->forms.pengajarPage[windowM->selectedPage].selectedField == -1)
+                {
+                    windowM->curPos = 0;
                     windowM->activeSubWindow = READ;
+                }
                 else
                 {
                     windowM->curPos = windowM->forms.pengajarPage[windowM->selectedPage].selectedField;
@@ -359,10 +362,21 @@ void updateView(windowModel *windowM)
                 break;
 
             case KEY_N:
+                clearFields(windowM->forms.pengajarPage[windowM->currWindow].fields);
+                windowM->selectByPage.pengajarPage[windowM->selectedPage] = (Select){};
                 windowM->curPos = 1;
                 windowM->activeSubWindow = CREATE;
                 break;
             case KEY_U:
+                switch (windowM->selectedPage)
+                {
+                case MATERI:
+                    copyStringData(windowM->focusedData.materi.id_materi, &windowM->forms.pengajarPage[MATERI].fields[0].value);
+                    copySelectData(windowM->focusedData.materi.id_mapel, windowM->focusedData.materi.id_mapel, &windowM->selectByPage.pengajarPage[MATERI].selected);
+                    copyStringData(windowM->focusedData.materi.judul_materi, &windowM->forms.pengajarPage[MATERI].fields[2].value);
+                    copyStringData(windowM->focusedData.materi.isi_materi, &windowM->forms.pengajarPage[MATERI].fields[3].value);
+                    break;
+                }
                 windowM->curPos = 1;
                 windowM->activeSubWindow = UPDATE;
                 break;

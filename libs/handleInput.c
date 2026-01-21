@@ -94,16 +94,16 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
         case KEY_ENTER:
             if (windowM->currWindow == PENGAJARHOME && windowM->selectedPage == MATERI)
             {
-                strcpy(windowM->forms.pengajarPage[windowM->selectedPage].fields[1].value.text, windowM->selectByPage.pengajarPage[windowM->selectedPage].selected.value);
+                copyStringData(windowM->selectByPage.pengajarPage[windowM->selectedPage].selected.value, &windowM->forms.pengajarPage[windowM->selectedPage].fields[1].value);
                 windowM->selectByPage.pengajarPage[windowM->selectedPage].selected = (SelectProp){};
             }
             if (windowM->currWindow == STAFHOME && windowM->selectedPage == JADWAL)
             {
-                strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[2].value.text, windowM->selectByPage.staffPage[windowM->selectedPage][2].selected.value);
+                copyStringData(windowM->selectByPage.staffPage[windowM->selectedPage][2].selected.value, &windowM->forms.staffPage[windowM->selectedPage].fields[2].value);
                 windowM->selectByPage.staffPage[windowM->selectedPage][2].selected = (SelectProp){};
-                strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[3].value.text, windowM->selectByPage.staffPage[windowM->selectedPage][3].selected.value);
+                copyStringData(windowM->selectByPage.staffPage[windowM->selectedPage][3].selected.value, &windowM->forms.staffPage[windowM->selectedPage].fields[3].value);
                 windowM->selectByPage.staffPage[windowM->selectedPage][3].selected = (SelectProp){};
-                strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[4].value.text, windowM->selectByPage.staffPage[windowM->selectedPage][4].selected.value);
+                copyStringData(windowM->selectByPage.staffPage[windowM->selectedPage][4].selected.value, &windowM->forms.staffPage[windowM->selectedPage].fields[4].value);
                 windowM->selectByPage.staffPage[windowM->selectedPage][4].selected = (SelectProp){};
                 for (int i = 0; i < windowM->selectByPage.staffPage[windowM->selectedPage][6].nMultiSelected; i++)
                 {
@@ -113,8 +113,8 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
             }
             if (windowM->currWindow == STAFHOME && windowM->selectedPage == PEMBAYARAN)
             {
-                strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[0].value.text, windowM->authUser.id);
-                strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[1].value.text, windowM->selectByPage.staffPage[windowM->selectedPage][1].selected.value);
+                copyStringData(windowM->authUser.id, &windowM->forms.staffPage[windowM->selectedPage].fields[0].value);
+                copyStringData(windowM->selectByPage.staffPage[windowM->selectedPage][1].selected.value, &windowM->forms.staffPage[windowM->selectedPage].fields[1].value);
                 windowM->selectByPage.staffPage[windowM->selectedPage][1].selected = (SelectProp){};
             }
             if (func != NULL && dataFetcher != NULL)
