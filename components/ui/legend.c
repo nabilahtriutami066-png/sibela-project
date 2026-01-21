@@ -38,6 +38,7 @@ void DrawLegend(windowModel *windowM)
             drawItem(x, y + gap * row++, "N", "Tambah Data", font);
             drawItem(x, y + gap * row++, "U", "Ubah Data", font);
             drawItem(x, y + gap * row++, "D", "Hapus Data", font);
+            drawItem(x, y + gap * row++, "Enter", "Pilih", font);
             drawItem(x, y + gap * row++, "Tab", "Kembali", font);
             drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
             return;
@@ -46,7 +47,7 @@ void DrawLegend(windowModel *windowM)
         if (windowM->activeSubWindow == CREATE)
         {
             drawItem(x, y + gap * row++, "Atas/Bawah", "Navigasi", font);
-            drawItem(x, y + gap * row++, "Enter", "Submit", font);
+            drawItem(x, y + gap * row++, "Enter", "Simpan", font);
             drawItem(x, y + gap * row++, "Tab", "Batal", font);
             drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
             return;
@@ -55,7 +56,7 @@ void DrawLegend(windowModel *windowM)
         if (windowM->activeSubWindow == UPDATE)
         {
             drawItem(x, y + gap * row++, "Atas/Bawah", "Navigasi", font);
-            drawItem(x, y + gap * row++, "Enter", "Submit", font);
+            drawItem(x, y + gap * row++, "Enter", "Simpan", font);
             drawItem(x, y + gap * row++, "Tab", "Batal", font);
             drawItem(x, y + gap * row++, "Esc", "Keluar Aplikasi", font);
             return;

@@ -9,7 +9,7 @@ void drawStaffCreate(windowModel *windowM)
     int start_y = 1080 / 2 - 300;
     int padding = 5;
     int font_size = 32;
-    DrawTextEx(windowM->fontStyle.regular, "CREATE STAFF",
+    DrawTextEx(windowM->fontStyle.regular, "TAMBAH STAFF",
                (Vector2){start_x + 390,
                          start_y - 120},
                64, 0,
