@@ -15,7 +15,7 @@ void drawStaffRead(windowModel *windowM)
                          start_y - 120},
                64, 0,
                SIBELAWHITE);
-    for (int col = 0; col < 4; col++)
+    for (int col = 0; col < 5; col++)
     {
         Rectangle cellRect = {
             start_x + col * cell_width,
@@ -45,10 +45,15 @@ void drawStaffRead(windowModel *windowM)
                          start_y - cell_height + padding},
                font_size, 0,
                SIBELAWHITE);
+    DrawTextEx(windowM->fontStyle.regular, "Tangggal Masuk",
+               (Vector2){start_x + 4 * cell_width + padding,
+                         start_y - cell_height + padding},
+               font_size, 0,
+               SIBELAWHITE);
 
     for (row = 0; row < windowM->datas.nStaf; row++)
     {
-        for (int col = 0; col < 4; col++)
+        for (int col = 0; col < 5; col++)
         {
             Rectangle cellRect = {
                 start_x + col * cell_width,
@@ -79,6 +84,11 @@ void drawStaffRead(windowModel *windowM)
                    SIBELAWHITE);
         DrawTextEx(windowM->fontStyle.regular, windowM->datas.staffs[row].no_hp,
                    (Vector2){start_x + 3 * cell_width + padding,
+                             start_y + row * cell_height + padding},
+                   font_size, 0,
+                   SIBELAWHITE);
+        DrawTextEx(windowM->fontStyle.regular, windowM->datas.staffs[row].tanggal_masuk,
+                   (Vector2){start_x + 4 * cell_width + padding,
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
