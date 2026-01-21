@@ -16,7 +16,7 @@ void drawMuridRead(windowModel *windowM)
                          start_y - 120},
                64, 0,
                SIBELAWHITE);
-    for (int col = 0; col < 3; col++)
+    for (int col = 0; col < 5; col++)
     {
         Rectangle cellRect = {
             start_x + col * cell_width,
@@ -41,9 +41,19 @@ void drawMuridRead(windowModel *windowM)
                          start_y - cell_height + padding},
                font_size, 0,
                SIBELAWHITE);
+    DrawTextEx(windowM->fontStyle.regular, "Tanggal Masuk",
+               (Vector2){start_x + 3 * cell_width + padding,
+                         start_y - cell_height + padding},
+               font_size, 0,
+               SIBELAWHITE);
+    DrawTextEx(windowM->fontStyle.regular, "Tingkat",
+               (Vector2){start_x + 4 * cell_width + padding,
+                         start_y - cell_height + padding},
+               font_size, 0,
+               SIBELAWHITE);
     for (row = 0; row < windowM->datas.nMurid; row++)
     {
-        for (int col = 0; col < 3; col++)
+        for (int col = 0; col < 5; col++)
         {
             Rectangle cellRect = {
                 start_x + col * cell_width,
@@ -69,6 +79,16 @@ void drawMuridRead(windowModel *windowM)
                    SIBELAWHITE);
         DrawTextEx(windowM->fontStyle.regular, windowM->datas.murids[row].no_hp,
                    (Vector2){start_x + 2 * cell_width + padding,
+                             start_y + row * cell_height + padding},
+                   font_size, 0,
+                   SIBELAWHITE);
+        DrawTextEx(windowM->fontStyle.regular, windowM->datas.murids[row].tanggal_masuk,
+                   (Vector2){start_x + 3 * cell_width + padding,
+                             start_y + row * cell_height + padding},
+                   font_size, 0,
+                   SIBELAWHITE);
+        DrawTextEx(windowM->fontStyle.regular, TextFormat ("%d",windowM->datas.murids[row].tingkat),
+                   (Vector2){start_x + 4 * cell_width + padding,
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
