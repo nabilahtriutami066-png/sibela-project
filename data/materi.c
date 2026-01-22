@@ -63,7 +63,7 @@ void findAllMateri(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
 
-void findAllMateriByMapelId(char id_materi[], data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
+void findAllMateriByMapelId(char id_mapel[], data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -72,8 +72,8 @@ void findAllMateriByMapelId(char id_materi[], data *datas, int *nPage, SQLHDBC *
 
     SQLLEN rowsFetched = 0;
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"SELECT COUNT(*) AS row_count FROM materi WHERE id_materi = ?", SQL_NTS);
-    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(id_materi), 0, id_materi, 0, NULL);
+    SQLPrepare(stmt, (SQLCHAR *)"SELECT COUNT(*) AS row_count FROM materi WHERE id_mapel = ?", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(id_mapel), 0, id_mapel, 0, NULL);
 
     ret = SQLExecute(stmt);
     if (SQL_SUCCEEDED(ret))
@@ -91,10 +91,10 @@ void findAllMateriByMapelId(char id_materi[], data *datas, int *nPage, SQLHDBC *
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     if (datas->sortBy == DESC)
-        SQLPrepare(stmt, (SQLCHAR *)"SELECT m.id_num, id_materi, m.id_mapel, map.nama_mapel, judul_materi, isi_materi  FROM materi m, mapel map WHERE m.id_materi = ? AND map.id_mapel = m.id_mapel ORDER BY id_materi DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT m.id_num, map.id_mapel, m.id_mapel, map.nama_mapel, judul_materi, isi_materi  FROM materi m, mapel map WHERE m.id_mapel = ? AND map.id_mapel = m.id_mapel ORDER BY id_materi DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     else
-        SQLPrepare(stmt, (SQLCHAR *)"SELECT m.id_num, id_materi, m.id_mapel, map.nama_mapel, judul_materi, isi_materi  FROM materi m, mapel map WHERE m.id_materi = ? AND map.id_mapel = m.id_mapel ORDER BY id_materi ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
-    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(id_materi), 0, id_materi, 0, NULL);
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT m.id_num, map.id_mapel, m.id_mapel, map.nama_mapel, judul_materi, isi_materi  FROM materi m, mapel map WHERE m.id_mapel = ? AND map.id_mapel = m.id_mapel ORDER BY id_materi ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(id_mapel), 0, id_mapel, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
     SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
 

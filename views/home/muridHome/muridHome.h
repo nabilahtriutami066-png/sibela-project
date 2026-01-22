@@ -14,6 +14,7 @@
 #include "../../../constants/color.h"
 #include "components/jadwal/read.h"
 #include "components/pembayaran/read.h"
+#include "components/materi/read.h"
 
 void drawMuridHome(windowModel *windowM);
 

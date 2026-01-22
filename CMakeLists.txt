@@ -45,6 +45,7 @@ set(PACKAGES
     views/home/muridHome/muridHome.c
     views/home/muridHome/components/jadwal/read.c
     views/home/muridHome/components/pembayaran/read.c
+    views/home/muridHome/components/materi/read.c
     views/loginView.c
     views/landingView.c
     views/memberView.c

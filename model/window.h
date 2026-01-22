@@ -166,6 +166,13 @@ typedef struct
 
 typedef struct
 {
+    MURIDSUBWINDOW activeSubWindow;
+    MateriPageState materiPage;   
+} MuridHomeState;
+
+
+typedef struct
+{
     SelectByPage selectByPage;
     WINDOWS currWindow;
     Vector2 mousePosition;
@@ -193,6 +200,7 @@ typedef struct
     float progress;
     LegendItem legends[MAX_LEGEND];
     PengajarHomeStates pengajarHomeState;
+    MuridHomeState MuridHomeState;
     TOAST toast;
     time_t time;
 } windowModel;

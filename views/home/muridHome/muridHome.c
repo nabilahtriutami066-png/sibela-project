@@ -37,10 +37,10 @@ void drawMuridHome(windowModel *windowM)
     if (windowM->activeSubWindow == READ)
         switch (windowM->selectedPage)
         {
-        case 0:
-
-            break;
         case 1:
+            drawMateriMuridRead(windowM);
+            break;
+        case 0:
             drawJadwalMuridRead(windowM);
             DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
             break;

@@ -116,6 +116,7 @@ void initForm(windowModel *windowM)
     windowM->forms.pengajarPage[MATERI].selectedField = -1;
 
     windowM->dataFetchers.pengajarPage[ABSENSI] = findAllJadwalPertemuanByUserId;
+    windowM->dataFetchers.muridPage[MATERIMURID] = findAllMapel;
     windowM->dataFetchers.pengajarPage[PERTEMUAN] = findAllJadwalPertemuanByUserId;
     windowM->pengajarHomeState.absensiPage.activeSubWindow = MAIN;
     windowM->pengajarHomeState.absensiPage.getMurids = getMuridsbyJadwalPertemuan;
