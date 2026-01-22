@@ -198,6 +198,30 @@ typedef struct
     int sumThisMonth;
 } PembayaranReport;
 
+typedef enum {
+    MATERI_MAPEL = 0,
+    MATERI_LIST,
+    MATERI_DETAIL
+} MATERISUBWINDOW;
+
+typedef struct
+{
+    MATERISUBWINDOW activeSubWindow;
+
+    int page;
+    int nPage;
+
+    int nMapel;
+    int nMateri;
+
+    Mapel *mapels;
+    Materi *materis;
+
+    Mapel selectedMapel;
+    int expandedIndex;
+} MateriPageState;
+
+
 // typedef struct
 //     {
 //         SQLINTEGER id_num;
