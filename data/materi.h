@@ -15,6 +15,7 @@
 
 QUERYSTATUS createMateri(InputField fields[], SQLHDBC *dbConn);
 void findAllMateri(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
+void findAllMateriByMapelId(char id_materi[], data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 void findAllMateriSelect(Select *selectObject, SQLHDBC *dbConn);
 QUERYSTATUS updateMateri(InputField fields[], SQLHDBC *dbConn);
 QUERYSTATUS deleteMateri(SQLHDBC *dbConn, Materi updatedMateri);

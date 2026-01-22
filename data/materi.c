@@ -63,6 +63,66 @@ void findAllMateri(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
 
+void findAllMateriByMapelId(char id_materi[], data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
+{
+    SQLHSTMT stmt;
+    SQLRETURN ret;
+    int count;
+    SQLUSMALLINT rowStatus[100];
+
+    SQLLEN rowsFetched = 0;
+    SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
+    SQLPrepare(stmt, (SQLCHAR *)"SELECT COUNT(*) AS row_count FROM materi WHERE id_materi = ?", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(id_materi), 0, id_materi, 0, NULL);
+
+    ret = SQLExecute(stmt);
+    if (SQL_SUCCEEDED(ret))
+    {
+        if (SQL_SUCCEEDED(SQLFetch(stmt)))
+        {
+            SQLGetData(stmt, 1, SQL_C_LONG, &count, 0, NULL);
+        }
+    }
+    SQLFreeHandle(SQL_HANDLE_STMT, stmt);
+    *nPage = (int)ceil((float)count / 10);
+    int limit = 10;
+    int offset = (datas->page - 1) * limit;
+    *nPage = (int)ceil((float)count / limit);
+
+    SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
+    if (datas->sortBy == DESC)
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT m.id_num, id_materi, m.id_mapel, map.nama_mapel, judul_materi, isi_materi  FROM materi m, mapel map WHERE m.id_materi = ? AND map.id_mapel = m.id_mapel ORDER BY id_materi DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    else
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT m.id_num, id_materi, m.id_mapel, map.nama_mapel, judul_materi, isi_materi  FROM materi m, mapel map WHERE m.id_materi = ? AND map.id_mapel = m.id_mapel ORDER BY id_materi ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(id_materi), 0, id_materi, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
+    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
+
+    ret = SQLExecute(stmt);
+
+    while (SQL_SUCCEEDED(ret = SQLFetch(stmt)))
+    {
+        char dateBuff[50];
+        int i = (int)rowsFetched;
+
+        SQLGetData(stmt, 1, SQL_C_LONG,
+                   &datas->Materis[i].id_num, sizeof(datas->Materis[i].id_num), NULL);
+        SQLGetData(stmt, 2, SQL_C_CHAR,
+                   &datas->Materis[i].id_materi, sizeof(datas->Materis[i].id_materi), NULL);
+        SQLGetData(stmt, 3, SQL_C_CHAR,
+                   &datas->Materis[i].id_mapel, sizeof(datas->Materis[i].id_mapel), NULL);
+        SQLGetData(stmt, 4, SQL_C_CHAR,
+                   &datas->Materis[i].nama_mapel, sizeof(datas->Materis[i].nama_mapel), NULL);
+        SQLGetData(stmt, 5, SQL_C_CHAR,
+                   &datas->Materis[i].judul_materi, sizeof(datas->Materis[i].judul_materi), NULL);
+        SQLGetData(stmt, 6, SQL_C_CHAR,
+                   &datas->Materis[i].isi_materi, sizeof(datas->Materis[i].isi_materi), NULL);
+        rowsFetched++;
+    }
+    datas->nMateri = rowsFetched;
+    SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
+}
+
 void findAllMateriSelect(Select *selectObject, SQLHDBC *dbConn)
 {
     SQLHSTMT stmt;

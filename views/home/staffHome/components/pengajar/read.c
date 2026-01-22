@@ -15,6 +15,23 @@ void drawPengajarRead(windowModel *windowM)
                          start_y - 120},
                64, 0,
                SIBELAWHITE);
+
+    if (windowM->datas.nPengajar == 0)
+    {
+        DrawTextEx(
+            windowM->fontStyle.regular,
+            "Belum ada data Pengajar",
+            (Vector2){
+                start_x + 380,
+                start_y + 290
+            },
+            40,
+            2,
+            Fade(SIBELAWHITE, 0.6f)
+        );
+        return;
+    }
+
     for (int col = 0; col < 4; col++)
     {
         Rectangle cellRect = {

@@ -15,6 +15,23 @@ void drawMuridPembayaranRead(windowModel *windowM)
                          start_y - 120},
                64, 0,
                SIBELAWHITE);
+
+    if (windowM->datas.nPembayaran == 0)
+    {
+        DrawTextEx(
+            windowM->fontStyle.regular,
+            "Belum ada data Pembayaran",
+            (Vector2){
+                start_x + 380,
+                start_y + 290
+            },
+            40,
+            2,
+            Fade(SIBELAWHITE, 0.6f)
+        );
+        return;
+    }
+
     for (int col = 0; col < 5; col++)
     {
         Rectangle cellRect = {

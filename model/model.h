@@ -21,6 +21,14 @@ typedef enum
 
 typedef struct
 {
+    int monthFrom;
+    int monthTo;
+    int yearFrom;
+    int yearTo;
+} DateRangeSelector;
+
+typedef struct
+{
     Staf staffs[100];
     SQLSMALLINT nStaf;
     Pengajar pengajars[100];

@@ -193,6 +193,11 @@ QUERYSTATUS createJadwalPertemuan(InputField fields[], SQLHDBC *dbConn)
 
     SQLBindCol(stmt, 1, SQL_C_CHAR, newJadwalPertemuan.id_pertemuan, sizeof(newJadwalPertemuan.id_pertemuan), &idind);
 
+    if (SQL_SUCCEEDED(ret))
+    {
+        ret = SQLFetch(stmt);
+    }
+
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     createJadwalMurid(fields[6].value, newJadwalPertemuan.id_pertemuan, dbConn);

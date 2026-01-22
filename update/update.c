@@ -361,26 +361,6 @@ void updateView(windowModel *windowM)
                 windowM->curPos += 1;
                 break;
 
-            case KEY_N:
-                clearFields(windowM->forms.pengajarPage[windowM->currWindow].fields);
-                windowM->selectByPage.pengajarPage[windowM->selectedPage] = (Select){};
-                windowM->curPos = 1;
-                windowM->activeSubWindow = CREATE;
-                break;
-            case KEY_U:
-                switch (windowM->selectedPage)
-                {
-                case MATERI:
-                    copyStringData(windowM->focusedData.materi.id_materi, &windowM->forms.pengajarPage[MATERI].fields[0].value);
-                    copySelectData(windowM->focusedData.materi.id_mapel, windowM->focusedData.materi.id_mapel, &windowM->selectByPage.pengajarPage[MATERI].selected);
-                    copyStringData(windowM->focusedData.materi.judul_materi, &windowM->forms.pengajarPage[MATERI].fields[2].value);
-                    copyStringData(windowM->focusedData.materi.isi_materi, &windowM->forms.pengajarPage[MATERI].fields[3].value);
-                    break;
-                }
-                windowM->curPos = 1;
-                windowM->activeSubWindow = UPDATE;
-                break;
-
             default:
                 if (windowM->activeSubWindow == ABSENSI)
                 {
@@ -424,10 +404,6 @@ void updateView(windowModel *windowM)
                         {
                         case KEY_TAB:
                             windowM->pengajarHomeState.absensiPage.activeSubWindow = MAIN;
-                            break;
-                        case KEY_ENTER:
-                            windowM->datas.muridAbsensis[windowM->curPos + (windowM->pengajarHomeState.absensiPage.page - 1) * 10].isHadir = !windowM->datas.muridAbsensis[windowM->curPos + (windowM->pengajarHomeState.absensiPage.page - 1) * 10].isHadir;
-                            paginateAbsensi(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->pengajarHomeState.absensiPage.nPage, windowM->pengajarHomeState.absensiPage.page, &windowM->pengajarHomeState.absensiPage.nMurid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi);
                             break;
                         case KEY_RIGHT:
                             if (windowM->pengajarHomeState.absensiPage.page < windowM->pengajarHomeState.absensiPage.nPage)
