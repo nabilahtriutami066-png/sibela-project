@@ -116,7 +116,7 @@ void drawMuridRead(windowModel *windowM)
                SIBELAWHITE);
     if (windowM->isModalShown)
     {
-        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Delete Murid?", TextFormat("Apakah anda ingin menghapus murid %s?", windowM->focusedData.murid.id_murid), "Batal;Hapus!");
+        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Hapus Murid?", TextFormat("Apakah anda ingin menghapus murid %s?", windowM->focusedData.murid.id_murid), "Batal;Hapus!");
 
         if (res == 2)
         {

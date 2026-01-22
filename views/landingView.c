@@ -4,7 +4,7 @@ void drawLandingPage(windowModel *windowM)
 {
     Rectangle box = {.height = 250, .width = 300, .x = 1920 / 2 - 300 / 2, .y = 1080 - 450};
     int gap = 54;
-    windowM->navigation.landingPage[0] = (NavMenus){.nama = "Masuk Staff", .targetPage = LOGINSTAFF};
+    windowM->navigation.landingPage[0] = (NavMenus){.nama = "Masuk Staf", .targetPage = LOGINSTAFF};
     windowM->navigation.landingPage[1] = (NavMenus){.nama = "Masuk Murid", .targetPage = LOGINMURID};
     windowM->navigation.landingPage[2] = (NavMenus){.nama = "Masuk Pengajar", .targetPage = LOGINPENGAJAR};
     windowM->navigation.landingPage[3] = (NavMenus){.nama = "Pembuat", .targetPage = CONTRIBPAGE};

@@ -95,7 +95,7 @@ void drawMateriRead(windowModel *windowM)
                SIBELAWHITE);
     if (windowM->isModalShown)
     {
-        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Delete Materi?", TextFormat("Apakah anda ingin menghapus materi %s?", windowM->focusedData.materi.judul_materi), "Batal;Hapus!");
+        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Hapus Materi?", TextFormat("Apakah anda ingin menghapus materi %s?", windowM->focusedData.materi.judul_materi), "Batal;Hapus!");
 
         if (res == 2)
         {

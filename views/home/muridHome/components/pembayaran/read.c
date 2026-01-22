@@ -62,7 +62,7 @@ void drawMuridPembayaranRead(windowModel *windowM)
                          start_y - cell_height + padding},
                font_size, 0,
                SIBELAWHITE);
-    DrawTextEx(windowM->fontStyle.regular, "Nama Staff",
+    DrawTextEx(windowM->fontStyle.regular, "Nama Staf",
                (Vector2){start_x + 4 * cell_width + padding,
                          start_y - cell_height + padding},
                font_size, 0,
@@ -98,7 +98,7 @@ void drawMuridPembayaranRead(windowModel *windowM)
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
-        DrawTextEx(windowM->fontStyle.regular, windowM->datas.pembayarans[row].dikonfirmasi ? "Terkonfirmasi" : "Belum Konfirmasi",
+        DrawTextEx(windowM->fontStyle.regular, windowM->datas.pembayarans[row].dikonfirmasi ? "Terkonfirmasi" : "Belum Dikonfirmasi",
                    (Vector2){start_x + 3 * cell_width + padding,
                              start_y + row * cell_height + padding},
                    font_size, 0,
@@ -115,7 +115,7 @@ void drawMuridPembayaranRead(windowModel *windowM)
                SIBELAWHITE);
     if (windowM->isModalShown)
     {
-        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Delete Jadwal?", TextFormat("Apakah anda ingin menghapus Jadwal %s?", windowM->focusedData.jadwal.id_pertemuan), "Batal;Hapus!");
+        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Hapus Jadwal?", TextFormat("Apakah anda ingin menghapus Jadwal %s?", windowM->focusedData.jadwal.id_pertemuan), "Batal;Hapus!");
 
         if (res == 2)
         {

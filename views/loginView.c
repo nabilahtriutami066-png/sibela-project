@@ -34,7 +34,7 @@ void drawStaffLogin(windowModel *windowM)
     }
     else
         DrawRectangleRoundedLines(buttonBox, 0.3, 0, SIBELAWHITE);
-    DrawTextEx(windowM->fontStyle.medium, "Masuk", (Vector2){(int)buttonBox.x + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).x / 2, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).y / 2 - 8}, 40, 0, SIBELAWHITE);
+    DrawTextEx(windowM->fontStyle.medium, "Masuk", (Vector2){(int)buttonBox.x + MeasureTextEx(windowM->fontStyle.medium, "Masuk", 40, 0).x / 2, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.medium, "Masuk", 40, 0).y / 2 - 8}, 40, 0, SIBELAWHITE);
 }
 
 void drawMuridTeacherLogin(windowModel *windowM)
@@ -70,5 +70,5 @@ void drawMuridTeacherLogin(windowModel *windowM)
     }
     else
         DrawRectangleRoundedLines(buttonBox, 0.3, 0, SIBELAWHITE);
-    DrawTextEx(windowM->fontStyle.medium, "Masuk", (Vector2){(int)buttonBox.x + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).x / 2, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.medium, "Login", 40, 0).y / 2 - 8}, 40, 0, SIBELAWHITE);
+    DrawTextEx(windowM->fontStyle.medium, "Masuk", (Vector2){(int)buttonBox.x + MeasureTextEx(windowM->fontStyle.medium, "Masuk", 40, 0).x / 2, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.medium, "Masuk", 40, 0).y / 2 - 8}, 40, 0, SIBELAWHITE);
 }

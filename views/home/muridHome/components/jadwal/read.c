@@ -70,6 +70,6 @@ void DrawMeetingCard(JadwalPertemuanWithDetails jadwal, Vector2 position, float 
     DrawTextEx(fonts.regular, "Lokasi:", (Vector2){labelX, startY + 25}, 36, 0, SECONDARY);
     DrawTextEx(fonts.regular, jadwal.lokasi, (Vector2){valueX, startY + 25}, 36, 0, TERTIARY);
 
-    DrawTextEx(fonts.regular, "Subject:", (Vector2){labelX, startY + 50}, 36, 0, SECONDARY);
+    DrawTextEx(fonts.regular, "Topik:", (Vector2){labelX, startY + 50}, 36, 0, SECONDARY);
     DrawTextEx(fonts.regular, jadwal.judul_materi, (Vector2){valueX, startY + 50}, 36, 0, PRIMARY);
 }

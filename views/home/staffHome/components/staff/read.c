@@ -10,7 +10,7 @@ void drawStaffRead(windowModel *windowM)
     int start_y = 1080 / 2 - 300;
     int padding = 5;
     int font_size = 32;
-    DrawTextEx(windowM->fontStyle.regular, "DATA STAFF",
+    DrawTextEx(windowM->fontStyle.regular, "DATA STAF",
                (Vector2){start_x + 390,
                          start_y - 120},
                64, 0,
@@ -118,7 +118,7 @@ void drawStaffRead(windowModel *windowM)
 
     if (windowM->isModalShown)
     {
-        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Delete Staff?", TextFormat("Apakah anda ingin menghapus staff %s?", windowM->focusedData.staff.id_staff), "Batal;Hapus!");
+        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Hapus Staf?", TextFormat("Apakah anda ingin menghapus staf %s?", windowM->focusedData.staff.id_staff), "Batal;Hapus!");
 
         if (res == 2)
         {

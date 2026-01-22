@@ -8,6 +8,7 @@
 #include <string.h>
 #include <time.h>
 #include "../types/form.h"
+#include "safe_string.h"
 
 void readAscii(char name[], char dest[]);
 time_t parseDate(char strDate[]);

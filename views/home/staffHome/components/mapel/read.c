@@ -86,7 +86,7 @@ void drawMapelRead(windowModel *windowM)
 
     if (windowM->isModalShown)
     {
-        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Delete Mapel?", TextFormat("Apakah anda ingin menghapus mapel %s?", windowM->focusedData.mapel.id_mapel), "Batal;Hapus!");
+        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Hapus Mapel?", TextFormat("Apakah anda ingin menghapus mapel %s?", windowM->focusedData.mapel.id_mapel), "Batal;Hapus!");
 
         if (res == 2)
         {

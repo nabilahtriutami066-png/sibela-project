@@ -35,32 +35,39 @@ time_t parseDate(char strDate[])
 
 char *parseDateToString(time_t cDate)
 {
-    char *dateBuff;
+    char *dateBuff = (char *)malloc(20 * sizeof(char));
     struct tm *parsedDate;
 
+    if (dateBuff == NULL) return NULL;
+    
     parsedDate = localtime(&cDate);
 
-    sprintf(dateBuff, "%d-%d-%d", parsedDate->tm_year + 1900, parsedDate->tm_mon, parsedDate->tm_mday);
+    snprintf(dateBuff, 20, "%d-%d-%d", parsedDate->tm_year + 1900, parsedDate->tm_mon, parsedDate->tm_mday);
 
     return dateBuff;
 }
 
 void copyStringData(char src[], InputParams *dest)
 {
-    strcpy(dest->text, src);
+    strncpy(dest->text, src, 99);
+    dest->text[99] = '\0';
     dest->charLen = strlen(src);
 }
 
 void copySelectData(char label[], char value[], SelectProp *dest)
 {
-    strcpy(dest->label, label);
-    strcpy(dest->value, value);
+    strncpy(dest->label, label, 99);
+    dest->label[99] = '\0';
+    strncpy(dest->value, value, 99);
+    dest->value[99] = '\0';
 }
 
 char *intToString(int i)
 {
-    char *buff;
-    sprintf(buff, "%d", i);
+    char *buff = (char *)malloc(20 * sizeof(char));
+    if (buff == NULL) return NULL;
+    
+    snprintf(buff, 20, "%d", i);
 
     return buff;
 }
@@ -70,11 +77,11 @@ void clearFields(InputField fields[])
     for (int i = 0; i < 10; i++)
     {
         fields[i].value.charLen = 0;
-        strcpy(fields[i].value.text, "");
+        fields[i].value.text[0] = '\0';
         fields[i].value.selected = -1;
         for (int j = 0; j < 8; j++)
         {
-            strcpy(fields[i].value.multiValue[j], "\0");
+            fields[i].value.multiValue[j][0] = '\0';
         }
     }
 }

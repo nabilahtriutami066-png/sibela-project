@@ -15,7 +15,7 @@ void drawMemberPage(windowModel *windowM)
     char domisili[60];
     char tanggalLahir[60];
 
-    strcpy(page, TextFormat("Member %d dari 5", windowM->page));
+    strcpy(page, TextFormat("Anggota %d dari 5", windowM->page));
     strcpy(nim, TextFormat("NIM:\t\"%s\"", currMember.nim));
     strcpy(julukan, TextFormat("Julukan:\t\"%s\"", currMember.julukan));
     strcpy(domisili, TextFormat("Domisili:\t\"%s\"", currMember.domisili));

@@ -96,7 +96,7 @@ void drawRuanganRead(windowModel *windowM)
                SIBELAWHITE);
     if (windowM->isModalShown)
     {
-        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Delete Ruangan?", TextFormat("Apakah anda ingin menghapus Ruangan %s?", windowM->focusedData.ruangan.id_ruangan), "Batal;Hapus!");
+        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Hapus Ruangan?", TextFormat("Apakah anda ingin menghapus Ruangan %s?", windowM->focusedData.ruangan.id_ruangan), "Batal;Hapus!");
 
         if (res == 2)
         {

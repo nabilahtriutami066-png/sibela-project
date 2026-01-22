@@ -106,7 +106,7 @@ void drawPengajarRead(windowModel *windowM)
                SIBELAWHITE);
     if (windowM->isModalShown)
     {
-        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Delete Pengajar?", TextFormat("Apakah anda ingin menghapus Pengajar %s?", windowM->focusedData.pengajar.id_pengajar), "Batal;Hapus!");
+        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Hapus Pengajar?", TextFormat("Apakah anda ingin menghapus Pengajar %s?", windowM->focusedData.pengajar.id_pengajar), "Batal;Hapus!");
 
         if (res == 2)
         {
