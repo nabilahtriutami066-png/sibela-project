@@ -767,7 +767,7 @@ extern "C"
 
     // Basic controls set
     RAYGUIAPI int GuiLabel(Rectangle bounds, const char *text);                     // Label control
-    RAYGUIAPI int GuiButton(Rectangle bounds, const char *text);                    // Button control, returns true when clicked
+    RAYGUIAPI int GuiButton(Rectangle bounds, const char *text, int isFocussed);    // Button control, returns true when clicked
     RAYGUIAPI int GuiLabelButton(Rectangle bounds, const char *text);               // Label button control, returns true when clicked
     RAYGUIAPI int GuiToggle(Rectangle bounds, const char *text, bool *active);      // Toggle Button control
     RAYGUIAPI int GuiToggleGroup(Rectangle bounds, const char *text, int *active);  // Toggle Group control
@@ -3484,9 +3484,9 @@ int GuiWindowBox(Rectangle bounds, const char *title)
     GuiSetStyle(BUTTON, BORDER_WIDTH, 1);
     GuiSetStyle(BUTTON, TEXT_ALIGNMENT, TEXT_ALIGN_CENTER);
 #if defined(RAYGUI_NO_ICONS)
-    result = GuiButton(closeButtonRec, "x");
+    result = GuiButton(closeButtonRec, "x", 0);
 #else
-    result = GuiButton(closeButtonRec, GuiIconText(ICON_CROSS_SMALL, NULL));
+    result = GuiButton(closeButtonRec, GuiIconText(ICON_CROSS_SMALL, NULL), 0);
 #endif
     GuiSetStyle(BUTTON, BORDER_WIDTH, tempBorderWidth);
     GuiSetStyle(BUTTON, TEXT_ALIGNMENT, tempTextAlignment);
@@ -3652,10 +3652,10 @@ int GuiTabBar(Rectangle bounds, const char **text, int count, int *active)
             GuiSetStyle(BUTTON, BORDER_WIDTH, 1);
             GuiSetStyle(BUTTON, TEXT_ALIGNMENT, TEXT_ALIGN_CENTER);
 #if defined(RAYGUI_NO_ICONS)
-            if (GuiButton(RAYGUI_CLITERAL(Rectangle){tabBounds.x + tabBounds.width - 14 - 5, tabBounds.y + 5, 14, 14}, "x"))
+            if (GuiButton(RAYGUI_CLITERAL(Rectangle){tabBounds.x + tabBounds.width - 14 - 5, tabBounds.y + 5, 14, 14}, "x", 0))
                 result = i;
 #else
-            if (GuiButton(RAYGUI_CLITERAL(Rectangle){tabBounds.x + tabBounds.width - 14 - 5, tabBounds.y + 5, 14, 14}, GuiIconText(ICON_CROSS_SMALL, NULL)))
+            if (GuiButton(RAYGUI_CLITERAL(Rectangle){tabBounds.x + tabBounds.width - 14 - 5, tabBounds.y + 5, 14, 14}, GuiIconText(ICON_CROSS_SMALL, NULL), 0))
                 result = i;
 #endif
             GuiSetStyle(BUTTON, BORDER_WIDTH, tempBorderWidth);
@@ -3871,7 +3871,7 @@ int GuiLabel(Rectangle bounds, const char *text)
 }
 
 // Button control, returns true when clicked
-int GuiButton(Rectangle bounds, const char *text)
+int GuiButton(Rectangle bounds, const char *text, int isFocussed)
 {
     int result = 0;
     GuiState state = guiState;
@@ -3883,7 +3883,7 @@ int GuiButton(Rectangle bounds, const char *text)
         Vector2 mousePoint = GetMousePosition();
 
         // Check button state
-        if (CheckCollisionPointRec(mousePoint, bounds))
+        if (CheckCollisionPointRec(mousePoint, bounds) || isFocussed)
         {
             if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
                 state = STATE_PRESSED;
@@ -4265,7 +4265,7 @@ int GuiComboBox(Rectangle bounds, const char *text, int *active)
     GuiSetStyle(BUTTON, BORDER_WIDTH, 1);
     GuiSetStyle(BUTTON, TEXT_ALIGNMENT, TEXT_ALIGN_CENTER);
 
-    GuiButton(selector, TextFormat("%i/%i", *active + 1, itemCount));
+    GuiButton(selector, TextFormat("%i/%i", *active + 1, itemCount), 0);
 
     GuiSetStyle(BUTTON, TEXT_ALIGNMENT, tempTextAlign);
     GuiSetStyle(BUTTON, BORDER_WIDTH, tempBorderWidth);
@@ -4944,14 +4944,14 @@ int GuiSpinner(Rectangle bounds, const char *text, int *value, int minValue, int
     }
 
 #if defined(RAYGUI_NO_ICONS)
-    if (GuiButton(leftButtonBound, "<"))
+    if (GuiButton(leftButtonBound, "<"), 0)
         tempValue--;
-    if (GuiButton(rightButtonBound, ">"))
+    if (GuiButton(rightButtonBound, ">"), 0)
         tempValue++;
 #else
-    if (GuiButton(leftButtonBound, GuiIconText(ICON_ARROW_LEFT_FILL, NULL)))
+    if (GuiButton(leftButtonBound, GuiIconText(ICON_ARROW_LEFT_FILL, NULL), 0))
         tempValue--;
-    if (GuiButton(rightButtonBound, GuiIconText(ICON_ARROW_RIGHT_FILL, NULL)))
+    if (GuiButton(rightButtonBound, GuiIconText(ICON_ARROW_RIGHT_FILL, NULL), 0))
         tempValue++;
 #endif
 
@@ -6163,7 +6163,7 @@ int GuiMessageBox(Rectangle bounds, const char *title, const char *message, cons
 
     for (int i = 0; i < buttonCount; i++)
     {
-        if (GuiButton(buttonBounds, buttonsText[i]))
+        if (GuiButton(buttonBounds, buttonsText[i], 0))
             result = i + 1;
         buttonBounds.x += (buttonBounds.width + RAYGUI_MESSAGEBOX_BUTTON_PADDING);
     }
@@ -6258,7 +6258,7 @@ int GuiTextInputBox(Rectangle bounds, const char *title, const char *message, co
 
     for (int i = 0; i < buttonCount; i++)
     {
-        if (GuiButton(buttonBounds, buttonsText[i]))
+        if (GuiButton(buttonBounds, buttonsText[i], 0))
             result = i + 1;
         buttonBounds.x += (buttonBounds.width + RAYGUI_MESSAGEBOX_BUTTON_PADDING);
     }

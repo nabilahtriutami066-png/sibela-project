@@ -52,6 +52,8 @@ void drawStaffHome(windowModel *windowM)
             case PEMBAYARANREPORT:
                 DrawMetricCard("Total Pembayaran", TextFormat("Rp. %d", windowM->datas.pembayaranReport.sumThisMonth), (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 200}, 200, &windowM->fontStyle);
                 DrawMetricCard("Jumlah", TextFormat("%d", windowM->datas.pembayaranReport.totalThisMonth), (Vector2){.x = 1920 / 2 - 600 + 100 + 100 + 210, .y = 200}, 200, &windowM->fontStyle);
+                drawPembayaranReport(windowM);
+                DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
                 break;
             case MANAJERSTAFF:
                 drawStaffRead(windowM);

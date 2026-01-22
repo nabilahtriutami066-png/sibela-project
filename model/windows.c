@@ -59,6 +59,7 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[JADWAL].fieldPerPage = 4;
     windowM->forms.staffPage[PEMBAYARAN].fieldPerPage = 4;
     windowM->forms.staffPage[MANAJERSTAFF].createFunc = createStaffManajer;
+    windowM->forms.staffPage[MANAJERSTAFF].updateFunction = updateStaff;
     windowM->forms.staffPage[MAPEL].createFunc = createMapel;
     windowM->forms.staffPage[MAPEL].updateFunction = updateMapel;
     windowM->forms.staffPage[MURID].createFunc = createMurid;
@@ -175,10 +176,13 @@ void initWindow(windowModel *windowM)
         .cursorEnabled = 1,
         .selectedPage = -1,
         .isModalShown = 0,
+        .isKeyboardInterrupted = 0,
         .activeSubWindow = READ,
         .loginData = {.email = {.charLen = 0, .text = "\0"}, .activeInput = 0}};
     windowM->datas.page = 1;
     windowM->datas.sortBy = ASC;
+    strcpy(windowM->datas.searchString, "");
+    windowM->datas.dateRange = (DateRangeSelector){.monthFrom = 1, .selected = 0, .isEditing = 0, .yearFrom = 2026, .monthTo = 1, .yearTo = 2026};
 
     initForm(windowM);
     initAssets(windowM);

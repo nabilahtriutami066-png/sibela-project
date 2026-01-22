@@ -10,6 +10,7 @@
 #include "../../../libs/utils.h"
 #include "../../../components/header.h"
 #include "../../../components/ui/welcomePage.h"
+#include "../../../components/ui/dateRange.h"
 #include "../../../data/staf.h"
 #include "../../../constants/color.h"
 #include "components/staff/read.h"
@@ -32,6 +33,7 @@
 #include "components/jadwal/update.h"
 #include "components/pembayaran/read.h"
 #include "components/pembayaran/create.h"
+#include "components/reportPembayaran/reportPembayaran.h"
 // #include "components/ruangan/update.h"
 
 void drawStaffHome(windowModel *windowM);

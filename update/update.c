@@ -152,7 +152,7 @@ void updateView(windowModel *windowM)
                     break;
                 }
             }
-            if (!windowM->cursorEnabled && windowM->activeSubWindow == READ)
+            if (!windowM->cursorEnabled && windowM->activeSubWindow == READ && !windowM->isKeyboardInterrupted)
             {
                 switch (ch)
                 {
@@ -261,6 +261,7 @@ void updateView(windowModel *windowM)
                         logoutFunction(windowM);
                         return;
                     }
+                    strcpy(windowM->datas.searchString, "");
                     windowM->dataFetchers.staffPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
                     windowM->datas.page = 1;
                     windowM->curPos = 0;

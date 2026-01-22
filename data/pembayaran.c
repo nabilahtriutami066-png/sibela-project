@@ -69,7 +69,7 @@ void findAllPembayaran(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
 
-void findAllPembayaranByDateRange(DateRangeSelector range, data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
+void findAllPembayaranByDateRange(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -78,11 +78,11 @@ void findAllPembayaranByDateRange(DateRangeSelector range, data *datas, int *nPa
 
     SQLLEN rowsFetched = 0;
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"SELECT COUNT(*) AS row_count FROM pembayaran WHERE MONTH(tanggal_pembayaran) >= ? AND YEAR(tanggal_pembayaran) >= ? AND MONTH(tanggal_pembayaran) <= ? AND YEAR(tanggal_pembayaran) <= ?", SQL_NTS);
-    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &range.monthFrom, 0, NULL);
-    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &range.yearFrom, 0, NULL);
-    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &range.monthTo, 0, NULL);
-    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &range.yearTo, 0, NULL);
+    SQLPrepare(stmt, (SQLCHAR *)"SELECT COUNT(*) AS row_count FROM pembayaran p WHERE p.tanggal_pembayaran >= DATEFROMPARTS(?, ?, 1) AND p.tanggal_pembayaran <= EOMONTH(DATEFROMPARTS(?, ?, 1))", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.yearFrom, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.monthFrom, 0, NULL);
+    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.yearTo, 0, NULL);
+    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.monthTo, 0, NULL);
     ret = SQLExecute(stmt);
     if (SQL_SUCCEEDED(ret))
     {
@@ -92,20 +92,19 @@ void findAllPembayaranByDateRange(DateRangeSelector range, data *datas, int *nPa
         }
     }
     SQLFreeHandle(SQL_HANDLE_STMT, stmt);
-    *nPage = (int)ceil((float)count / 10);
-    int limit = 10;
+    int limit = 5;
     int offset = (datas->page - 1) * limit;
     *nPage = (int)ceil((float)count / limit);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     if (datas->sortBy == DESC)
-        SQLPrepare(stmt, (SQLCHAR *)"SELECT p.id_num, id_pembayaran, p.id_murid,m.nama AS 'nama_murid', tanggal_pembayaran, jumlah_pembayaran, dikonfirmasi, p.id_staff,s.nama AS 'nama_staff', mtd_pembayaran FROM pembayaran p LEFT JOIN murid m ON m.id_murid = p.id_murid LEFT JOIN staff s ON s.id_staff = p.id_staff WHERE MONTH(p.tanggal_pembayaran) >= ? AND YEAR(p.tanggal_pembayaran) >= ? AND MONTH(p.tanggal_pembayaran) <= ? AND YEAR(p.tanggal_pembayaran) <= ? ORDER BY tanggal_pembayaran DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT p.id_num, id_pembayaran, p.id_murid,m.nama AS 'nama_murid', tanggal_pembayaran, jumlah_pembayaran, dikonfirmasi, p.id_staff,s.nama AS 'nama_staff', mtd_pembayaran FROM pembayaran p LEFT JOIN murid m ON m.id_murid = p.id_murid LEFT JOIN staff s ON s.id_staff = p.id_staff WHERE p.tanggal_pembayaran >= DATEFROMPARTS(?, ?, 1) AND p.tanggal_pembayaran <= EOMONTH(DATEFROMPARTS(?, ?, 1)) ORDER BY tanggal_pembayaran DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     else
-        SQLPrepare(stmt, (SQLCHAR *)"SELECT p.id_num, id_pembayaran, p.id_murid,m.nama AS 'nama_murid', tanggal_pembayaran, jumlah_pembayaran, dikonfirmasi, p.id_staff,s.nama AS 'nama_staff', mtd_pembayaran FROM pembayaran p LEFT JOIN murid m ON m.id_murid = p.id_murid LEFT JOIN staff s ON s.id_staff = p.id_staff WHERE MONTH(p.tanggal_pembayaran) >= ? AND YEAR(p.tanggal_pembayaran) >= ? AND MONTH(p.tanggal_pembayaran) <= ? AND YEAR(p.tanggal_pembayaran) <= ? ORDER BY tanggal_pembayaran ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
-    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &range.monthFrom, 0, NULL);
-    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &range.yearFrom, 0, NULL);
-    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &range.monthTo, 0, NULL);
-    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &range.yearTo, 0, NULL);
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT p.id_num, id_pembayaran, p.id_murid,m.nama AS 'nama_murid', tanggal_pembayaran, jumlah_pembayaran, dikonfirmasi, p.id_staff,s.nama AS 'nama_staff', mtd_pembayaran FROM pembayaran p LEFT JOIN murid m ON m.id_murid = p.id_murid LEFT JOIN staff s ON s.id_staff = p.id_staff WHERE p.tanggal_pembayaran >= DATEFROMPARTS(?, ?, 1) AND p.tanggal_pembayaran <= EOMONTH(DATEFROMPARTS(?, ?, 1)) ORDER BY tanggal_pembayaran ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.yearFrom, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.monthFrom, 0, NULL);
+    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.yearTo, 0, NULL);
+    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.monthTo, 0, NULL);
     SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
     SQLBindParameter(stmt, 6, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &limit, 0, NULL);
 
@@ -270,7 +269,11 @@ void getPembayaranReport(data *datas, int *nPage, SQLHDBC *dbConn, user *authUse
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
 
-    SQLPrepare(stmt, (SQLCHAR *)"SELECT SUM(p.jumlah_pembayaran) AS 'TOTAL_BulanIni', COUNT(*) AS 'jumlah_pembayaran' FROM pembayaran p WHERE p.tanggal_pembayaran >= DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1) AND p.tanggal_pembayaran <= GETDATE()", SQL_NTS);
+    SQLPrepare(stmt, (SQLCHAR *)"SELECT SUM(p.jumlah_pembayaran) AS 'TOTAL_BulanIni', COUNT(*) AS 'jumlah_pembayaran' FROM pembayaran p WHERE p.tanggal_pembayaran >= DATEFROMPARTS(?, ?, 1) AND p.tanggal_pembayaran <= EOMONTH(DATEFROMPARTS(?, ?, 1))", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.yearFrom, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.monthFrom, 0, NULL);
+    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.yearTo, 0, NULL);
+    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.monthTo, 0, NULL);
 
     ret = SQLExecute(stmt);
     while (SQL_SUCCEEDED(ret = SQLFetch(stmt)))
@@ -281,4 +284,5 @@ void getPembayaranReport(data *datas, int *nPage, SQLHDBC *dbConn, user *authUse
                    &datas->pembayaranReport.totalThisMonth, sizeof(datas->pembayaranReport.totalThisMonth), NULL);
     }
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
+    findAllPembayaranByDateRange(datas, nPage, dbConn, authUser);
 }

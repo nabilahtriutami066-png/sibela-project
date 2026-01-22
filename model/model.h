@@ -25,6 +25,8 @@ typedef struct
     int monthTo;
     int yearFrom;
     int yearTo;
+    int selected;
+    int isEditing;
 } DateRangeSelector;
 
 typedef struct
@@ -51,6 +53,8 @@ typedef struct
     PembayaranReport pembayaranReport;
 
     SORTBY sortBy;
+    char searchString[100];
+    DateRangeSelector dateRange;
     int page;
     int totalPages;
 } data;

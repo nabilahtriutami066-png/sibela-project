@@ -20,6 +20,7 @@ set(PACKAGES
     views/home/staffHome/components/mapel/read.c
     views/home/staffHome/components/mapel/update.c
     views/home/staffHome/components/pengajar/create.c
+    views/home/staffHome/components/reportPembayaran/reportPembayaran.c
     views/home/staffHome/components/pengajar/read.c
     views/home/staffHome/components/pengajar/update.c
     views/home/staffHome/components/staff/create.c
@@ -64,6 +65,8 @@ set(PACKAGES
     components/ui/legend.c
     components/ui/toast.c
     components/ui/welcomePage.c
+    components/ui/dateRange.c
+    components/ui/searchBar.c
 )
 
 add_executable(sibela main.c ${PACKAGES})

@@ -53,7 +53,7 @@ void drawStaffCreate(windowModel *windowM)
                 windowM->forms.staffPage[windowM->selectedPage].fields[i].value.charLen = 9;
             }
             int isTrue = strcmp(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "FRONTDESK") == 0;
-            if (GuiButton(textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text))
+            if (GuiButton(textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, windowM->curPos == i))
             {
                 if (isTrue)
                 {

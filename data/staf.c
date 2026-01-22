@@ -211,15 +211,17 @@ QUERYSTATUS updateStaff(InputField fields[], SQLHDBC *dbConn)
     strcpy(updatedStaff.no_hp, fields[3].value.text);
     strcpy(updatedStaff.password, fields[4].value.text);
     strcpy(updatedStaff.email, fields[5].value.text);
+    strcpy(updatedStaff.role, fields[6].value.text);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"UPDATE staff SET nama = ?, tanggal_lahir = ?, no_hp = ?, password = ?, email = ? WHERE id_staff = ?", SQL_NTS);
+    SQLPrepare(stmt, (SQLCHAR *)"UPDATE staff SET nama = ?, tanggal_lahir = ?, no_hp = ?, password = ?, email = ?, role = ? WHERE id_staff = ?", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.nama), 0, updatedStaff.nama, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_DATE, strlen(updatedStaff.tanggal_lahir), 0, updatedStaff.tanggal_lahir, 0, NULL);
     SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.no_hp), 0, updatedStaff.no_hp, 0, NULL);
     SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.password), 0, updatedStaff.password, 0, NULL);
     SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.email), 0, updatedStaff.email, 0, NULL);
-    SQLBindParameter(stmt, 6, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.id_staff), 0, updatedStaff.id_staff, 0, NULL);
+    SQLBindParameter(stmt, 6, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.role), 0, updatedStaff.role, 0, NULL);
+    SQLBindParameter(stmt, 7, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.id_staff), 0, updatedStaff.id_staff, 0, NULL);
     ret = SQLExecute(stmt);
 
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
@@ -246,7 +248,7 @@ QUERYSTATUS deleteStaff(SQLHDBC *dbConn, Staf updatedStaff)
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedStaff.id_staff), 0, updatedStaff.id_staff, 0, NULL);
     ret = SQLExecute(stmt);
 
-        SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
+    SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
     switch (ret)
     {

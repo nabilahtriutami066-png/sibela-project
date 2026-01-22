@@ -6,7 +6,7 @@ void DrawSortControl(windowModel *windowM, Vector2 pos)
     Rectangle button = {.width = 120, .height = 50, .x = pos.x + 5, .y = pos.y};
     Vector2 leng = MeasureTextEx(windowM->fontStyle.regular, "Urutkan:", 20, 0);
 
-    if (GuiButton(button, windowM->datas.sortBy == ASC ? "Teratas" : "Terbawah"))
+    if (GuiButton(button, windowM->datas.sortBy == ASC ? "Teratas" : "Terbawah", 0))
     {
         switch (windowM->datas.sortBy)
         {

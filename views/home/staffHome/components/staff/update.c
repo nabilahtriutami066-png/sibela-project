@@ -45,7 +45,7 @@ void drawStaffUpdate(windowModel *windowM)
                        (Vector2){(int)textBox.x, (int)textBox.y - 44},
                        40, 0, SIBELAWHITE);
             int isTrue = strcmp(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "FRONTDESK") == 0;
-            if (GuiButton(textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text))
+            if (GuiButton(textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, 0))
             {
                 if (isTrue)
                 {

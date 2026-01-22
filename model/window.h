@@ -167,9 +167,8 @@ typedef struct
 typedef struct
 {
     MURIDSUBWINDOW activeSubWindow;
-    MateriPageState materiPage;   
+    MateriPageState materiPage;
 } MuridHomeState;
-
 
 typedef struct
 {
@@ -185,6 +184,7 @@ typedef struct
     SQLHDBC *dbConn;
     FocusedData focusedData;
     FontStyles fontStyle;
+    int isKeyboardInterrupted;
     ascii asciis;
     image images;
     Member members[5];

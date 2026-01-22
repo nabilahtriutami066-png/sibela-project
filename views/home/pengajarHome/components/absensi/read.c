@@ -28,7 +28,7 @@ void drawAbsensiPengajarRead(windowModel *windowM)
             DrawMeetingPengajarCard(windowM->datas.jadwalPertemuans[row], (Vector2){start_x - 400, start_y + row * 200}, 800, windowM->fontStyle, windowM->curPos == row);
         }
         DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
-                   (Vector2){start_x , start_y + (row * cell_height) + 30},
+                   (Vector2){start_x, start_y + (row * cell_height) + 30},
                    40, 0,
                    SIBELAWHITE);
         break;
@@ -62,7 +62,7 @@ void drawAbsensiPengajarRead(windowModel *windowM)
                                       .y = 1080 - 150,
                                       .width = 200,
                                       .height = 80};
-            if (GuiButton(submitButton, "Kumpulkan"))
+            if (GuiButton(submitButton, "Kumpulkan", 0))
             {
                 windowM->pengajarHomeState.absensiPage.submitFunc(windowM->pengajarHomeState.absensiPage.paginatedAbsensi, windowM->datas.nMuridAbsensi, windowM->focusedData.jadwal.id_pertemuan, windowM->dbConn, windowM->authUser);
             }

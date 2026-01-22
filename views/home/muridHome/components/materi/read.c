@@ -24,11 +24,10 @@ void drawMateriMuridRead(windowModel *windowM)
         DrawTextEx(
             font,
             "PILIH MATA PELAJARAN",
-            (Vector2){ x, y - 60 },
+            (Vector2){x, y - 60},
             38,
             2,
-            WHITE
-        );
+            WHITE);
 
         for (int i = 0; i < windowM->datas.nMapel; i++)
         {
@@ -36,10 +35,9 @@ void drawMateriMuridRead(windowModel *windowM)
                 x,
                 y + i * 70,
                 400,
-                55
-            };
+                55};
 
-            if (GuiButton(btn, windowM->datas.Mapels[i].nama_mapel))
+            if (GuiButton(btn, windowM->datas.Mapels[i].nama_mapel, 0))
             {
                 state->selectedMapel = windowM->datas.Mapels[i];
                 windowM->datas.page = 1;
@@ -49,8 +47,7 @@ void drawMateriMuridRead(windowModel *windowM)
                     &windowM->datas,
                     &state->nPage,
                     windowM->dbConn,
-                    &windowM->authUser
-                );
+                    &windowM->authUser);
 
                 state->expandedIndex = -1;
                 state->activeSubWindow = MATERI_LIST;
@@ -62,20 +59,18 @@ void drawMateriMuridRead(windowModel *windowM)
         DrawTextEx(
             font,
             "DAFTAR MATERI",
-            (Vector2){ x, y - 60 },
+            (Vector2){x, y - 60},
             38,
             2,
-            WHITE
-        );
+            WHITE);
 
         DrawTextEx(
             font,
             state->selectedMapel.nama_mapel,
-            (Vector2){ x, y - 25 },
+            (Vector2){x, y - 25},
             22,
             2,
-            GRAY
-        );
+            GRAY);
 
         for (int i = 0; i < windowM->datas.nMateri; i++)
         {
@@ -83,17 +78,16 @@ void drawMateriMuridRead(windowModel *windowM)
                 x,
                 y + i * 70,
                 700,
-                50
-            };
+                50};
 
-            if (GuiButton(materiHeader, windowM->datas.Materis[i].judul_materi))
+            if (GuiButton(materiHeader, windowM->datas.Materis[i].judul_materi, 0))
             {
                 state->expandedIndex = i;
                 state->activeSubWindow = MATERI_DETAIL;
             }
         }
 
-        if (GuiButton((Rectangle){ x, y + 520, 120, 40 }, "Kembali"))
+        if (GuiButton((Rectangle){x, y + 520, 120, 40}, "Kembali", 0))
         {
             state->activeSubWindow = MATERI_MAPEL;
         }
@@ -105,31 +99,28 @@ void drawMateriMuridRead(windowModel *windowM)
         DrawTextEx(
             font,
             windowM->datas.Materis[i].judul_materi,
-            (Vector2){ x, y - 40 },
+            (Vector2){x, y - 40},
             34,
             2,
-            WHITE
-        );
+            WHITE);
 
         Rectangle box = {
             x,
             y,
             700,
-            300
-        };
+            300};
 
         DrawRectangleRounded(box, 0.2f, 8, DARKGRAY);
 
         DrawTextEx(
             font,
             windowM->datas.Materis[i].isi_materi,
-            (Vector2){ box.x + 15, box.y + 10 },
+            (Vector2){box.x + 15, box.y + 10},
             18,
             2,
-            LIGHTGRAY
-        );
+            LIGHTGRAY);
 
-        if (GuiButton((Rectangle){ x, y + 330, 120, 40 }, "Kembali"))
+        if (GuiButton((Rectangle){x, y + 330, 120, 40}, "Kembali", 0))
         {
             state->activeSubWindow = MATERI_LIST;
             state->expandedIndex = -1;

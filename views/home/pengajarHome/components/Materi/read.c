@@ -15,7 +15,7 @@ void drawMateriRead(windowModel *windowM)
                          start_y - 120},
                64, 0,
                SIBELAWHITE);
-
+    drawSearchBar(windowM, (Vector2){start_x + 5 * cell_width + padding - 364, start_y - cell_height - 100});
     if (windowM->datas.nMateri == 0)
     {
         DrawTextEx(
@@ -23,12 +23,10 @@ void drawMateriRead(windowModel *windowM)
             "Belum ada data Materi",
             (Vector2){
                 start_x + 380,
-                start_y + 290
-            },
+                start_y + 290},
             40,
             2,
-            Fade(SIBELAWHITE, 0.6f)
-        );
+            Fade(SIBELAWHITE, 0.6f));
         return;
     }
 
@@ -90,7 +88,7 @@ void drawMateriRead(windowModel *windowM)
                    SIBELAWHITE);
     }
     DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
-               (Vector2){start_x , start_y + (row * cell_height) + 30},
+               (Vector2){start_x, start_y + (row * cell_height) + 30},
                40, 0,
                SIBELAWHITE);
     if (windowM->isModalShown)
