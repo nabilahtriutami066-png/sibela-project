@@ -15,6 +15,23 @@ void drawMapelRead(windowModel *windowM)
                          start_y - 120},
                64, 0,
                SIBELAWHITE);
+
+    if (windowM->datas.nMapel == 0)
+    {
+        DrawTextEx(
+            windowM->fontStyle.regular,
+            "Belum ada data Pelajaran",
+            (Vector2){
+                start_x + 380,
+                start_y + 290
+            },
+            40,
+            2,
+            Fade(SIBELAWHITE, 0.6f)
+        );
+        return;
+    }
+
     for (int col = 0; col < 2; col++)
     {
         Rectangle cellRect = {

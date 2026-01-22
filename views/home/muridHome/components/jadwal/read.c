@@ -17,6 +17,22 @@ void drawJadwalMuridRead(windowModel *windowM)
                64, 0,
                SIBELAWHITE);
 
+    if (windowM->datas.nJadwalPertemuan == 0)
+    {
+        DrawTextEx(
+            windowM->fontStyle.regular,
+            "Belum ada data Jadwal Pertemuan",
+            (Vector2){
+                start_x + 380,
+                start_y + 290
+            },
+            40,
+            2,
+            Fade(SIBELAWHITE, 0.6f)
+        );
+        return;
+    }
+
     for (row = 0; row < windowM->datas.nJadwalPertemuan; row++)
     {
         DrawMeetingCard(windowM->datas.jadwalPertemuans[row], (Vector2){start_x - 400, start_y + row * 200}, 800, windowM->fontStyle);
