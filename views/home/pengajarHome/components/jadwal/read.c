@@ -23,7 +23,7 @@ void drawJadwalPengajarRead(windowModel *windowM)
             windowM->fontStyle.regular,
             "Belum ada data Jadwal Pertemuan",
             (Vector2){
-                start_x + 380,
+                start_x - 235,
                 start_y + 290
             },
             40,
