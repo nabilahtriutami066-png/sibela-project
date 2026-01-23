@@ -22,14 +22,14 @@ void drawMateriUpdate(windowModel *windowM)
     for (int i = windowM->forms.pengajarPage[windowM->selectedPage].offset; i <= windowM->forms.pengajarPage[windowM->selectedPage].lastIndex; i++)
     {
         Rectangle textBox = {
-            1920 / 2.0f - 300,
-            start_y + 200 + (i - 1 - windowM->forms.pengajarPage[windowM->selectedPage].offset) * 150,
+            1920 / 2.0f - 200,
+            start_y + 300 + (i - 1 - windowM->forms.pengajarPage[windowM->selectedPage].offset) * 150,
             600,
             63,
         };
         Rectangle buttonBox = {
-            1920 / 2.0f - 80,
-            start_y + 200 + (i - 1 - windowM->forms.pengajarPage[windowM->selectedPage].offset) * 150,
+            1920 / 2.0f + 20,
+            start_y + 300 + (i - 1 - windowM->forms.pengajarPage[windowM->selectedPage].offset) * 150,
             160,
             67,
         };
