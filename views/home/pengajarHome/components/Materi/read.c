@@ -11,7 +11,7 @@ void drawMateriRead(windowModel *windowM)
     int padding = 5;
     int font_size = 32;
     DrawTextEx(windowM->fontStyle.bold, "DATA MATERI",
-               (Vector2){start_x + 1.4 * (cell_width + padding) - 310,
+               (Vector2){start_x + 1.8 * (cell_width + padding) - 310,
                          start_y - 200},
                64, 0,
                SIBELAWHITE);
@@ -94,7 +94,7 @@ void drawMateriRead(windowModel *windowM)
                SIBELAWHITE);
     if (windowM->isModalShown)
     {
-        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Hapus Materi?", TextFormat("Apakah anda ingin menghapus materi %s?", windowM->focusedData.materi.judul_materi), "Batal;Hapus!");
+        int res = GuiMessageBox((Rectangle)(Rectangle){.height = 400, .width = 800, .x = 300 + 1620 / 2 - 400, .y = 1080 / 2 - 200}, "Hapus Materi?", TextFormat("Apakah anda ingin menghapus materi %s?", windowM->focusedData.materi.judul_materi), "Batal;Hapus!");
 
         if (res == 2)
         {

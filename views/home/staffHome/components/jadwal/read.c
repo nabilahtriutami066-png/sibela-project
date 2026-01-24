@@ -87,7 +87,7 @@ void drawJadwalRead(windowModel *windowM)
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
-        DrawTextEx(windowM->fontStyle.regular, windowM->datas.jadwalPertemuans[row].nama_pengajar,
+        DrawTextEx(windowM->fontStyle.regular, windowM->datas.jadwalPertemuans[row].nama_peng_truncated,
                    (Vector2){start_x + 1 * cell_width + padding,
                              start_y + row * cell_height + padding},
                    font_size, 0,
@@ -112,9 +112,10 @@ void drawJadwalRead(windowModel *windowM)
                (Vector2){start_x, start_y + (row * cell_height) + 30},
                40, 0,
                SIBELAWHITE);
+
     if (windowM->isModalShown)
     {
-        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Hapus Jadwal?", TextFormat("Apakah anda ingin menghapus Jadwal %s?", windowM->focusedData.jadwal.id_pertemuan), "Batal;Hapus!");
+        int res = GuiMessageBox((Rectangle)(Rectangle){.height = 400, .width = 800, .x = 300 + 1620 / 2 - 400, .y = 1080 / 2 - 200}, "Hapus Jadwal?", TextFormat("Apakah anda ingin menghapus Jadwal %s?", windowM->focusedData.jadwal.id_pertemuan), "Batal;Hapus!");
 
         if (res == 2)
         {

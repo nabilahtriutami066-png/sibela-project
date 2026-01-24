@@ -92,6 +92,9 @@ typedef struct
     char id_materi[7];
     int jumlah_murid;
     char waktu[20];
+    char nama_peng_truncated[50];
+    char judul_materi_truncated[50];
+    char nama_mapel[100];
 } JadwalPertemuanWithDetails;
 
 typedef struct
@@ -103,6 +106,7 @@ typedef struct
     char tanggal_masuk[20];
     char no_hp[16];
     char password[101];
+    char nama_truncated[50];
 } Pengajar;
 
 typedef struct
@@ -197,6 +201,10 @@ typedef struct
 {
     int totalThisMonth;
     int sumThisMonth;
+    int total_transfer;
+    int total_tunai;
+    int count_transfer;
+    int count_tunai;
 } PembayaranReport;
 
 typedef enum

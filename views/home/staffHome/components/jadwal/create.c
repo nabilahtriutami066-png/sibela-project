@@ -45,36 +45,33 @@ void drawJadwalCreate(windowModel *windowM)
 
         case BUTTONINPUT:
         {
-        const char *label =
-        windowM->forms.staffPage[windowM->selectedPage].fields[i].label;
+            const char *label =
+                windowM->forms.staffPage[windowM->selectedPage].fields[i].label;
 
-        Vector2 textSize = MeasureTextEx(
-        windowM->fontStyle.medium,
-        label,
-        40,
-        0
-        );
+            Vector2 textSize = MeasureTextEx(
+                windowM->fontStyle.medium,
+                label,
+                40,
+                0);
 
-        if (windowM->curPos == i)
-        {
-            DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
-        }
-        else
-        {
-            DrawRectangleRoundedLines(buttonBox, 0.3f, 0, SIBELAWHITE);
-        }
+            if (windowM->curPos == i)
+            {
+                DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
+            }
+            else
+            {
+                DrawRectangleRoundedLines(buttonBox, 0.3f, 0, SIBELAWHITE);
+            }
 
-        DrawTextEx(
-        windowM->fontStyle.medium,
-        label,
-        (Vector2){
-            buttonBox.x + buttonBox.width  / 2 - textSize.x / 2,
-            buttonBox.y + buttonBox.height / 2 - textSize.y / 2
-        },
-        40,
-        0,
-        SIBELAWHITE
-        );
+            DrawTextEx(
+                windowM->fontStyle.medium,
+                label,
+                (Vector2){
+                    buttonBox.x + buttonBox.width / 2 - textSize.x / 2,
+                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2},
+                40,
+                0,
+                SIBELAWHITE);
         }
         break;
 

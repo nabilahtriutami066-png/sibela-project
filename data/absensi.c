@@ -90,6 +90,8 @@ QUERYSTATUS createAbsensi(MuridAbsensi murids[], int nMurid, char id_pert[], SQL
     strcpy(newAbsensi.id_pertemuan, id_pert);
     strcpy(newAbsensi.id_pengajar, authUser.id);
 
+    SQLLEN nullDataInd = SQL_NULL_DATA;
+
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     for (int i = 0; i < nMurid; i++)
     {
@@ -100,7 +102,7 @@ QUERYSTATUS createAbsensi(MuridAbsensi murids[], int nMurid, char id_pert[], SQL
         {
             SQLPrepare(stmt, (SQLCHAR *)"UPDATE absensi SET isHadir = ?, alasan = ? WHERE id_pertemuan = ? AND id_murid = ?", SQL_NTS);
             SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_BIT, SQL_BIT, sizeof(newAbsensi.isHadir), 0, &newAbsensi.isHadir, 0, NULL);
-            SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, strlen(newAbsensi.alasan) > 0 ? SQL_VARCHAR : SQL_NULL_DATA, strlen(newAbsensi.alasan), 0, newAbsensi.alasan, 0, NULL);
+            SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.alasan), 0, newAbsensi.alasan, 0, newAbsensi.isHadir ? NULL : &nullDataInd);
             SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.id_pertemuan), 0, newAbsensi.id_pertemuan, 0, NULL);
             SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.id_murid), 0, newAbsensi.id_murid, 0, NULL);
         }
@@ -111,7 +113,7 @@ QUERYSTATUS createAbsensi(MuridAbsensi murids[], int nMurid, char id_pert[], SQL
             SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.id_murid), 0, newAbsensi.id_murid, 0, NULL);
             SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.id_pengajar), 0, newAbsensi.id_pengajar, 0, NULL);
             SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_BIT, SQL_BIT, sizeof(newAbsensi.isHadir), 0, &newAbsensi.isHadir, 0, NULL);
-            SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, strlen(newAbsensi.alasan) > 0 ? SQL_VARCHAR : SQL_NULL_DATA, strlen(newAbsensi.alasan), 0, newAbsensi.alasan, 0, NULL);
+            SQLBindParameter(stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newAbsensi.alasan), 0, newAbsensi.alasan, 0, newAbsensi.isHadir ? NULL : &nullDataInd);
         }
         ret = SQLExecute(stmt);
     }

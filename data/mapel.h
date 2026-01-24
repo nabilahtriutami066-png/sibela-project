@@ -15,10 +15,10 @@
 
 // void createStaf(int lastIndex);
 
-QUERYSTATUS createMapel(InputField fields[], SQLHDBC *dbConn);
+QUERYSTATUS createMapel(InputField fields[], SQLHDBC *dbConn, user *authUser);
 void findAllMapel(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 void findAllMapelSelect(Select *selectObject, SQLHDBC *dbConn);
-QUERYSTATUS updateMapel(InputField fields[], SQLHDBC *dbConn);
+QUERYSTATUS updateMapel(InputField fields[], SQLHDBC *dbConn, user *authUser);
 QUERYSTATUS deleteMapel(SQLHDBC *dbConn, Mapel updatedMapel);
 
 #endif

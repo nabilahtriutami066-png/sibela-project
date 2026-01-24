@@ -8,6 +8,8 @@ set(PACKAGES
     components/header.c
     components/ui/sortControl.c
     components/ui/inputBox.c
+    components/ui/textArea.c
+    components/ui/pieChart.c
     libs/login.c
     libs/handleInput.c
     libs/validator.c

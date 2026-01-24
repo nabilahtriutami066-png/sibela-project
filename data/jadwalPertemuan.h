@@ -14,8 +14,8 @@
 #include "jadwalMurid.h"
 
 void findAllJadwalPertemuan(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
-QUERYSTATUS createJadwalPertemuan(InputField fields[], SQLHDBC *dbConn);
-QUERYSTATUS updateJadwalPertemuan(InputField fields[], SQLHDBC *dbConn);
+QUERYSTATUS createJadwalPertemuan(InputField fields[], SQLHDBC *dbConn, user *authUser);
+QUERYSTATUS updateJadwalPertemuan(InputField fields[], SQLHDBC *dbConn, user *authUser);
 QUERYSTATUS deleteJadwalPertemuan(SQLHDBC *dbConn, JadwalPertemuanWithDetails updatedPertemuan);
 void findAllJadwalPertemuanByUserId(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 

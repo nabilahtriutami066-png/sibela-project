@@ -42,7 +42,7 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[MANAJERSTAFF].nField = 7;
     windowM->forms.staffPage[MURID].nField = 6;
     windowM->forms.staffPage[MAPEL].nField = 2;
-    windowM->forms.staffPage[JADWAL].nField = 7;
+    windowM->forms.staffPage[JADWAL].nField = 6;
     windowM->forms.staffPage[PENGAJAR].nField = 5;
     windowM->forms.staffPage[RUANGAN].nField = 3;
     windowM->forms.staffPage[PEMBAYARAN].nField = 4;
@@ -82,17 +82,16 @@ void initForm(windowModel *windowM)
     windowM->dataFetchers.staffPage[PEMBAYARAN] = findAllPembayaran;
     windowM->dataFetchers.staffPage[PEMBAYARANREPORT] = getPembayaranReport;
 
-    windowM->forms.staffPage[JADWAL].fields[1] = (InputField){.label = "ID STAFF", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[JADWAL].fields[2] = (InputField){.label = "ID PENGAJAR", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[JADWAL].fields[3] = (InputField){.label = "ID RUANGAN", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[JADWAL].fields[4] = (InputField){.label = "ID MATERI", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[JADWAL].fields[5] = (InputField){.label = "WAKTU", .type = DATETIMEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[JADWAL].fields[6] = (InputField){.label = "MURID", .type = CUSTOMMODALMULTI, .value = (InputParams){.charLen = 0, .multiValue = {}}};
-    windowM->forms.staffPage[JADWAL].fields[7] = (InputField){.label = "SUBMIT", .type = BUTTONINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[JADWAL].optionFetcher[2] = findAllPengajarSelect;
-    windowM->forms.staffPage[JADWAL].optionFetcher[3] = findAllRuanganSelect;
-    windowM->forms.staffPage[JADWAL].optionFetcher[4] = findAllMateriSelect;
-    windowM->forms.staffPage[JADWAL].optionFetcher[6] = findAllMuridSelect;
+    windowM->forms.staffPage[JADWAL].fields[1] = (InputField){.label = "PENGAJAR", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[JADWAL].fields[2] = (InputField){.label = "RUANGAN", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[JADWAL].fields[3] = (InputField){.label = "MATERI", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[JADWAL].fields[4] = (InputField){.label = "WAKTU", .type = DATETIMEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[JADWAL].fields[5] = (InputField){.label = "MURID", .type = CUSTOMMODALMULTI, .value = (InputParams){.charLen = 0, .multiValue = {}}};
+    windowM->forms.staffPage[JADWAL].fields[6] = (InputField){.label = "SUBMIT", .type = BUTTONINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[JADWAL].optionFetcher[1] = findAllPengajarSelect;
+    windowM->forms.staffPage[JADWAL].optionFetcher[2] = findAllRuanganSelect;
+    windowM->forms.staffPage[JADWAL].optionFetcher[3] = findAllMateriSelect;
+    windowM->forms.staffPage[JADWAL].optionFetcher[5] = findAllMuridSelect;
     windowM->forms.staffPage[JADWAL].selectedField = -1;
 
     windowM->forms.staffPage[PEMBAYARAN].fields[1] = (InputField){.label = "SISWA", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
@@ -104,7 +103,7 @@ void initForm(windowModel *windowM)
 
     windowM->selectByPage.staffPage = (Select(*)[6])malloc(sizeof(Select) * 6 * 10);
 
-    windowM->forms.pengajarPage[MATERI].fields[1] = (InputField){.label = "ID MAPEL", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.pengajarPage[MATERI].fields[1] = (InputField){.label = "MAPEL", .type = CUSTOMMODAL, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.pengajarPage[MATERI].fields[2] = (InputField){.label = "Judul Materi", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.pengajarPage[MATERI].fields[3] = (InputField){.label = "Isi Materi", .type = LONGTEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.pengajarPage[MATERI].fields[4] = (InputField){.label = "SUBMIT", .type = BUTTONINPUT, .value = (InputParams){.charLen = 0, .text = ""}};

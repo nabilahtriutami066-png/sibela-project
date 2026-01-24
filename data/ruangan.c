@@ -117,7 +117,7 @@ void findAllRuanganSelect(Select *selectObject, SQLHDBC *dbConn)
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
 
-QUERYSTATUS createRuangan(InputField fields[], SQLHDBC *dbConn)
+QUERYSTATUS createRuangan(InputField fields[], SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -149,7 +149,7 @@ QUERYSTATUS createRuangan(InputField fields[], SQLHDBC *dbConn)
     }
 }
 
-QUERYSTATUS updateRuangan(InputField fields[], SQLHDBC *dbConn)
+QUERYSTATUS updateRuangan(InputField fields[], SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;

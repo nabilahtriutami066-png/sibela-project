@@ -12,10 +12,10 @@
 
 Pengajar findPengajarbyPhoneNum(char PhoneNum[], SQLHDBC *dbConn);
 
-QUERYSTATUS createPengajar(InputField fields[], SQLHDBC *dbConn);
+QUERYSTATUS createPengajar(InputField fields[], SQLHDBC *dbConn, user *authUser);
 void findAllPengajar(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 void findAllPengajarSelect(Select *selectObject, SQLHDBC *dbConn);
-QUERYSTATUS updatePengajar(InputField fields[], SQLHDBC *dbConn);
+QUERYSTATUS updatePengajar(InputField fields[], SQLHDBC *dbConn, user *authUser);
 QUERYSTATUS deletePengajar(SQLHDBC *dbConn, Pengajar updatedPengajar);
 
 #endif

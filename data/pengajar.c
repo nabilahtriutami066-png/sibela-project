@@ -84,9 +84,9 @@ void findAllPengajar(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
     if (datas->sortBy == DESC)
-        SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM pengajar WHERE id_pengajar LIKE ? OR nama LIKE ? ORDER BY tanggal_masuk DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT *, SUBSTRING(nama, 1, 15) + IIF(LEN(nama) >= 15,'...','') FROM pengajar WHERE id_pengajar LIKE ? OR nama LIKE ? ORDER BY tanggal_masuk DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     else
-        SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM pengajar WHERE id_pengajar LIKE ? OR nama LIKE ? ORDER BY tanggal_masuk ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
+        SQLPrepare(stmt, (SQLCHAR *)"SELECT *, SUBSTRING(nama, 1, 15) + IIF(LEN(nama) >= 15,'...','') FROM pengajar WHERE id_pengajar LIKE ? OR nama LIKE ? ORDER BY tanggal_masuk ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 0, 0, charString, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 0, 0, charString, 0, NULL);
     SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &offset, 0, NULL);
@@ -111,6 +111,8 @@ void findAllPengajar(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser)
                    &datas->pengajars[i].no_hp, sizeof(datas->pengajars[i].no_hp), NULL);
         SQLGetData(stmt, 7, SQL_C_CHAR,
                    &datas->pengajars[i].password, sizeof(datas->pengajars[i].password), NULL);
+        SQLGetData(stmt, 8, SQL_C_CHAR,
+                   &datas->pengajars[i].nama_truncated, sizeof(datas->pengajars[i].nama_truncated), NULL);
         rowsFetched++;
     }
     datas->nPengajar = rowsFetched;
@@ -163,7 +165,7 @@ void findAllPengajarSelect(Select *selectObject, SQLHDBC *dbConn)
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
 
-QUERYSTATUS createPengajar(InputField fields[], SQLHDBC *dbConn)
+QUERYSTATUS createPengajar(InputField fields[], SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -197,7 +199,7 @@ QUERYSTATUS createPengajar(InputField fields[], SQLHDBC *dbConn)
     }
 }
 
-QUERYSTATUS updatePengajar(InputField fields[], SQLHDBC *dbConn)
+QUERYSTATUS updatePengajar(InputField fields[], SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;

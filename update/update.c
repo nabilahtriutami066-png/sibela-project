@@ -177,6 +177,8 @@ void updateView(windowModel *windowM)
                 switch (ch)
                 {
                 case KEY_N:
+                    if (windowM->selectedPage == PEMBAYARANREPORT)
+                        break;
                     clearFields(windowM->forms.staffPage[windowM->selectedPage].fields);
                     clearSelects(windowM->selectByPage.staffPage);
 
@@ -202,9 +204,13 @@ void updateView(windowModel *windowM)
                     }
                     break;
                 case KEY_D:
+                    if (windowM->selectedPage == PEMBAYARANREPORT)
+                        break;
                     windowM->isModalShown = 1;
                     break;
                 case KEY_U:
+                    if (windowM->selectedPage == PEMBAYARANREPORT)
+                        break;
                     switch (windowM->selectedPage)
                     {
                     case MANAJERSTAFF:
@@ -244,14 +250,11 @@ void updateView(windowModel *windowM)
                         break;
                     case JADWAL:
                         copyStringData(windowM->focusedData.jadwal.id_pertemuan, &windowM->forms.staffPage[JADWAL].fields[0].value);
-                        copyStringData(windowM->focusedData.jadwal.id_staff, &windowM->forms.staffPage[JADWAL].fields[1].value);
-                        copySelectData(windowM->focusedData.jadwal.nama_pengajar, windowM->focusedData.jadwal.id_pengajar, &windowM->selectByPage.staffPage[JADWAL][2].selected);
-                        copySelectData(windowM->focusedData.jadwal.lokasi, windowM->focusedData.jadwal.id_ruangan, &windowM->selectByPage.staffPage[JADWAL][3].selected);
-                        copySelectData(windowM->focusedData.jadwal.judul_materi, windowM->focusedData.jadwal.id_materi, &windowM->selectByPage.staffPage[JADWAL][4].selected);
-                        copyStringData(windowM->focusedData.jadwal.waktu, &windowM->forms.staffPage[JADWAL].fields[5].value);
-                        findAllSelectedSiswaByPertemuanID(windowM->focusedData.jadwal.id_pertemuan, &windowM->selectByPage.staffPage[JADWAL][6], windowM->dbConn);
-                        strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[1].value.text, windowM->authUser.id);
-                        windowM->forms.staffPage[windowM->selectedPage].fields[1].value.charLen = strlen(windowM->authUser.id);
+                        copySelectData(windowM->focusedData.jadwal.nama_pengajar, windowM->focusedData.jadwal.id_pengajar, &windowM->selectByPage.staffPage[JADWAL][1].selected);
+                        copySelectData(windowM->focusedData.jadwal.lokasi, windowM->focusedData.jadwal.id_ruangan, &windowM->selectByPage.staffPage[JADWAL][2].selected);
+                        copySelectData(windowM->focusedData.jadwal.judul_materi, windowM->focusedData.jadwal.id_materi, &windowM->selectByPage.staffPage[JADWAL][3].selected);
+                        copyStringData(windowM->focusedData.jadwal.waktu, &windowM->forms.staffPage[JADWAL].fields[4].value);
+                        findAllSelectedSiswaByPertemuanID(windowM->focusedData.jadwal.id_pertemuan, &windowM->selectByPage.staffPage[JADWAL][5], windowM->dbConn);
                         break;
                     }
                     windowM->activeSubWindow = UPDATE;
@@ -324,8 +327,11 @@ void updateView(windowModel *windowM)
                 }
                 else if (windowM->forms.pengajarPage[windowM->selectedPage].selectedField < 0)
                 {
-                    windowM->page++;
-                    windowM->curPos = windowM->page * windowM->forms.pengajarPage[windowM->selectedPage].fieldPerPage - windowM->forms.pengajarPage[windowM->selectedPage].fieldPerPage + 1;
+                    if (windowM->page < windowM->forms.pengajarPage[windowM->selectedPage].totalPages)
+                    {
+                        windowM->page++;
+                        windowM->curPos = windowM->page * windowM->forms.pengajarPage[windowM->selectedPage].fieldPerPage - windowM->forms.pengajarPage[windowM->selectedPage].fieldPerPage + 1;
+                    }
                 }
                 break;
             case KEY_LEFT:
@@ -337,8 +343,11 @@ void updateView(windowModel *windowM)
                 }
                 else if (windowM->forms.pengajarPage[windowM->selectedPage].selectedField < 0)
                 {
-                    windowM->page--;
-                    windowM->curPos = windowM->page * windowM->forms.pengajarPage[windowM->selectedPage].fieldPerPage - windowM->forms.pengajarPage[windowM->selectedPage].fieldPerPage + 1;
+                    if (windowM->page > 1)
+                    {
+                        windowM->page--;
+                        windowM->curPos = windowM->page * windowM->forms.pengajarPage[windowM->selectedPage].fieldPerPage - windowM->forms.pengajarPage[windowM->selectedPage].fieldPerPage + 1;
+                    }
                 }
                 break;
             default:
@@ -376,27 +385,14 @@ void updateView(windowModel *windowM)
             switch (ch)
             {
             case KEY_UP:
-                windowM->curPos -= 1;
+                if (windowM->curPos > 0)
+                    windowM->curPos -= 1;
                 break;
             case KEY_DOWN:
-                windowM->curPos += 1;
+                if (windowM->curPos < 10)
+                    windowM->curPos += 1;
                 break;
-            case KEY_RIGHT:
-                if (windowM->datas.page < windowM->datas.totalPages)
-                {
-                    windowM->datas.page++;
-                    windowM->curPos = 0;
-                    windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
-                }
-                break;
-            case KEY_LEFT:
-                if (windowM->datas.page > 1)
-                {
-                    windowM->datas.page--;
-                    windowM->curPos = 0;
-                    windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
-                }
-                break;
+
             default:
                 if (windowM->selectedPage == MATERI)
                 {
@@ -413,6 +409,22 @@ void updateView(windowModel *windowM)
                         }
                         windowM->curPos = 1;
                         break;
+                    case KEY_RIGHT:
+                        if (windowM->datas.page < windowM->datas.totalPages)
+                        {
+                            windowM->datas.page++;
+                            windowM->curPos = 0;
+                            windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                        }
+                        break;
+                    case KEY_LEFT:
+                        if (windowM->datas.page > 1)
+                        {
+                            windowM->datas.page--;
+                            windowM->curPos = 0;
+                            windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                        }
+                        break;
                     case KEY_D:
                         windowM->isModalShown = 1;
                         break;
@@ -428,7 +440,7 @@ void updateView(windowModel *windowM)
                     case KEY_TAB:
                         windowM->curPos = 0;
                         windowM->cursorEnabled = 1;
-                        windowM->activeSubWindow = -1;
+                        windowM->selectedPage = -1;
                         break;
                     }
                 }
@@ -442,7 +454,7 @@ void updateView(windowModel *windowM)
                         case KEY_TAB:
                             windowM->curPos = 0;
                             windowM->cursorEnabled = 1;
-                            windowM->activeSubWindow = -1;
+                            windowM->selectedPage = -1;
                             break;
                         case KEY_ENTER:
                             windowM->pengajarHomeState.absensiPage.page = 1;
@@ -457,9 +469,14 @@ void updateView(windowModel *windowM)
                         switch (ch)
                         {
                         case KEY_TAB:
+                            windowM->curPos = 0;
                             windowM->pengajarHomeState.absensiPage.getMurids(&windowM->datas, &windowM->pengajarHomeState.absensiPage.nPage, windowM->dbConn, &windowM->focusedData.jadwal);
                             paginateAbsensi(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->pengajarHomeState.absensiPage.nPage, windowM->pengajarHomeState.absensiPage.page, &windowM->pengajarHomeState.absensiPage.nMurid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi);
                             windowM->pengajarHomeState.absensiPage.activeSubWindow = MAIN;
+                            break;
+                        case KEY_ENTER:
+                            windowM->datas.muridAbsensis[windowM->curPos + (windowM->pengajarHomeState.absensiPage.page - 1) * 10].isHadir = !windowM->datas.muridAbsensis[windowM->curPos + (windowM->pengajarHomeState.absensiPage.page - 1) * 10].isHadir;
+                            paginateAbsensi(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->pengajarHomeState.absensiPage.nPage, windowM->pengajarHomeState.absensiPage.page, &windowM->pengajarHomeState.absensiPage.nMurid, windowM->pengajarHomeState.absensiPage.paginatedAbsensi);
                             break;
                         case KEY_RIGHT:
                             if (windowM->pengajarHomeState.absensiPage.page < windowM->pengajarHomeState.absensiPage.nPage)
@@ -484,13 +501,32 @@ void updateView(windowModel *windowM)
                     }
                 }
 
-                else
+                else if (windowM->selectedPage == PERTEMUAN)
                 {
-                case KEY_TAB:
-                    windowM->curPos = 0;
-                    windowM->cursorEnabled = 1;
-                    windowM->activeSubWindow = -1;
-                    break;
+                    switch (ch)
+                    {
+                    case KEY_RIGHT:
+                        if (windowM->datas.page < windowM->datas.totalPages)
+                        {
+                            windowM->datas.page++;
+                            windowM->curPos = 0;
+                            windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                        }
+                        break;
+                    case KEY_LEFT:
+                        if (windowM->datas.page > 1)
+                        {
+                            windowM->datas.page--;
+                            windowM->curPos = 0;
+                            windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, NULL);
+                        }
+                        break;
+                    case KEY_TAB:
+                        windowM->curPos = 0;
+                        windowM->cursorEnabled = 1;
+                        windowM->selectedPage = -1;
+                        break;
+                    }
                 }
                 break;
             }
@@ -500,20 +536,21 @@ void updateView(windowModel *windowM)
             switch (ch)
             {
             case KEY_UP:
-                windowM->curPos -= 1;
+                if (windowM->curPos > 0)
+                    windowM->curPos -= 1;
                 break;
             case KEY_DOWN:
-                windowM->curPos += 1;
+                if (windowM->curPos < 3)
+                    windowM->curPos += 1;
                 break;
             case KEY_ENTER:
-
                 if (windowM->curPos == 3)
                 {
                     logoutFunction(windowM);
                     return;
                 }
-                windowM->dataFetchers.pengajarPage[windowM->curPos](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, &windowM->authUser);
                 windowM->selectedPage = windowM->curPos;
+                windowM->dataFetchers.pengajarPage[windowM->selectedPage](&windowM->datas, &windowM->datas.totalPages, windowM->dbConn, &windowM->authUser);
                 windowM->activeSubWindow = READ;
                 windowM->datas.page = 1;
                 windowM->curPos = 0;

@@ -16,10 +16,10 @@
 // void createStaf(int lastIndex);
 // Staf findStafbyEmail(char email[], SQLHDBC *dbConn);
 
-QUERYSTATUS createRuangan(InputField fields[], SQLHDBC *dbConn);
+QUERYSTATUS createRuangan(InputField fields[], SQLHDBC *dbConn, user *authUser);
 void findAllRuangan(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 void findAllRuanganSelect(Select *selectObject, SQLHDBC *dbConn);
-QUERYSTATUS updateRuangan(InputField fields[], SQLHDBC *dbConn);
+QUERYSTATUS updateRuangan(InputField fields[], SQLHDBC *dbConn, user *authUser);
 QUERYSTATUS deleteRuangan(SQLHDBC *dbConn, Ruangan updatedRuangan);
 
 #endif

@@ -8,9 +8,10 @@ void drawMateriUpdate(windowModel *windowM)
     int start_x = 1920 / 2 - 600 + 100;
     int start_y = 1080 / 2 - 300;
     int padding = 5;
+    int margin = 150;
     int font_size = 32;
     DrawTextEx(windowM->fontStyle.regular, "UBAH MATERI",
-               (Vector2){start_x + 390,
+               (Vector2){start_x + 420,
                          start_y - 120},
                64, 0,
                SIBELAWHITE);
@@ -21,21 +22,33 @@ void drawMateriUpdate(windowModel *windowM)
 
     for (int i = windowM->forms.pengajarPage[windowM->selectedPage].offset; i <= windowM->forms.pengajarPage[windowM->selectedPage].lastIndex; i++)
     {
+
         Rectangle textBox = {
             1920 / 2.0f - 200,
-            start_y + 300 + (i - 1 - windowM->forms.pengajarPage[windowM->selectedPage].offset) * 150,
+            start_y + 200 + (i - 1 - windowM->forms.pengajarPage[windowM->selectedPage].offset) * margin,
             600,
             63,
         };
+        Rectangle textAreaBox = {
+            1920 / 2.0f - 200,
+            start_y + 200 + (i - 1 - windowM->forms.pengajarPage[windowM->selectedPage].offset) * margin,
+            600,
+            200,
+        };
         Rectangle buttonBox = {
             1920 / 2.0f + 20,
-            start_y + 300 + (i - 1 - windowM->forms.pengajarPage[windowM->selectedPage].offset) * 150,
+            start_y + 200 + (i - 1 - windowM->forms.pengajarPage[windowM->selectedPage].offset) * margin,
             160,
             67,
         };
+        if (margin != 150)
+            margin = 150;
         switch (windowM->forms.pengajarPage[windowM->selectedPage].fields[i].type)
         {
         case LONGTEXTINPUT:
+            drawTextArea(windowM, &windowM->forms.pengajarPage[windowM->selectedPage].fields[i].value, textAreaBox, windowM->forms.pengajarPage[windowM->selectedPage].fields[i].label, i);
+            margin = 200;
+            break;
         case NUMERICINPUT:
         case TEXTINPUT:
             DrawTextEx(windowM->fontStyle.medium, windowM->forms.pengajarPage[windowM->selectedPage].fields[i].label, (Vector2){(int)textBox.x, (int)textBox.y - 44}, 40, 0, SIBELAWHITE);
@@ -45,43 +58,40 @@ void drawMateriUpdate(windowModel *windowM)
 
         case BUTTONINPUT:
         {
-        const char *label =
-        windowM->forms.pengajarPage[windowM->selectedPage].fields[i].label;
+            const char *label =
+                windowM->forms.pengajarPage[windowM->selectedPage].fields[i].label;
 
-        Vector2 textSize = MeasureTextEx(
-        windowM->fontStyle.medium,
-        label,
-        40,
-        0
-        );
+            Vector2 textSize = MeasureTextEx(
+                windowM->fontStyle.medium,
+                label,
+                40,
+                0);
 
-        if ((windowM->forms.pengajarPage[windowM->selectedPage].selectedField == -1 &&
-         windowM->curPos == i) ||
-        windowM->forms.pengajarPage[windowM->selectedPage].selectedField == i)
-        {
-            DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
-        }
-        else
-        {
-            DrawRectangleRoundedLines(buttonBox, 0.3f, 0, SIBELAWHITE);
-        }
+            if ((windowM->forms.pengajarPage[windowM->selectedPage].selectedField == -1 &&
+                 windowM->curPos == i) ||
+                windowM->forms.pengajarPage[windowM->selectedPage].selectedField == i)
+            {
+                DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
+            }
+            else
+            {
+                DrawRectangleRoundedLines(buttonBox, 0.3f, 0, SIBELAWHITE);
+            }
 
-        DrawTextEx(
-        windowM->fontStyle.medium,
-        label,
-        (Vector2){
-            buttonBox.x + buttonBox.width  / 2 - textSize.x / 2,
-            buttonBox.y + buttonBox.height / 2 - textSize.y / 2
-        },
-        40,
-        0,
-        SIBELAWHITE
-        );
+            DrawTextEx(
+                windowM->fontStyle.medium,
+                label,
+                (Vector2){
+                    buttonBox.x + buttonBox.width / 2 - textSize.x / 2,
+                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2},
+                40,
+                0,
+                SIBELAWHITE);
         }
         break;
 
-
         case CUSTOMMODAL:
+            buttonBox.x = textBox.x;
             DrawTextEx(windowM->fontStyle.medium, windowM->forms.pengajarPage[windowM->selectedPage].fields[i].label, (Vector2){(int)buttonBox.x, (int)buttonBox.y - 45}, 40, 0, SIBELAWHITE);
             if (windowM->curPos == i)
             {
@@ -90,6 +100,8 @@ void drawMateriUpdate(windowModel *windowM)
             else
                 DrawRectangleRoundedLines(buttonBox, 0.3, 0, SIBELAWHITE);
             DrawTextEx(windowM->fontStyle.medium, "PILIH", (Vector2){(int)buttonBox.x + buttonBox.width / 2 - MeasureTextEx(windowM->fontStyle.medium, "PILIH", 40, 0).x / 2, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.medium, "PILIH", 40, 0).y / 2 - 8}, 40, 0, SIBELAWHITE);
+            if (!TextIsEqual(windowM->selectByPage.pengajarPage[windowM->selectedPage].selected.value, ""))
+                DrawTextEx(windowM->fontStyle.regular, TextFormat("Tepilih: %s", windowM->selectByPage.pengajarPage[windowM->selectedPage].selected.label), (Vector2){(int)buttonBox.x + buttonBox.width + 20, (int)buttonBox.y + MeasureTextEx(windowM->fontStyle.regular, "PILIH", 32, 0).y / 2}, 32, 0, SIBELAWHITE);
             break;
         }
         if (windowM->forms.pengajarPage[windowM->selectedPage].selectedField >= 0)

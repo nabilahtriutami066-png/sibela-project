@@ -166,7 +166,7 @@ QUERYSTATUS createStaff(InputField fields[], SQLHDBC *dbConn)
     }
 }
 
-QUERYSTATUS createStaffManajer(InputField fields[], SQLHDBC *dbConn)
+QUERYSTATUS createStaffManajer(InputField fields[], SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -205,7 +205,7 @@ QUERYSTATUS createStaffManajer(InputField fields[], SQLHDBC *dbConn)
     }
 }
 
-QUERYSTATUS updateStaff(InputField fields[], SQLHDBC *dbConn)
+QUERYSTATUS updateStaff(InputField fields[], SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;

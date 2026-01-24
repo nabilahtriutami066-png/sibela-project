@@ -63,7 +63,7 @@ typedef struct
     InputType type;
 } InputField;
 
-typedef QUERYSTATUS (*mutationFunc)(InputField fields[], SQLHDBC *dbConn);
+typedef QUERYSTATUS (*mutationFunc)(InputField fields[], SQLHDBC *dbConn, user *authUser);
 typedef void (*selectOptionFetcher)(Select *selectObject, SQLHDBC *dbConn);
 
 typedef struct

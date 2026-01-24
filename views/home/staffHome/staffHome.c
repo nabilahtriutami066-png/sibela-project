@@ -1,26 +1,5 @@
 #include "staffHome.h"
 
-void DrawMetricCard(const char *label, const char *value, Vector2 pos, float width, FontStyles *fonts)
-{
-    float height = 110.0f;
-    Rectangle bounds = {pos.x, pos.y, width, height};
-
-    // Card Body
-    DrawRectangleRounded(bounds, 0.2f, 10, SIBELAWHITE);
-
-    // Top Accent Line
-    DrawRectangleRounded((Rectangle){bounds.x, bounds.y, bounds.width, 6}, 1.0f, 10, PRIMARY);
-
-    // Label
-    DrawTextEx(fonts->medium, label, (Vector2){bounds.x + 15, bounds.y + 25}, 24, 0, SECONDARY);
-
-    // Big Value
-    DrawTextEx(fonts->regular, value, (Vector2){bounds.x + 15, bounds.y + 45}, 42, 0, PRIMARY);
-
-    // Bottom Helper Text
-    DrawTextEx(fonts->regular, "Bulan Ini", (Vector2){bounds.x + 15, bounds.y + 85}, 18, 0, GRAY);
-}
-
 void drawStaffHome(windowModel *windowM)
 {
     if (strcmp(windowM->authUser.role, "MANAJER") == 0)
@@ -50,8 +29,6 @@ void drawStaffHome(windowModel *windowM)
             switch (windowM->selectedPage)
             {
             case PEMBAYARANREPORT:
-                DrawMetricCard("Total Pembayaran", TextFormat("Rp. %d", windowM->datas.pembayaranReport.sumThisMonth), (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 200}, 200, &windowM->fontStyle);
-                DrawMetricCard("Jumlah", TextFormat("%d", windowM->datas.pembayaranReport.totalThisMonth), (Vector2){.x = 1920 / 2 - 600 + 100 + 100 + 210, .y = 200}, 200, &windowM->fontStyle);
                 drawPembayaranReport(windowM);
 
                 break;

@@ -39,14 +39,12 @@ void drawMuridHome(windowModel *windowM)
         {
         case 0:
             drawJadwalMuridRead(windowM);
-            DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
             break;
         case 1:
             drawMateriMuridRead(windowM);
             break;
         case 2:
             drawMuridPembayaranRead(windowM);
-            DrawSortControl(windowM, (Vector2){.x = 1920 / 2 - 600 + 100 + 100, .y = 80});
             break;
         default:
             drawWelcomePage(windowM);

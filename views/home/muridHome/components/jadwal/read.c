@@ -11,7 +11,7 @@ void drawJadwalMuridRead(windowModel *windowM)
     int padding = 5;
     int font_size = 32;
 
-    DrawTextEx(windowM->fontStyle.regular, "JADWAL PERTEMUAN",
+    DrawTextEx(windowM->fontStyle.bold, "JADWAL PERTEMUAN",
                (Vector2){start_x - 225,
                          start_y - 150},
                64, 0,
@@ -23,29 +23,27 @@ void drawJadwalMuridRead(windowModel *windowM)
             windowM->fontStyle.regular,
             "Belum ada data Jadwal Pertemuan",
             (Vector2){
-                start_x + 380,
-                start_y + 290
-            },
+                start_x - 235,
+                start_y + 290},
             40,
             2,
-            Fade(SIBELAWHITE, 0.6f)
-        );
+            Fade(SIBELAWHITE, 0.6f));
         return;
     }
 
     for (row = 0; row < windowM->datas.nJadwalPertemuan; row++)
     {
-        DrawMeetingCard(windowM->datas.jadwalPertemuans[row], (Vector2){start_x - 400, start_y + row * 200}, 800, windowM->fontStyle);
+        DrawMeetingCard(windowM->datas.jadwalPertemuans[row], (Vector2){start_x - 400, start_y + row * 205}, 800, windowM->fontStyle);
     }
     DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
-               (Vector2){start_x , start_y + (row * cell_height) + 30},
+               (Vector2){start_x - 125, 1080 - 150},
                40, 0,
                SIBELAWHITE);
 }
 
 void DrawMeetingCard(JadwalPertemuanWithDetails jadwal, Vector2 position, float width, FontStyles fonts)
 {
-    float height = 160.0f;
+    float height = 185.0f;
     float padding = 25.0f;
     float cornerRoundness = 0.15f;
 
@@ -70,6 +68,8 @@ void DrawMeetingCard(JadwalPertemuanWithDetails jadwal, Vector2 position, float 
     DrawTextEx(fonts.regular, "Lokasi:", (Vector2){labelX, startY + 25}, 36, 0, SECONDARY);
     DrawTextEx(fonts.regular, jadwal.lokasi, (Vector2){valueX, startY + 25}, 36, 0, TERTIARY);
 
-    DrawTextEx(fonts.regular, "Topik:", (Vector2){labelX, startY + 50}, 36, 0, SECONDARY);
-    DrawTextEx(fonts.regular, jadwal.judul_materi, (Vector2){valueX, startY + 50}, 36, 0, PRIMARY);
+    DrawTextEx(fonts.regular, "Mapel:", (Vector2){labelX, startY + 50}, 36, 0, SECONDARY);
+    DrawTextEx(fonts.regular, jadwal.nama_mapel, (Vector2){valueX, startY + 50}, 36, 0, PRIMARY);
+    DrawTextEx(fonts.regular, "Topik:", (Vector2){labelX, startY + 75}, 36, 0, SECONDARY);
+    DrawTextEx(fonts.regular, jadwal.judul_materi, (Vector2){valueX, startY + 75}, 36, 0, PRIMARY);
 }

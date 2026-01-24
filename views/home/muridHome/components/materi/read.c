@@ -53,6 +53,10 @@ void drawMateriMuridRead(windowModel *windowM)
                 state->activeSubWindow = MATERI_LIST;
             }
         }
+        DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
+                   (Vector2){x, 1080 - 150},
+                   40, 0,
+                   SIBELAWHITE);
     }
     else if (state->activeSubWindow == MATERI_LIST)
     {
@@ -111,14 +115,9 @@ void drawMateriMuridRead(windowModel *windowM)
             300};
 
         DrawRectangleRounded(box, 0.2f, 8, DARKGRAY);
-
-        DrawTextEx(
-            font,
-            windowM->datas.Materis[i].isi_materi,
-            (Vector2){box.x + 15, box.y + 10},
-            18,
-            2,
-            LIGHTGRAY);
+        InputParams input = {.charLen = strlen(windowM->datas.Materis[i].isi_materi)};
+        strcpy(input.text, windowM->datas.Materis[i].isi_materi);
+        drawTextArea(windowM, &input, box, "", -1);
 
         if (GuiButton((Rectangle){x, y + 330, 120, 40}, "Kembali", 0))
         {

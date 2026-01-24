@@ -82,7 +82,7 @@ void drawPengajarRead(windowModel *windowM)
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
-        DrawTextEx(windowM->fontStyle.regular, windowM->datas.pengajars[row].nama,
+        DrawTextEx(windowM->fontStyle.regular, windowM->datas.pengajars[row].nama_truncated,
                    (Vector2){start_x + 1 * cell_width + padding,
                              start_y + row * cell_height + padding},
                    font_size, 0,
@@ -104,7 +104,7 @@ void drawPengajarRead(windowModel *windowM)
                SIBELAWHITE);
     if (windowM->isModalShown)
     {
-        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Hapus Pengajar?", TextFormat("Apakah anda ingin menghapus Pengajar %s?", windowM->focusedData.pengajar.id_pengajar), "Batal;Hapus!");
+        int res = GuiMessageBox((Rectangle)(Rectangle){.height = 400, .width = 800, .x = 300 + 1620 / 2 - 400, .y = 1080 / 2 - 200}, "Hapus Pengajar?", TextFormat("Apakah anda ingin menghapus Pengajar %s?", windowM->focusedData.pengajar.id_pengajar), "Batal;Hapus!");
 
         if (res == 2)
         {

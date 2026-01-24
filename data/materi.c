@@ -179,7 +179,7 @@ void findAllMateriSelect(Select *selectObject, SQLHDBC *dbConn)
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
 
-QUERYSTATUS createMateri(InputField fields[], SQLHDBC *dbConn)
+QUERYSTATUS createMateri(InputField fields[], SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -212,7 +212,7 @@ QUERYSTATUS createMateri(InputField fields[], SQLHDBC *dbConn)
     }
 }
 
-QUERYSTATUS updateMateri(InputField fields[], SQLHDBC *dbConn)
+QUERYSTATUS updateMateri(InputField fields[], SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;

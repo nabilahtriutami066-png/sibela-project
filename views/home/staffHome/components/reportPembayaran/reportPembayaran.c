@@ -1,5 +1,7 @@
 #include "reportPembayaran.h"
 
+void DrawMetricCard(const char *label, const char *value, Vector2 pos, float width, FontStyles *fonts);
+
 void drawPembayaranReport(windowModel *windowM)
 {
     int row;
@@ -58,11 +60,7 @@ void drawPembayaranReport(windowModel *windowM)
                 start_y + row * cell_height,
                 cell_width,
                 cell_height};
-            if (row == windowM->curPos)
-            {
-                windowM->focusedData.pembayaran = windowM->datas.pembayarans[row];
-                DrawRectangleRec(cellRect, PRIMARY);
-            }
+
             DrawRectangleLinesEx(cellRect, 1, SIBELAWHITE);
         }
         DrawTextEx(windowM->fontStyle.regular, windowM->datas.pembayarans[row].id_pembayaran,
@@ -100,5 +98,31 @@ void drawPembayaranReport(windowModel *windowM)
                (Vector2){start_x, start_y + (row * cell_height) + 30},
                40, 0,
                SIBELAWHITE);
-    dateRangeSelector(windowM, (Vector2){300 + 700, 100});
+
+    DrawMetricCard("Total Pembayaran", TextFormat("Rp. %d", windowM->datas.pembayaranReport.sumThisMonth), (Vector2){start_x, 330}, 200, &windowM->fontStyle);
+    DrawMetricCard("Jumlah Pembayaran", TextFormat("%d", windowM->datas.pembayaranReport.totalThisMonth), (Vector2){start_x + 210, 330}, 200, &windowM->fontStyle);
+    dateRangeSelector(windowM, (Vector2){start_x, 200});
+    drawPieChart(windowM, (Vector2){1920 - 285, 250}, windowM->datas.pembayaranReport.total_tunai, windowM->datas.pembayaranReport.total_transfer, "Tunai", "Transfer", "Jumlah Pembayaran", 1);
+    drawPieChart(windowM, (Vector2){1920 - 285 - 460 - 20, 250}, windowM->datas.pembayaranReport.count_tunai, windowM->datas.pembayaranReport.count_transfer, "Tunai", "Transfer", "Total Pembayaran Dilakukan", 0);
+}
+
+void DrawMetricCard(const char *label, const char *value, Vector2 pos, float width, FontStyles *fonts)
+{
+    float height = 110.0f;
+    Rectangle bounds = {pos.x, pos.y, width, height};
+
+    // Card Body
+    DrawRectangleRounded(bounds, 0.2f, 10, SIBELAWHITE);
+
+    // Top Accent Line
+    DrawRectangleRounded((Rectangle){bounds.x, bounds.y, bounds.width, 6}, 1.0f, 10, PRIMARY);
+
+    // Label
+    DrawTextEx(fonts->medium, label, (Vector2){bounds.x + 10, bounds.y + 15}, 24, 0, SECONDARY);
+
+    // Big Value
+    DrawTextEx(fonts->regular, value, (Vector2){bounds.x + 10, bounds.y + 35}, 42, 0, PRIMARY);
+
+    // Bottom Helper Text
+    DrawTextEx(fonts->regular, "Periode ini", (Vector2){bounds.x + 10, bounds.y + 75}, 24, 0, GRAY);
 }

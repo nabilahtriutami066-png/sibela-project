@@ -6,16 +6,16 @@ void drawMuridPembayaranRead(windowModel *windowM)
     int row;
     int cell_width = 250;
     int cell_height = 50;
-    int start_x = 1920 / 2 - 500;
-    int start_y = 1080 / 2 - 300;
+    int start_x = 520;
+    int start_y = 320;
     int padding = 5;
     int font_size = 32;
-    DrawTextEx(windowM->fontStyle.regular, "DATA PEMBAYARAN",
-               (Vector2){start_x + 390,
-                         start_y - 120},
+    DrawTextEx(windowM->fontStyle.bold, "DATA PEMBAYARAN",
+               (Vector2){start_x + 2.6 * (cell_width + padding) - 310,
+                         start_y - 190},
                64, 0,
                SIBELAWHITE);
-
+    DrawSortControl(windowM, (Vector2){.x = start_x, .y = start_y - cell_height - 65});
     if (windowM->datas.nPembayaran == 0)
     {
         DrawTextEx(
@@ -23,12 +23,10 @@ void drawMuridPembayaranRead(windowModel *windowM)
             "Belum ada data Pembayaran",
             (Vector2){
                 start_x + 380,
-                start_y + 290
-            },
+                start_y + 290},
             40,
             2,
-            Fade(SIBELAWHITE, 0.6f)
-        );
+            Fade(SIBELAWHITE, 0.6f));
         return;
     }
 
@@ -110,12 +108,12 @@ void drawMuridPembayaranRead(windowModel *windowM)
                    SIBELAWHITE);
     }
     DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
-               (Vector2){start_x , start_y + (row * cell_height) + 30},
+               (Vector2){start_x, start_y + (row * cell_height) + 30},
                40, 0,
                SIBELAWHITE);
     if (windowM->isModalShown)
     {
-        int res = GuiMessageBox((Rectangle){.height = 200, .width = 300, .x = 1920 / 2 - 150, .y = 1080 / 2 - 300}, "Hapus Jadwal?", TextFormat("Apakah anda ingin menghapus Jadwal %s?", windowM->focusedData.jadwal.id_pertemuan), "Batal;Hapus!");
+        int res = GuiMessageBox((Rectangle)(Rectangle){.height = 400, .width = 800, .x = 300 + 1620 / 2 - 400, .y = 1080 / 2 - 200}, "Hapus Jadwal?", TextFormat("Apakah anda ingin menghapus Jadwal %s?", windowM->focusedData.jadwal.id_pertemuan), "Batal;Hapus!");
 
         if (res == 2)
         {

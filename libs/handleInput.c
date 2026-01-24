@@ -99,17 +99,17 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
             }
             if (windowM->currWindow == STAFHOME && windowM->selectedPage == JADWAL)
             {
+                copyStringData(windowM->selectByPage.staffPage[windowM->selectedPage][1].selected.value, &windowM->forms.staffPage[windowM->selectedPage].fields[1].value);
+                windowM->selectByPage.staffPage[windowM->selectedPage][1].selected = (SelectProp){};
                 copyStringData(windowM->selectByPage.staffPage[windowM->selectedPage][2].selected.value, &windowM->forms.staffPage[windowM->selectedPage].fields[2].value);
                 windowM->selectByPage.staffPage[windowM->selectedPage][2].selected = (SelectProp){};
                 copyStringData(windowM->selectByPage.staffPage[windowM->selectedPage][3].selected.value, &windowM->forms.staffPage[windowM->selectedPage].fields[3].value);
                 windowM->selectByPage.staffPage[windowM->selectedPage][3].selected = (SelectProp){};
-                copyStringData(windowM->selectByPage.staffPage[windowM->selectedPage][4].selected.value, &windowM->forms.staffPage[windowM->selectedPage].fields[4].value);
-                windowM->selectByPage.staffPage[windowM->selectedPage][4].selected = (SelectProp){};
-                for (int i = 0; i < windowM->selectByPage.staffPage[windowM->selectedPage][6].nMultiSelected; i++)
+                for (int i = 0; i < windowM->selectByPage.staffPage[windowM->selectedPage][5].nMultiSelected; i++)
                 {
-                    strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[6].value.multiValue[i], windowM->selectByPage.staffPage[windowM->selectedPage][6].MultiSelected[i].value);
+                    strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[5].value.multiValue[i], windowM->selectByPage.staffPage[windowM->selectedPage][5].MultiSelected[i].value);
                 }
-                windowM->forms.staffPage[windowM->selectedPage].fields[6].value.charLen = windowM->selectByPage.staffPage[windowM->selectedPage][6].nMultiSelected;
+                windowM->forms.staffPage[windowM->selectedPage].fields[5].value.charLen = windowM->selectByPage.staffPage[windowM->selectedPage][5].nMultiSelected;
             }
             if (windowM->currWindow == STAFHOME && windowM->selectedPage == PEMBAYARAN)
             {
@@ -129,7 +129,7 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
                     showToast(&windowM->toast, "Input tidak valid!", "Silahkan cek lagi data yang anda masukkan!");
                     return;
                 }
-                QUERYSTATUS resQuery = func(fields, windowM->dbConn);
+                QUERYSTATUS resQuery = func(fields, windowM->dbConn, &windowM->authUser);
                 if (resQuery == FAILED)
                 {
                     showToast(&windowM->toast, "Kesalahan", "Terjadi kesalahan saat submit form!");

@@ -13,11 +13,11 @@
 // #include "../components/header.h"
 #include "../types/form.h"
 
-QUERYSTATUS createMateri(InputField fields[], SQLHDBC *dbConn);
+QUERYSTATUS createMateri(InputField fields[], SQLHDBC *dbConn, user *authUser);
 void findAllMateri(data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 void findAllMateriByMapelId(char id_mapel[], data *datas, int *nPage, SQLHDBC *dbConn, user *authUser);
 void findAllMateriSelect(Select *selectObject, SQLHDBC *dbConn);
-QUERYSTATUS updateMateri(InputField fields[], SQLHDBC *dbConn);
+QUERYSTATUS updateMateri(InputField fields[], SQLHDBC *dbConn, user *authUser);
 QUERYSTATUS deleteMateri(SQLHDBC *dbConn, Materi updatedMateri);
 
 #endif

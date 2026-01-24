@@ -209,7 +209,7 @@ void findAllPembayaranByUserId(data *datas, int *nPage, SQLHDBC *dbConn, user *a
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 }
 
-QUERYSTATUS createPembayaran(InputField fields[], SQLHDBC *dbConn)
+QUERYSTATUS createPembayaran(InputField fields[], SQLHDBC *dbConn, user *authUser)
 {
     SQLHSTMT stmt;
     SQLRETURN ret;
@@ -282,6 +282,28 @@ void getPembayaranReport(data *datas, int *nPage, SQLHDBC *dbConn, user *authUse
                    &datas->pembayaranReport.sumThisMonth, sizeof(datas->pembayaranReport.sumThisMonth), NULL);
         SQLGetData(stmt, 2, SQL_C_LONG,
                    &datas->pembayaranReport.totalThisMonth, sizeof(datas->pembayaranReport.totalThisMonth), NULL);
+    }
+    SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
+
+    SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
+
+    SQLPrepare(stmt, (SQLCHAR *)"SELECT COUNT(CASE WHEN p.mtd_pembayaran = 'TUNAI' THEN 1 END) as 'tunai_count', SUM(CASE WHEN p.mtd_pembayaran = 'TUNAI' THEN p.jumlah_pembayaran END) as 'Jumlah tunai', COUNT(CASE WHEN p.mtd_pembayaran = 'TRANSFER' THEN 1 END) as 'transfer_count', SUM(CASE WHEN p.mtd_pembayaran = 'TRANSFER' THEN p.jumlah_pembayaran END) as 'Jumlah transfer' FROM pembayaran p LEFT JOIN murid m ON m.id_murid = p.id_murid LEFT JOIN staff s ON s.id_staff = p.id_staff WHERE p.tanggal_pembayaran >= DATEFROMPARTS(?, ?, 1) AND p.tanggal_pembayaran <= EOMONTH(DATEFROMPARTS(?, ?, 1))", SQL_NTS);
+    SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.yearFrom, 0, NULL);
+    SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.monthFrom, 0, NULL);
+    SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.yearTo, 0, NULL);
+    SQLBindParameter(stmt, 4, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &datas->dateRange.monthTo, 0, NULL);
+
+    ret = SQLExecute(stmt);
+    while (SQL_SUCCEEDED(ret = SQLFetch(stmt)))
+    {
+        SQLGetData(stmt, 1, SQL_C_LONG,
+                   &datas->pembayaranReport.count_tunai, sizeof(datas->pembayaranReport.sumThisMonth), NULL);
+        SQLGetData(stmt, 2, SQL_C_LONG,
+                   &datas->pembayaranReport.total_tunai, sizeof(datas->pembayaranReport.totalThisMonth), NULL);
+        SQLGetData(stmt, 3, SQL_C_LONG,
+                   &datas->pembayaranReport.count_transfer, sizeof(datas->pembayaranReport.sumThisMonth), NULL);
+        SQLGetData(stmt, 4, SQL_C_LONG,
+                   &datas->pembayaranReport.total_transfer, sizeof(datas->pembayaranReport.totalThisMonth), NULL);
     }
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
     findAllPembayaranByDateRange(datas, nPage, dbConn, authUser);

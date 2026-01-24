@@ -14,8 +14,8 @@ void drawAbsensiPengajarRead(windowModel *windowM)
     {
     case MAIN:
         DrawTextEx(windowM->fontStyle.bold, "PILIH JADWAL",
-                   (Vector2){start_x + 1 * (cell_width + padding) - 310,
-                             start_y - 200},
+                   (Vector2){start_x - 175,
+                             start_y - 150},
                    64, 0,
                    SIBELAWHITE);
         for (row = 0; row < windowM->datas.nJadwalPertemuan; row++)
@@ -24,10 +24,11 @@ void drawAbsensiPengajarRead(windowModel *windowM)
             {
                 windowM->focusedData.jadwal = windowM->datas.jadwalPertemuans[row];
             }
-            DrawMeetingPengajarCard(windowM->datas.jadwalPertemuans[row], (Vector2){start_x - 400, start_y + row * 200}, 800, windowM->fontStyle, windowM->curPos == row);
+            DrawMeetingPengajarCard(windowM->datas.jadwalPertemuans[row], (Vector2){start_x - 400, start_y + row * 230}, 800, windowM->fontStyle, windowM->curPos == row);
         }
         DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->datas.page, windowM->datas.totalPages),
-                   (Vector2){start_x - 200, 1080 - 120},
+                   (Vector2){start_x - 130,
+                             1080 - 120},
                    40, 0,
                    SIBELAWHITE);
         break;
@@ -35,6 +36,11 @@ void drawAbsensiPengajarRead(windowModel *windowM)
     case PRESENSI:
         start_x = 300 + 220;
         cell_width = 400;
+        DrawTextEx(windowM->fontStyle.bold, "ABSENSI MURID",
+                   (Vector2){start_x + 1.8 * (cell_width + padding) - 310,
+                             start_y - 200},
+                   64, 0,
+                   SIBELAWHITE);
         for (int col = 0; col < 3; col++)
         {
             Rectangle cellRect = {
@@ -69,6 +75,10 @@ void drawAbsensiPengajarRead(windowModel *windowM)
                     start_y + i * cell_height,
                     cell_width,
                     cell_height};
+                if (i == windowM->curPos)
+                {
+                    DrawRectangleRec(cellRect, PRIMARY);
+                }
                 DrawRectangleLinesEx(cellRect, 1, SIBELAWHITE);
             }
             DrawTextEx(windowM->fontStyle.regular, windowM->pengajarHomeState.absensiPage.paginatedAbsensi[i].nama_murid,
@@ -76,7 +86,19 @@ void drawAbsensiPengajarRead(windowModel *windowM)
                                  start_y + i * cell_height + padding},
                        font_size, 0,
                        SIBELAWHITE);
-            GuiCheckBox((Rectangle){.x = start_x + 1 * cell_width + padding, .y = start_y + i * cell_height + padding, .height = 40, .width = 40}, "", &windowM->pengajarHomeState.absensiPage.paginatedAbsensi[i].isHadir);
+            if (windowM->pengajarHomeState.absensiPage.paginatedAbsensi[i].isHadir)
+                DrawTextEx(windowM->fontStyle.regular, "Hadir",
+                           (Vector2){start_x + 1 * cell_width + padding,
+                                     start_y + i * cell_height + padding},
+                           font_size, 0,
+                           GREEN);
+            else
+                DrawTextEx(windowM->fontStyle.regular, "Tidak Hadir",
+                           (Vector2){start_x + 1 * cell_width + padding,
+                                     start_y + i * cell_height + padding},
+                           font_size, 0,
+                           DANGER);
+            // GuiCheckBox((Rectangle){.x = start_x + 1 * cell_width + padding, .y = start_y + i * cell_height + padding, .height = 40, .width = 40}, "", &windowM->pengajarHomeState.absensiPage.paginatedAbsensi[i].isHadir);
             if (!windowM->pengajarHomeState.absensiPage.paginatedAbsensi[i].isHadir)
             {
                 Rectangle input = {.x = start_x + 2 * cell_width + padding,
@@ -116,16 +138,20 @@ void drawAbsensiPengajarRead(windowModel *windowM)
             //            64, 0,
             //            SIBELAWHITE);
 
-            Rectangle submitButton = {.x = 300 + 1620 / 2 - 100,
+            Rectangle submitButton = {.x = 300 + 1620 / 2 - 100 + 7,
                                       .y = 1080 - 200,
                                       .width = 200,
                                       .height = 80};
             if (GuiButton(submitButton, "Kumpulkan", 0))
             {
-                windowM->pengajarHomeState.absensiPage.submitFunc(windowM->pengajarHomeState.absensiPage.paginatedAbsensi, windowM->datas.nMuridAbsensi, windowM->focusedData.jadwal.id_pertemuan, windowM->dbConn, windowM->authUser);
+                QUERYSTATUS resSql = windowM->pengajarHomeState.absensiPage.submitFunc(windowM->datas.muridAbsensis, windowM->datas.nMuridAbsensi, windowM->focusedData.jadwal.id_pertemuan, windowM->dbConn, windowM->authUser);
+                if (resSql == SUCCESS)
+                    showToast(&windowM->toast, "Berhasil disimpan", "Absensi berhasil disimpan!");
+                else
+                    showToast(&windowM->toast, "Gagal disimpan!", "Absensi Gagal di simpan!");
             }
             DrawTextEx(windowM->fontStyle.regular, TextFormat("Halaman %d dari %d", windowM->pengajarHomeState.absensiPage.page, windowM->pengajarHomeState.absensiPage.nPage),
-                       (Vector2){300 + (1620 / 2 - 50),
+                       (Vector2){start_x + 1.8 * (cell_width + padding) - 250,
                                  800},
                        40, 0,
                        SIBELAWHITE);
