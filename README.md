@@ -16,6 +16,19 @@ Sistem bimbingan belajar (SIBELA) is our final project for our first semester
 - Raylib (UI Framework)
 - ODBC (Sql Server connection)
 
+## Adding database connection
+
+1. Import .sql to your DBMS
+2. Add NEW ODBC DSN to your system ([See here](https://docs.devart.com/odbc/sqlserver/?configuring_odbc_dsn_on_windows.htm))
+3. create a .env file on the project's root folder containing:
+
+```
+DSN=YOURDSNNAME;Uid={YOURDBUSER};Pwd={YOURDBPASSWORD}
+
+```
+
+4. Done
+
 ## How to build
 
 ```bash
