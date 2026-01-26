@@ -11,7 +11,7 @@ void drawMuridRead(windowModel *windowM)
     int start_y = 320;
     int padding = 5;
     int font_size = 32;
-    DrawTextEx(windowM->fontStyle.bold, "DATA Murid",
+    DrawTextEx(windowM->fontStyle.bold, "DATA MURID",
                (Vector2){start_x + 3 * (cell_width + padding) - 290,
                          start_y - 200},
                64, 0,
