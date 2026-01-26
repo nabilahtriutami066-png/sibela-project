@@ -14,12 +14,13 @@ int validateInput(InputField *input)
         }
     }
 
+    int d, m, y, h, min, s;
     switch (input->type)
     {
     case BUTTONINPUT:
         return 1;
     case DATEINPUT:
-        valid = valid && input->value.charLen > 0 && strcspn(input->value.text, "-") != input->value.charLen;
+        valid = valid && input->value.charLen > 0 && strcspn(input->value.text, "-") != input->value.charLen && sscanf(input->value.text, "%d-%d-%d", &y, &m, &d) == 3 && y > 2025 && m >= 0 && m <= 12 && d >= 1 && d <= 31;
         if (!valid)
         {
             input->value.validation.isInputInvalid = 1;
@@ -27,7 +28,7 @@ int validateInput(InputField *input)
         }
         break;
     case DATETIMEINPUT:
-        valid = valid && input->value.charLen > 0 && strcspn(input->value.text, "-") != input->value.charLen && strcspn(input->value.text, ":") != input->value.charLen;
+        valid = valid && input->value.charLen > 0 && strcspn(input->value.text, "-") != input->value.charLen && strcspn(input->value.text, ":") != input->value.charLen && sscanf(input->value.text, "%d-%d-%d %d:%d:%d", &y, &m, &d, &h, &min, &s) == 6 && y > 2025 && m >= 0 && m <= 12 && d >= 1 && d <= 31 && h >= 0 && h <= 23 && min >= 0 && min <= 59 && s >= 0 && s <= 59;
         if (!valid)
         {
             input->value.validation.isInputInvalid = 1;
@@ -35,8 +36,8 @@ int validateInput(InputField *input)
         }
         break;
     case CUSTOMMODAL:
+        break;
     case CUSTOMMODALMULTI:
-
         break;
 
     case TINGKATINPUT:

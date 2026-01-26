@@ -208,7 +208,7 @@ QUERYSTATUS createJadwalPertemuan(InputField fields[], SQLHDBC *dbConn, user *au
 
     SQLFreeHandle(SQL_HANDLE_STMT, *dbConn);
 
-    createJadwalMurid(fields[6].value, newJadwalPertemuan.id_pertemuan, dbConn);
+    createJadwalMurid(fields[5].value, newJadwalPertemuan.id_pertemuan, dbConn);
 
     switch (ret)
     {
