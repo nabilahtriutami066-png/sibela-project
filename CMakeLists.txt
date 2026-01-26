@@ -73,9 +73,11 @@ set(PACKAGES
 
 add_executable(sibela main.c ${PACKAGES})
 
+target_compile_options(sibela PRIVATE "-mwindows")
 set_target_properties(sibela PROPERTIES C_STANDARD 11)
 target_include_directories(sibela PRIVATE ${PROJECT_SOURCE_DIR}/libs/headers)
 if(WIN32)
+    add_compile_options("-mwindows")
     target_link_libraries(sibela PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/libs/dll/libraylib.a ${CMAKE_CURRENT_SOURCE_DIR}/libs/dll/libglfw3.a winmm gdi32 opengl32 ${ODBC_LIBRARIES})
 else()
     target_link_libraries(sibela PRIVATE raylib ${ODBC_LIBRARIES})

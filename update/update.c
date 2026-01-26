@@ -564,7 +564,8 @@ void updateView(windowModel *windowM)
         switch (ch)
         {
         case KEY_UP:
-            windowM->curPos -= 1;
+            if (windowM->curPos > 0)
+                windowM->curPos -= 1;
             break;
         case KEY_DOWN:
             windowM->curPos += 1;
