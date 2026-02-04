@@ -24,7 +24,7 @@ void initForm(windowModel *windowM)
     windowM->forms.staffPage[MANAJERSTAFF].fields[6] = (InputField){.label = "Role", .type = ROLEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[MANAJERSTAFF].fields[7] = (InputField){.label = "Submit", .type = BUTTONINPUT};
     windowM->forms.staffPage[MURID].fields[1] = (InputField){.label = "Nama", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
-    windowM->forms.staffPage[MURID].fields[2] = (InputField){.label = "Tanggal Lahir", .type = DATEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
+    windowM->forms.staffPage[MURID].fields[2] = (InputField){.label = "Tanggal Lahir", .type = BIRTHDATEINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[MURID].fields[3] = (InputField){.label = "No HP", .type = PHONENOINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[MURID].fields[4] = (InputField){.label = "Password", .type = TEXTINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
     windowM->forms.staffPage[MURID].fields[5] = (InputField){.label = "Tingkat", .type = TINGKATINPUT, .value = (InputParams){.charLen = 0, .text = ""}};
