@@ -192,8 +192,20 @@ struct tm ParseSQLDate(const char *dateStr)
 
 const char *FormatDatePretty(struct tm timeinfo)
 {
-    static char buffer[64];
-    // Example output: "23 Jan 2026, 11:23"
-    strftime(buffer, sizeof(buffer), "%d %b %Y", &timeinfo);
-    return buffer;
+    const char *bulan[] = {
+    "Januari", "Februari", "Maret", "April",
+    "Mei", "Juni", "Juli", "Agustus",
+    "September", "Oktober", "November", "Desember"
+};
+static char buffer[64];
+snprintf(buffer, sizeof(buffer),"%02d %s %d",timeinfo.tm_mday,bulan[timeinfo.tm_mon],timeinfo.tm_year + 1900
+);
+return buffer;
+
+// Untuk bulan di persingkat
+
+// static char buffer[64];
+// // Example output: "23 Jan 2026, 11:23"
+// strftime(buffer, sizeof(buffer), "]%d %b %Y", &timeinfo);
+// return buffer;
 }

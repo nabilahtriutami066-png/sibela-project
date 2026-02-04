@@ -59,6 +59,7 @@ typedef struct
 typedef struct
 {
     char label[25];
+    char placeholder[64];
     InputParams value;
     InputType type;
 } InputField;
