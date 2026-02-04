@@ -1,64 +1,109 @@
 #include "create.h"
 #include <math.h>
+#include <string.h>
+
+static void initMapelCreatePlaceholder(windowModel *windowM)
+{
+    static int initialized = 0;
+    if (initialized) return;
+    initialized = 1;
+
+    FORM *form = &windowM->forms.staffPage[windowM->selectedPage];
+
+    strcpy(form->fields[1].placeholder, "Contoh: Matematika");
+}
 
 void drawMapelCreate(windowModel *windowM)
 {
-    int cell_width = 250;
-    int cell_height = 50;
+    initMapelCreatePlaceholder(windowM);
+
     int start_x = 1920 / 2 - 600 + 100;
     int start_y = 1080 / 2 - 300;
-    int padding = 5;
-    int font_size = 32;
-    DrawTextEx(windowM->fontStyle.regular, "TAMBAH MAPEL",
-               (Vector2){start_x + 390,
-                         start_y - 120},
-               64, 0,
-               SIBELAWHITE);
 
-    windowM->forms.staffPage[windowM->selectedPage].totalPages = (int)ceilf((float)windowM->forms.staffPage[windowM->selectedPage].nField / windowM->forms.staffPage[windowM->selectedPage].fieldPerPage);
-    windowM->forms.staffPage[windowM->selectedPage].offset = (windowM->page - 1) * windowM->forms.staffPage[windowM->selectedPage].fieldPerPage + 1;
-    windowM->forms.staffPage[windowM->selectedPage].lastIndex = windowM->forms.staffPage[windowM->selectedPage].offset + (windowM->forms.staffPage[windowM->selectedPage].fieldPerPage - 1) > windowM->forms.staffPage[windowM->selectedPage].nField ? windowM->forms.staffPage[windowM->selectedPage].nField : windowM->forms.staffPage[windowM->selectedPage].offset + (windowM->forms.staffPage[windowM->selectedPage].fieldPerPage - 1);
+    DrawTextEx(
+        windowM->fontStyle.regular,
+        "TAMBAH MAPEL",
+        (Vector2){start_x + 390, start_y - 120},
+        64, 0,
+        SIBELAWHITE
+    );
 
-    for (int i = windowM->forms.staffPage[windowM->selectedPage].offset; i <= windowM->forms.staffPage[windowM->selectedPage].lastIndex; i++)
+    FORM *form = &windowM->forms.staffPage[windowM->selectedPage];
+
+    form->totalPages = (int)ceilf(
+        (float)form->nField / form->fieldPerPage
+    );
+
+    form->offset =
+        (windowM->page - 1) * form->fieldPerPage + 1;
+
+    form->lastIndex =
+        form->offset + (form->fieldPerPage - 1) > form->nField
+            ? form->nField
+            : form->offset + (form->fieldPerPage - 1);
+
+    for (int i = form->offset; i <= form->lastIndex; i++)
     {
         Rectangle textBox = {
             1920 / 2.0f - 200,
-            start_y + 300 + (i - 1 - windowM->forms.staffPage[windowM->selectedPage].offset) * 150,
+            start_y + 300 + (i - 1 - form->offset) * 150,
             600,
-            63,
+            63
         };
+
         Rectangle buttonBox = {
             1920 / 2.0f + 20,
-            start_y + 300 + (i - 1 - windowM->forms.staffPage[windowM->selectedPage].offset) * 150,
+            start_y + 300 + (i - 1 - form->offset) * 150,
             160,
-            67,
+            67
         };
-        switch (windowM->forms.staffPage[windowM->selectedPage].fields[i].type)
+
+        switch (form->fields[i].type)
         {
         case TEXTINPUT:
-            drawInputBox(windowM, &windowM->forms.staffPage[windowM->selectedPage].fields[i].value, textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, i, 0);
+            drawInputBox(
+                windowM,
+                &form->fields[i].value,
+                textBox,
+                form->fields[i].label,
+                i,
+                0
+            );
             break;
 
         case BUTTONINPUT:
         {
-        const char *label = windowM->forms.staffPage[windowM->selectedPage].fields[i].label;
-        Vector2 textSize = MeasureTextEx(windowM->fontStyle.medium,label,40,0);
+            const char *label = form->fields[i].label;
+            Vector2 textSize = MeasureTextEx(
+                windowM->fontStyle.medium,
+                label,
+                40,
+                0
+            );
 
-        if ((windowM->forms.staffPage[windowM->selectedPage].selectedField == -1 && windowM->curPos == i) || windowM->forms.staffPage[windowM->selectedPage].selectedField == i)
-        {
-            DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
-        }
-        else
-        {
-            DrawRectangleRoundedLines(buttonBox, 0.3f, 0, SIBELAWHITE);
-        }
-            DrawTextEx(windowM->fontStyle.medium,label,
-            (Vector2){buttonBox.x + buttonBox.width  / 2 - textSize.x / 2,buttonBox.y + buttonBox.height / 2 - textSize.y / 2
-            },
-            40,
-            0,
-            SIBELAWHITE
-        );
+            if (
+                (form->selectedField == -1 && windowM->curPos == i) ||
+                form->selectedField == i
+            )
+            {
+                DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
+            }
+            else
+            {
+                DrawRectangleRoundedLines(buttonBox, 0.3f, 0, SIBELAWHITE);
+            }
+
+            DrawTextEx(
+                windowM->fontStyle.medium,
+                label,
+                (Vector2){
+                    buttonBox.x + buttonBox.width / 2 - textSize.x / 2,
+                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2
+                },
+                40,
+                0,
+                SIBELAWHITE
+            );
         }
         break;
         }

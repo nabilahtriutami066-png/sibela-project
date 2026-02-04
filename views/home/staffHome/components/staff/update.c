@@ -1,94 +1,158 @@
 #include "update.h"
 #include <math.h>
+#include <string.h>
 #include "../../../../../libs/headers/raygui.h"
+
+static void initStaffUpdatePlaceholder(windowModel *windowM)
+{
+    FORM *form = &windowM->forms.staffPage[windowM->selectedPage];
+
+    strcpy(form->fields[1].placeholder, "Ubah nama lengkap");
+    strcpy(form->fields[2].placeholder, "Ubah email staf");
+    strcpy(form->fields[3].placeholder, "Ubah nomor HP");
+}
 
 void drawStaffUpdate(windowModel *windowM)
 {
-    int cell_width = 250;
-    int cell_height = 50;
+    static bool initialized = false;
+    if (!initialized)
+    {
+        initStaffUpdatePlaceholder(windowM);
+        initialized = true;
+    }
+
+    FORM *page = &windowM->forms.staffPage[windowM->selectedPage];
+
     int start_x = 1920 / 2 - 600 + 100;
     int start_y = 1080 / 2 - 300;
-    int padding = 5;
-    int font_size = 32;
-    DrawTextEx(windowM->fontStyle.regular, "UBAH STAF",
-               (Vector2){start_x + 390,
-                         start_y - 120},
-               64, 0,
-               SIBELAWHITE);
 
-    windowM->forms.staffPage[windowM->selectedPage].totalPages = (int)ceilf((float)windowM->forms.staffPage[windowM->selectedPage].nField / windowM->forms.staffPage[windowM->selectedPage].fieldPerPage);
-    windowM->forms.staffPage[windowM->selectedPage].offset = (windowM->page - 1) * windowM->forms.staffPage[windowM->selectedPage].fieldPerPage + 1;
-    windowM->forms.staffPage[windowM->selectedPage].lastIndex = windowM->forms.staffPage[windowM->selectedPage].offset + (windowM->forms.staffPage[windowM->selectedPage].fieldPerPage - 1) > windowM->forms.staffPage[windowM->selectedPage].nField ? windowM->forms.staffPage[windowM->selectedPage].nField : windowM->forms.staffPage[windowM->selectedPage].offset + (windowM->forms.staffPage[windowM->selectedPage].fieldPerPage - 1);
+    DrawTextEx(
+        windowM->fontStyle.regular,
+        "UBAH STAF",
+        (Vector2){start_x + 390, start_y - 120},
+        64, 0,
+        SIBELAWHITE
+    );
 
-    for (int i = windowM->forms.staffPage[windowM->selectedPage].offset; i <= windowM->forms.staffPage[windowM->selectedPage].lastIndex; i++)
+    page->totalPages =
+        (int)ceilf((float)page->nField / page->fieldPerPage);
+
+    page->offset =
+        (windowM->page - 1) * page->fieldPerPage + 1;
+
+    page->lastIndex =
+        page->offset + page->fieldPerPage - 1;
+
+    if (page->lastIndex > page->nField)
+        page->lastIndex = page->nField;
+
+    for (int i = page->offset; i <= page->lastIndex; i++)
     {
+        InputField *field = &page->fields[i];
+
+        float posY =
+            start_y + 100 +
+            (i - page->offset) * 150;
+
         Rectangle textBox = {
             1920 / 2.0f - 200,
-            start_y + 200 + (i - 1 - windowM->forms.staffPage[windowM->selectedPage].offset) * 150,
+            posY,
             600,
-            63,
+            63
         };
+
         Rectangle buttonBox = {
             1920 / 2.0f + 20,
-            start_y + 200 + (i - 1 - windowM->forms.staffPage[windowM->selectedPage].offset) * 150,
+            posY,
             160,
-            67,
+            67
         };
-        switch (windowM->forms.staffPage[windowM->selectedPage].fields[i].type)
+
+        switch (field->type)
         {
-        default:
-            drawInputBox(windowM, &windowM->forms.staffPage[windowM->selectedPage].fields[i].value, textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, i, 0);
-            break;
         case ROLEINPUT:
-            DrawTextEx(windowM->fontStyle.medium,
-                       windowM->forms.staffPage[windowM->selectedPage].fields[i].label,
-                       (Vector2){(int)textBox.x, (int)textBox.y - 44},
-                       40, 0, SIBELAWHITE);
-            int isTrue = strcmp(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "FRONTDESK") == 0;
-            if (GuiButton(textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, 0))
+        {
+            DrawTextEx(
+                windowM->fontStyle.medium,
+                field->label,
+                (Vector2){(int)textBox.x, (int)textBox.y - 44},
+                40, 0,
+                SIBELAWHITE
+            );
+
+            if (GuiButton(textBox, field->value.text, windowM->curPos == i))
             {
-                if (isTrue)
+                int isFrontdesk =
+                    strcmp(field->value.text, "FRONTDESK") == 0;
+
+                if (isFrontdesk)
                 {
-                    strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "MANAJER");
-                    windowM->forms.staffPage[windowM->selectedPage].fields[i].value.charLen = 7;
+                    strcpy(field->value.text, "MANAJER");
+                    field->value.charLen = 7;
                 }
                 else
                 {
-
-                    strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "FRONTDESK");
-                    windowM->forms.staffPage[windowM->selectedPage].fields[i].value.charLen = 9;
+                    strcpy(field->value.text, "FRONTDESK");
+                    field->value.charLen = 9;
                 }
             }
-            break;
+        }
+        break;
+
         case BUTTONINPUT:
         {
-            const char *label =
-                windowM->forms.staffPage[windowM->selectedPage].fields[i].label;
-
             Vector2 textSize = MeasureTextEx(
                 windowM->fontStyle.medium,
-                label,
+                field->label,
                 40,
-                0);
+                0
+            );
 
             if (windowM->curPos == i)
-            {
                 DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
-            }
             else
-            {
                 DrawRectangleRoundedLines(buttonBox, 0.3f, 0, SIBELAWHITE);
-            }
 
             DrawTextEx(
                 windowM->fontStyle.medium,
-                label,
+                field->label,
                 (Vector2){
                     buttonBox.x + buttonBox.width / 2 - textSize.x / 2,
-                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2},
+                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2
+                },
                 40,
                 0,
-                SIBELAWHITE);
+                SIBELAWHITE
+            );
+        }
+        break;
+
+        default:
+        {
+            drawInputBox(
+                windowM,
+                &field->value,
+                textBox,
+                field->label,
+                i,
+                0
+            );
+
+            if (field->value.charLen == 0 &&
+                strlen(field->placeholder) > 0)
+            {
+                DrawTextEx(
+                    windowM->fontStyle.regular,
+                    field->placeholder,
+                    (Vector2){
+                        textBox.x + 12,
+                        textBox.y + (textBox.height / 2) - 12
+                    },
+                    24,
+                    0,
+                    Fade(GRAY, 0.45f)
+                );
+            }
         }
         break;
         }
