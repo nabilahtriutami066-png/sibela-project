@@ -6,6 +6,7 @@ void handleInput(int *ch, InputParams *params, InputType fieldType, int maxLen, 
     switch (fieldType)
     {
     case DATEINPUT:
+    case BIRTHDATEINPUT:
         *ch = GetCharPressed();
         while (*ch > 0)
         {

@@ -1,4 +1,5 @@
 #include "validator.h"
+#include <time.h>
 
 int validateInput(InputField *input)
 {
@@ -81,7 +82,44 @@ int validateInput(InputField *input)
             strcpy(input->value.validation.errMessage, "Role hanya bisa bernilai 'FRONTDESK' atau 'MANAJER'");
         }
         break;
-    default:
+
+    case BIRTHDATEINPUT: //Validasi tanggal lahir
+    {
+        valid = valid && input->value.charLen > 0 && strcspn(input->value.text, "-") != input->value.charLen && sscanf(input->value.text, "%d-%d-%d", &y, &m, &d) == 3;
+        
+        if (valid)
+        {
+            valid = valid && m >= 1 && m <= 12 && d >= 1 && d <= 31;
+            
+            if (valid)
+            {
+                time_t now = time(NULL);
+                struct tm *today = localtime(&now);
+                int currentDay = today->tm_mday - 1; // Biar tidak bisa input tanggal hari ini
+                int currentMonth = today->tm_mon + 1;
+                int currentYear = today->tm_year + 1900;
+                
+                if (y > currentYear || 
+                    (y == currentYear && m > currentMonth) || 
+                    (y == currentYear && m == currentMonth && d > currentDay))
+                {
+                    valid = 0;
+                    strcpy(input->value.validation.errMessage, "Tanggal lahir tidak masuk akal");
+                }
+            }
+        }
+        
+        if (!valid) // validasi tanggal, agar user tau
+        {
+            input->value.validation.isInputInvalid = 1;
+            if (strlen(input->value.validation.errMessage) == 0)
+            {
+                strcpy(input->value.validation.errMessage, "Format: YYYY-MM-DD");
+            }
+        }
+        break;
+    }
+    default: // validasi jika input kosong
         valid = valid && input->value.charLen > 0;
         if (!valid)
         {

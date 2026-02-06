@@ -36,6 +36,7 @@ typedef enum
     LONGTEXTINPUT,
     CUSTOMMODAL,
     CUSTOMMODALMULTI,
+    BIRTHDATEINPUT,
 } InputType;
 
 typedef struct
