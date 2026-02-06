@@ -69,6 +69,8 @@ set(PACKAGES
     components/ui/welcomePage.c
     components/ui/dateRange.c
     components/ui/searchBar.c
+    icon.rc
+    appinfo.rc
 )
 
 add_executable(sibela main.c ${PACKAGES})

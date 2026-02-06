@@ -1,0 +1,23 @@
+1 VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "080904E4"
+    BEGIN
+      VALUE "CompanyName", "Kelompok 5"
+      VALUE "FileDescription", "Aplikasi Sistem Bimbingan Belajar"
+      VALUE "FileVersion", "1.0"
+      VALUE "InternalName", "SIBELA"
+      VALUE "LegalCopyright", "SIBELA"
+      VALUE "OriginalFilename", "sibela.exe"
+      VALUE "ProductName", "SIBELA: Sistem Bimbingan Belajar"
+      VALUE "ProductVersion", "1.0"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x809, 1252
+  END
+END

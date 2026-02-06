@@ -18,7 +18,7 @@ Staf findStafbyEmail(char email[], SQLHDBC *dbConn)
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
 
-    SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM staff WHERE email = ?", SQL_NTS);
+    SQLPrepare(stmt, (SQLCHAR *)"SELECT * FROM staff  WHERE email = ?", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(email), 0, email, 0, NULL);
     ret = SQLExecute(stmt);
 
