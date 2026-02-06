@@ -102,7 +102,7 @@ void drawJadwalRead(windowModel *windowM)
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
-        DrawTextEx(windowM->fontStyle.regular, windowM->datas.jadwalPertemuans[row].waktu,
+        DrawTextEx(windowM->fontStyle.regular, FormatDateTimePretty(ParseSQLDateTime(windowM->datas.jadwalPertemuans[row].waktu)),
                    (Vector2){start_x + 4 * cell_width + padding + materiPadding,
                              start_y + row * cell_height + padding},
                    font_size, 0,

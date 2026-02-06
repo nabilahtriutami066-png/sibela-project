@@ -86,8 +86,9 @@ void drawMuridPembayaranRead(windowModel *windowM)
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);
-        DrawTextEx(windowM->fontStyle.regular, TextFormat("Rp.%ld", windowM->datas.pembayarans[row].jumlah_pembayaran),
-                   (Vector2){start_x + 1 * cell_width + padding,
+        Vector2 measuredTotal = MeasureTextEx(windowM->fontStyle.regular, formatMoneyWithSeparator(windowM->datas.pembayarans[row].jumlah_pembayaran), font_size, 0);
+        DrawTextEx(windowM->fontStyle.regular, formatMoneyWithSeparator(windowM->datas.pembayarans[row].jumlah_pembayaran),
+                   (Vector2){start_x + 2 * cell_width - padding - measuredTotal.x,
                              start_y + row * cell_height + padding},
                    font_size, 0,
                    SIBELAWHITE);

@@ -31,8 +31,7 @@ void drawStaffUpdate(windowModel *windowM)
         "UBAH STAF",
         (Vector2){start_x + 390, start_y - 120},
         64, 0,
-        SIBELAWHITE
-    );
+        SIBELAWHITE);
 
     page->totalPages =
         (int)ceilf((float)page->nField / page->fieldPerPage);
@@ -58,15 +57,13 @@ void drawStaffUpdate(windowModel *windowM)
             1920 / 2.0f - 200,
             posY,
             600,
-            63
-        };
+            63};
 
         Rectangle buttonBox = {
             1920 / 2.0f + 20,
             posY,
             160,
-            67
-        };
+            67};
 
         switch (field->type)
         {
@@ -74,11 +71,10 @@ void drawStaffUpdate(windowModel *windowM)
         {
             DrawTextEx(
                 windowM->fontStyle.medium,
-                field->label,
+                TextFormat("%s (klik box di bawah)", field->label),
                 (Vector2){(int)textBox.x, (int)textBox.y - 44},
                 40, 0,
-                SIBELAWHITE
-            );
+                SIBELAWHITE);
 
             if (GuiButton(textBox, field->value.text, windowM->curPos == i))
             {
@@ -105,8 +101,7 @@ void drawStaffUpdate(windowModel *windowM)
                 windowM->fontStyle.medium,
                 field->label,
                 40,
-                0
-            );
+                0);
 
             if (windowM->curPos == i)
                 DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
@@ -118,12 +113,10 @@ void drawStaffUpdate(windowModel *windowM)
                 field->label,
                 (Vector2){
                     buttonBox.x + buttonBox.width / 2 - textSize.x / 2,
-                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2
-                },
+                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2},
                 40,
                 0,
-                SIBELAWHITE
-            );
+                SIBELAWHITE);
         }
         break;
 
@@ -135,8 +128,7 @@ void drawStaffUpdate(windowModel *windowM)
                 textBox,
                 field->label,
                 i,
-                0
-            );
+                0, 0);
 
             if (field->value.charLen == 0 &&
                 strlen(field->placeholder) > 0)
@@ -146,12 +138,10 @@ void drawStaffUpdate(windowModel *windowM)
                     field->placeholder,
                     (Vector2){
                         textBox.x + 12,
-                        textBox.y + (textBox.height / 2) - 12
-                    },
+                        textBox.y + (textBox.height / 2) - 12},
                     24,
                     0,
-                    Fade(GRAY, 0.45f)
-                );
+                    Fade(GRAY, 0.45f));
             }
         }
         break;

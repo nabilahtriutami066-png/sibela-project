@@ -193,19 +193,35 @@ struct tm ParseSQLDate(const char *dateStr)
 const char *FormatDatePretty(struct tm timeinfo)
 {
     const char *bulan[] = {
-    "Januari", "Februari", "Maret", "April",
-    "Mei", "Juni", "Juli", "Agustus",
-    "September", "Oktober", "November", "Desember"
-};
-static char buffer[64];
-snprintf(buffer, sizeof(buffer),"%02d %s %d",timeinfo.tm_mday,bulan[timeinfo.tm_mon],timeinfo.tm_year + 1900
-);
-return buffer;
+        "Januari", "Februari", "Maret", "April",
+        "Mei", "Juni", "Juli", "Agustus",
+        "September", "Oktober", "November", "Desember"};
+    static char buffer[64];
+    snprintf(buffer, sizeof(buffer), "%02d %s %d", timeinfo.tm_mday, bulan[timeinfo.tm_mon], timeinfo.tm_year + 1900);
+    return buffer;
 
-// Untuk bulan di persingkat
+    // Untuk bulan di persingkat
 
-// static char buffer[64];
-// // Example output: "23 Jan 2026, 11:23"
-// strftime(buffer, sizeof(buffer), "]%d %b %Y", &timeinfo);
-// return buffer;
+    // static char buffer[64];
+    // // Example output: "23 Jan 2026, 11:23"
+    // strftime(buffer, sizeof(buffer), "]%d %b %Y", &timeinfo);
+    // return buffer;
+}
+
+const char *FormatDateTimePretty(struct tm timeinfo)
+{
+    static char buffer[64];
+    // Example output: "23 Jan 2026, 11:23"
+    strftime(buffer, sizeof(buffer), "%d %b %Y", &timeinfo);
+    sprintf(buffer, "%s %02d:%02d:%02d", buffer, timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
+    return buffer;
+}
+
+const char *formatMoneyWithSeparator(double value)
+{
+    static char buffer[64];
+
+    sprintf(buffer, "Rp%'.2f", value);
+
+    return buffer;
 }

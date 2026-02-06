@@ -4,9 +4,11 @@
 #include "update/update.h"
 #include "views/drawView.h"
 #include "views/Loading.h"
+#include "locale.h"
 
 int main()
 {
+    setlocale(LC_NUMERIC, "German_Germany.1252");
     SetConfigFlags(FLAG_WINDOW_UNDECORATED);
     InitWindow(1920, 1080, "SIBELA: Sistem Bimbingan Belajar");
 

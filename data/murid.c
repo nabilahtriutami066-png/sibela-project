@@ -189,7 +189,7 @@ QUERYSTATUS createMurid(InputField fields[], SQLHDBC *dbConn, user *authUser)
     newMurid.tingkat = atoi(fields[5].value.text);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO murid (nama, tanggal_lahir, no_hp, password,  tingkat) VALUES (?,?,?,?,?)", SQL_NTS);
+    SQLPrepare(stmt, (SQLCHAR *)"INSERT INTO murid (nama, tanggal_lahir, no_hp, password, tingkat) VALUES (?,?,?,?,?)", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMurid.nama), 0, newMurid.nama, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_DATE, strlen(newMurid.tanggal_lahir), 0, newMurid.tanggal_lahir, 0, NULL);
     SQLBindParameter(stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(newMurid.no_hp), 0, newMurid.no_hp, 0, NULL);

@@ -83,14 +83,13 @@ int validateInput(InputField *input)
         }
         break;
 
-    case BIRTHDATEINPUT: //Validasi tanggal lahir
-    {
+    case BIRTHDATEINPUT: // Validasi tanggal lahir
         valid = valid && input->value.charLen > 0 && strcspn(input->value.text, "-") != input->value.charLen && sscanf(input->value.text, "%d-%d-%d", &y, &m, &d) == 3;
-        
+
         if (valid)
         {
             valid = valid && m >= 1 && m <= 12 && d >= 1 && d <= 31;
-            
+
             if (valid)
             {
                 time_t now = time(NULL);
@@ -98,9 +97,9 @@ int validateInput(InputField *input)
                 int currentDay = today->tm_mday - 1; // Biar tidak bisa input tanggal hari ini
                 int currentMonth = today->tm_mon + 1;
                 int currentYear = today->tm_year + 1900;
-                
-                if (y > currentYear || 
-                    (y == currentYear && m > currentMonth) || 
+
+                if (y > currentYear ||
+                    (y == currentYear && m > currentMonth) ||
                     (y == currentYear && m == currentMonth && d > currentDay))
                 {
                     valid = 0;
@@ -108,7 +107,7 @@ int validateInput(InputField *input)
                 }
             }
         }
-        
+
         if (!valid) // validasi tanggal, agar user tau
         {
             input->value.validation.isInputInvalid = 1;
@@ -118,7 +117,7 @@ int validateInput(InputField *input)
             }
         }
         break;
-    }
+
     default: // validasi jika input kosong
         valid = valid && input->value.charLen > 0;
         if (!valid)

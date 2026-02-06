@@ -24,5 +24,7 @@ void paginateAbsensi(MuridAbsensi absensis[], int nAbsensi, int nPage, int page,
 struct tm ParseSQLDateTime(const char *dateStr);
 const char *FormatDatePretty(struct tm timeinfo);
 struct tm ParseSQLDate(const char *dateStr);
+const char *FormatDateTimePretty(struct tm timeinfo);
+const char *formatMoneyWithSeparator(double value);
 
 #endif

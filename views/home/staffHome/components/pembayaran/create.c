@@ -1,5 +1,6 @@
 #include "create.h"
 #include <math.h>
+#include "../../../../../libs/headers/raygui.h"
 
 void drawPembayaranCreate(windowModel *windowM)
 {
@@ -36,44 +37,69 @@ void drawPembayaranCreate(windowModel *windowM)
         switch (windowM->forms.staffPage[windowM->selectedPage].fields[i].type)
         {
         default:
-            drawInputBox(windowM, &windowM->forms.staffPage[windowM->selectedPage].fields[i].value, textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, i, 0);
+            drawInputBox(windowM, &windowM->forms.staffPage[windowM->selectedPage].fields[i].value, textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, i, 0, 1);
             break;
 
+        case PAYMENTMETHODINPUT:
+            DrawTextEx(
+                windowM->fontStyle.medium,
+                TextFormat("%s (klik box di bawah)", windowM->forms.staffPage[windowM->selectedPage].fields[i].label),
+                (Vector2){(int)textBox.x, (int)textBox.y - 44},
+                40, 0, SIBELAWHITE);
+
+            if (windowM->forms.staffPage[windowM->selectedPage].fields[i].value.charLen < 1)
+            {
+                strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "TUNAI");
+                windowM->forms.staffPage[windowM->selectedPage].fields[i].value.charLen = 5;
+            }
+
+            if (GuiButton(textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, windowM->curPos == i))
+            {
+                if (strcmp(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "TUNAI") == 0)
+                {
+                    strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "TRANSFER");
+                    windowM->forms.staffPage[windowM->selectedPage].fields[i].value.charLen = 7;
+                }
+                else
+                {
+                    strcpy(windowM->forms.staffPage[windowM->selectedPage].fields[i].value.text, "TUNAI");
+                    windowM->forms.staffPage[windowM->selectedPage].fields[i].value.charLen = 5;
+                }
+            }
+
+            break;
         case BUTTONINPUT:
         {
-        const char *label =
-        windowM->forms.staffPage[windowM->selectedPage].fields[i].label;
+            const char *label =
+                windowM->forms.staffPage[windowM->selectedPage].fields[i].label;
 
-        Vector2 textSize = MeasureTextEx(
-        windowM->fontStyle.medium,
-        label,
-        40,
-        0
-        );
+            Vector2 textSize = MeasureTextEx(
+                windowM->fontStyle.medium,
+                label,
+                40,
+                0);
 
-        if (windowM->curPos == i)
-        {
-            DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
-        }
-        else
-        {
-            DrawRectangleRoundedLines(buttonBox, 0.3f, 0, SIBELAWHITE);
-        }
+            if (windowM->curPos == i)
+            {
+                DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
+            }
+            else
+            {
+                DrawRectangleRoundedLines(buttonBox, 0.3f, 0, SIBELAWHITE);
+            }
 
-        DrawTextEx(
-        windowM->fontStyle.medium,
-        label,
-        (Vector2){
-            buttonBox.x + buttonBox.width  / 2 - textSize.x / 2,
-            buttonBox.y + buttonBox.height / 2 - textSize.y / 2
-        },
-        40,
-        0,
-        SIBELAWHITE
-        );
+            DrawTextEx(
+                windowM->fontStyle.medium,
+                label,
+                (Vector2){
+                    buttonBox.x + buttonBox.width / 2 - textSize.x / 2,
+                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2},
+                40,
+                0,
+                SIBELAWHITE);
         }
         break;
-        
+
         case CUSTOMMODAL:
             DrawTextEx(windowM->fontStyle.medium, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, (Vector2){(int)buttonBox.x, (int)buttonBox.y - 45}, 40, 0, SIBELAWHITE);
             if (windowM->curPos == i)

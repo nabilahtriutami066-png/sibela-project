@@ -24,9 +24,9 @@ void drawStaffLogin(windowModel *windowM)
         160,
         67,
     };
-    drawInputBox(windowM, &windowM->loginData.email, textBox, "Email", 0, 0);
+    drawInputBox(windowM, &windowM->loginData.email, textBox, "Email", 0, 0, 0);
 
-    drawInputBox(windowM, &windowM->loginData.password, textBoxPass, "Kata Sandi", 1, 1);
+    drawInputBox(windowM, &windowM->loginData.password, textBoxPass, "Kata Sandi", 1, 1, 0);
 
     if (windowM->loginData.activeInput == 2)
     {
@@ -61,8 +61,8 @@ void drawMuridTeacherLogin(windowModel *windowM)
         160,
         67,
     };
-    drawInputBox(windowM, &windowM->loginData.phoneNumber, textBox, "No. Telp", 0, 0);
-    drawInputBox(windowM, &windowM->loginData.password, textBoxPass, "Kata Sandi", 1, 1);
+    drawInputBox(windowM, &windowM->loginData.phoneNumber, textBox, "No. Telp", 0, 0, 0);
+    drawInputBox(windowM, &windowM->loginData.password, textBoxPass, "Kata Sandi", 1, 1, 0);
 
     if (windowM->loginData.activeInput == 2)
     {

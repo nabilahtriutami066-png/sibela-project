@@ -9,7 +9,8 @@ void drawInputBox(windowModel *windowM,
                   Rectangle textBox,
                   char Label[],
                   int posIndex,
-                  int isSecret)
+                  int isSecret,
+                  int isMonetary)
 {
     if (isSecret && !eyeLoaded)
     {
@@ -90,7 +91,7 @@ void drawInputBox(windowModel *windowM,
             offset = textSize.x - contentArea.width;
 
         DrawTextEx(windowM->fontStyle.regular,
-                   input->text,
+                   isMonetary ? formatMoneyWithSeparator(input->charLen < 1 ? 0 : atof(input->text)) : input->text,
                    (Vector2){(int)textBox.x + 5 - (int)offset, (int)textBox.y + 8},
                    40, 0, SIBELAWHITE);
     }

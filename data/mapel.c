@@ -153,7 +153,7 @@ QUERYSTATUS updateMapel(InputField fields[], SQLHDBC *dbConn, user *authUser)
     strcpy(updatedMapel.nama_mapel, fields[1].value.text);
 
     SQLAllocHandle(SQL_HANDLE_STMT, *dbConn, &stmt);
-    SQLPrepare(stmt, (SQLCHAR *)"UPDATE Mapel nama_mapel = ? WHERE id_mapel = ?", SQL_NTS);
+    SQLPrepare(stmt, (SQLCHAR *)"UPDATE Mapel SET nama_mapel = ? WHERE id_mapel = ?", SQL_NTS);
     SQLBindParameter(stmt, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMapel.nama_mapel), 0, updatedMapel.nama_mapel, 0, NULL);
     SQLBindParameter(stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, strlen(updatedMapel.id_mapel), 0, updatedMapel.id_mapel, 0, NULL);
     ret = SQLExecute(stmt);

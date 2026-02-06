@@ -5,7 +5,8 @@
 static void initMapelUpdatePlaceholder(windowModel *windowM)
 {
     static int initialized = 0;
-    if (initialized) return;
+    if (initialized)
+        return;
     initialized = 1;
 
     FORM *form = &windowM->forms.staffPage[windowM->selectedPage];
@@ -26,14 +27,12 @@ void drawMapelUpdate(windowModel *windowM)
         "UBAH MAPEL",
         (Vector2){start_x + 390, start_y - 120},
         64, 0,
-        SIBELAWHITE
-    );
+        SIBELAWHITE);
 
     FORM *form = &windowM->forms.staffPage[windowM->selectedPage];
 
     form->totalPages = (int)ceilf(
-        (float)form->nField / form->fieldPerPage
-    );
+        (float)form->nField / form->fieldPerPage);
 
     form->offset =
         (windowM->page - 1) * form->fieldPerPage + 1;
@@ -49,15 +48,13 @@ void drawMapelUpdate(windowModel *windowM)
             1920 / 2.0f - 200,
             start_y + 300 + (i - 1 - form->offset) * 150,
             600,
-            63
-        };
+            63};
 
         Rectangle buttonBox = {
             1920 / 2.0f + 20,
             start_y + 300 + (i - 1 - form->offset) * 150,
             160,
-            67
-        };
+            67};
 
         switch (form->fields[i].type)
         {
@@ -68,8 +65,7 @@ void drawMapelUpdate(windowModel *windowM)
                 textBox,
                 form->fields[i].label,
                 i,
-                0
-            );
+                0, 0);
             break;
 
         case BUTTONINPUT:
@@ -80,13 +76,11 @@ void drawMapelUpdate(windowModel *windowM)
                 windowM->fontStyle.medium,
                 label,
                 40,
-                0
-            );
+                0);
 
             if (
                 (form->selectedField == -1 && windowM->curPos == i) ||
-                form->selectedField == i
-            )
+                form->selectedField == i)
             {
                 DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
             }
@@ -100,12 +94,10 @@ void drawMapelUpdate(windowModel *windowM)
                 label,
                 (Vector2){
                     buttonBox.x + buttonBox.width / 2 - textSize.x / 2,
-                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2
-                },
+                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2},
                 40,
                 0,
-                SIBELAWHITE
-            );
+                SIBELAWHITE);
         }
         break;
         }

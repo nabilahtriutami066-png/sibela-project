@@ -30,8 +30,7 @@ void drawRuanganUpdate(windowModel *windowM)
         "UBAH RUANGAN",
         (Vector2){start_x + 390, start_y - 120},
         64, 0,
-        SIBELAWHITE
-    );
+        SIBELAWHITE);
 
     form->totalPages =
         (int)ceilf((float)form->nField / form->fieldPerPage);
@@ -57,15 +56,13 @@ void drawRuanganUpdate(windowModel *windowM)
             1920 / 2.0f - 200,
             posY,
             600,
-            63
-        };
+            63};
 
         Rectangle buttonBox = {
             1920 / 2.0f + 20,
             posY,
             160,
-            67
-        };
+            67};
 
         switch (field->type)
         {
@@ -75,8 +72,7 @@ void drawRuanganUpdate(windowModel *windowM)
                 windowM->fontStyle.medium,
                 field->label,
                 40,
-                0
-            );
+                0);
 
             if (windowM->curPos == i)
                 DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
@@ -88,12 +84,10 @@ void drawRuanganUpdate(windowModel *windowM)
                 field->label,
                 (Vector2){
                     buttonBox.x + buttonBox.width / 2 - textSize.x / 2,
-                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2
-                },
+                    buttonBox.y + buttonBox.height / 2 - textSize.y / 2},
                 40,
                 0,
-                SIBELAWHITE
-            );
+                SIBELAWHITE);
         }
         break;
 
@@ -105,8 +99,7 @@ void drawRuanganUpdate(windowModel *windowM)
                 textBox,
                 field->label,
                 i,
-                0
-            );
+                0, 0);
 
             if (field->value.charLen == 0 &&
                 strlen(field->placeholder) > 0)
@@ -116,12 +109,10 @@ void drawRuanganUpdate(windowModel *windowM)
                     field->placeholder,
                     (Vector2){
                         textBox.x + 12,
-                        textBox.y + (textBox.height / 2) - 12
-                    },
+                        textBox.y + (textBox.height / 2) - 12},
                     24,
                     0,
-                    Fade(GRAY, 0.45f)
-                );
+                    Fade(GRAY, 0.45f));
             }
         }
         break;

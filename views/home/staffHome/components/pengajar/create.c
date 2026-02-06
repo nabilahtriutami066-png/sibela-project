@@ -13,7 +13,6 @@ static void initPengajarPlaceholder(FORM *form)
     strcpy(form->fields[4].placeholder, "ex: email@mail.com");
 }
 
-
 static void initPengajarCreatePlaceholder(windowModel *windowM)
 {
     FORM *form = &windowM->forms.staffPage[windowM->selectedPage];
@@ -131,8 +130,7 @@ void drawPengajarCreate(windowModel *windowM)
         "TAMBAH PENGAJAR",
         (Vector2){start_x + 360, start_y - 120},
         64, 0,
-        SIBELAWHITE
-    );
+        SIBELAWHITE);
 
     FORM *form = &windowM->forms.staffPage[windowM->selectedPage];
 
@@ -158,8 +156,7 @@ void drawPengajarCreate(windowModel *windowM)
             Vector2 textSize = MeasureTextEx(
                 windowM->fontStyle.medium,
                 field->label,
-                40, 0
-            );
+                40, 0);
 
             if (windowM->curPos == i)
                 DrawRectangleRounded(buttonBox, 0.3f, 0, PRIMARY);
@@ -172,8 +169,7 @@ void drawPengajarCreate(windowModel *windowM)
                 (Vector2){
                     buttonBox.x + buttonBox.width / 2 - textSize.x / 2,
                     buttonBox.y + buttonBox.height / 2 - textSize.y / 2},
-                40, 0, SIBELAWHITE
-            );
+                40, 0, SIBELAWHITE);
         }
         break;
 
@@ -185,8 +181,7 @@ void drawPengajarCreate(windowModel *windowM)
                 textBox,
                 field->label,
                 i,
-                0
-            );
+                0, 0);
 
             if (field->value.charLen == 0 && strlen(field->placeholder) > 0)
             {
@@ -196,8 +191,7 @@ void drawPengajarCreate(windowModel *windowM)
                     (Vector2){
                         textBox.x + 12,
                         textBox.y + (textBox.height / 2) - 12},
-                    24, 0, Fade(GRAY, 0.45f)
-                );
+                    24, 0, Fade(GRAY, 0.45f));
             }
         }
         break;

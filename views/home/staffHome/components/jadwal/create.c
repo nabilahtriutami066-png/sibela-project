@@ -40,7 +40,7 @@ void drawJadwalCreate(windowModel *windowM)
         case DATEINPUT:
         case DATETIMEINPUT:
         case TEXTINPUT:
-            drawInputBox(windowM, &windowM->forms.staffPage[windowM->selectedPage].fields[i].value, textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, i, 0);
+            drawInputBox(windowM, &windowM->forms.staffPage[windowM->selectedPage].fields[i].value, textBox, windowM->forms.staffPage[windowM->selectedPage].fields[i].label, i, 0, 0);
             break;
 
         case BUTTONINPUT:
